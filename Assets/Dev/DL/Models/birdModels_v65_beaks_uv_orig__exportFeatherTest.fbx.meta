@@ -1,0 +1,737 @@
+fileFormatVersion: 2
+guid: 25ace5de1694b41a2acceaca7e9386fa
+timeCreated: 1471220464
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: beak45_test4
+    100002: beak45_test4 1
+    100004: beak45_test4 2
+    100006: beak46
+    100008: beak47
+    100010: //RootNode
+    100012: eyeTemp8
+    100014: eyeTemp8 1
+    100016: eyeTemp8 2
+    100018: eyeTemp9
+    100020: eyeTemp9 1
+    100022: eyeTemp9 2
+    100024: featherCrown
+    100026: featherCrown 1
+    100028: featherCrown 2
+    100030: featherHead_O
+    100032: featherHead_P
+    100034: featherHead_Q
+    100036: flatHeadPlate2
+    100038: flatHeadPlate2 1
+    100040: flatHeadPlate3
+    100042: flatHeadPlate4
+    100044: group76
+    100046: group76 1
+    100048: group85
+    100050: group86
+    100052: group87
+    100054: headK
+    100056: headK 1
+    100058: Locator_featherHead_O_featherCrown_nurbsToPoly19_vtx_7
+    100060: Locator_featherHead_O_featherCrown_nurbsToPoly19_vtx_7 1
+    100062: Locator_featherHead_O_featherCrown_nurbsToPoly28_vtx_7
+    100064: Locator_featherHead_O_featherCrown_nurbsToPoly28_vtx_7 1
+    100066: Locator_featherHead_O_featherCrown_nurbsToPoly29_vtx_7
+    100068: Locator_featherHead_O_featherCrown_nurbsToPoly29_vtx_7 1
+    100070: Locator_featherHead_O_featherCrown_nurbsToPoly30_vtx_7
+    100072: Locator_featherHead_O_featherCrown_nurbsToPoly30_vtx_7 1
+    100074: Locator_featherHead_O_featherCrown_nurbsToPoly31_vtx_7
+    100076: Locator_featherHead_O_featherCrown_nurbsToPoly31_vtx_7 1
+    100078: Locator_featherHead_O_featherCrown_nurbsToPoly32_vtx_7
+    100080: Locator_featherHead_O_featherCrown_nurbsToPoly32_vtx_7 1
+    100082: Locator_featherHead_O_featherCrown_nurbsToPoly33_vtx_7
+    100084: Locator_featherHead_O_featherCrown_nurbsToPoly33_vtx_7 1
+    100086: Locator_featherHead_O_featherCrown_nurbsToPoly34_vtx_7
+    100088: Locator_featherHead_O_featherCrown_nurbsToPoly34_vtx_7 1
+    100090: nurbsToPoly11
+    100092: nurbsToPoly12
+    100094: nurbsToPoly13
+    100096: nurbsToPoly14
+    100098: nurbsToPoly19
+    100100: nurbsToPoly19 1
+    100102: nurbsToPoly19 2
+    100104: nurbsToPoly25
+    100106: nurbsToPoly26
+    100108: nurbsToPoly27
+    100110: nurbsToPoly28
+    100112: nurbsToPoly28 1
+    100114: nurbsToPoly28 2
+    100116: nurbsToPoly28 3
+    100118: nurbsToPoly29
+    100120: nurbsToPoly29 1
+    100122: nurbsToPoly29 2
+    100124: nurbsToPoly29 3
+    100126: nurbsToPoly30
+    100128: nurbsToPoly30 1
+    100130: nurbsToPoly30 2
+    100132: nurbsToPoly30 3
+    100134: nurbsToPoly31
+    100136: nurbsToPoly31 1
+    100138: nurbsToPoly31 2
+    100140: nurbsToPoly31 3
+    100142: nurbsToPoly32
+    100144: nurbsToPoly32 1
+    100146: nurbsToPoly32 2
+    100148: nurbsToPoly32 3
+    100150: nurbsToPoly33
+    100152: nurbsToPoly33 1
+    100154: nurbsToPoly33 2
+    100156: nurbsToPoly33 3
+    100158: nurbsToPoly34
+    100160: nurbsToPoly34 1
+    100162: nurbsToPoly34 2
+    100164: nurbsToPoly34 3
+    100166: nurbsToPoly35
+    100168: nurbsToPoly35 1
+    100170: nurbsToPoly36
+    100172: nurbsToPoly36 1
+    100174: nurbsToPoly37
+    100176: nurbsToPoly37 1
+    100178: nurbsToPoly38
+    100180: nurbsToPoly38 1
+    100182: nurbsToPoly39
+    100184: nurbsToPoly39 1
+    100186: nurbsToPoly40
+    100188: nurbsToPoly40 1
+    100190: nurbsToPoly41
+    100192: nurbsToPoly41 1
+    100194: nurbsToPoly42
+    100196: nurbsToPoly42 1
+    100198: nurbsToPoly44
+    100200: nurbsToPoly44 1
+    100202: nurbsToPoly45
+    100204: nurbsToPoly45 1
+    100206: nurbsToPoly46
+    100208: nurbsToPoly46 1
+    100210: perp2_nurbsToPoly11
+    100212: perp2_nurbsToPoly12
+    100214: perp2_nurbsToPoly13
+    100216: perp2_nurbsToPoly14
+    100218: perp2_nurbsToPoly19
+    100220: perp2_nurbsToPoly19 1
+    100222: perp2_nurbsToPoly19 2
+    100224: perp2_nurbsToPoly25
+    100226: perp2_nurbsToPoly26
+    100228: perp2_nurbsToPoly27
+    100230: perp2_nurbsToPoly28
+    100232: perp2_nurbsToPoly28 1
+    100234: perp2_nurbsToPoly28 2
+    100236: perp2_nurbsToPoly29
+    100238: perp2_nurbsToPoly29 1
+    100240: perp2_nurbsToPoly29 2
+    100242: perp2_nurbsToPoly30
+    100244: perp2_nurbsToPoly30 1
+    100246: perp2_nurbsToPoly30 2
+    100248: perp2_nurbsToPoly31
+    100250: perp2_nurbsToPoly31 1
+    100252: perp2_nurbsToPoly31 2
+    100254: perp2_nurbsToPoly32
+    100256: perp2_nurbsToPoly32 1
+    100258: perp2_nurbsToPoly32 2
+    100260: perp2_nurbsToPoly33
+    100262: perp2_nurbsToPoly33 1
+    100264: perp2_nurbsToPoly33 2
+    100266: perp2_nurbsToPoly34
+    100268: perp2_nurbsToPoly34 1
+    100270: perp2_nurbsToPoly34 2
+    100272: perp2_nurbsToPoly35
+    100274: perp2_nurbsToPoly35 1
+    100276: perp2_nurbsToPoly36
+    100278: perp2_nurbsToPoly36 1
+    100280: perp2_nurbsToPoly37
+    100282: perp2_nurbsToPoly37 1
+    100284: perp2_nurbsToPoly38
+    100286: perp2_nurbsToPoly38 1
+    100288: perp2_nurbsToPoly39
+    100290: perp2_nurbsToPoly39 1
+    100292: perp2_nurbsToPoly40
+    100294: perp2_nurbsToPoly40 1
+    100296: perp2_nurbsToPoly41
+    100298: perp2_nurbsToPoly41 1
+    400000: beak45_test4
+    400002: beak45_test4 1
+    400004: beak45_test4 2
+    400006: beak46
+    400008: beak47
+    400010: //RootNode
+    400012: eyeTemp8
+    400014: eyeTemp8 1
+    400016: eyeTemp8 2
+    400018: eyeTemp9
+    400020: eyeTemp9 1
+    400022: eyeTemp9 2
+    400024: featherCrown
+    400026: featherCrown 1
+    400028: featherCrown 2
+    400030: featherHead_O
+    400032: featherHead_P
+    400034: featherHead_Q
+    400036: flatHeadPlate2
+    400038: flatHeadPlate2 1
+    400040: flatHeadPlate3
+    400042: flatHeadPlate4
+    400044: group76
+    400046: group76 1
+    400048: group85
+    400050: group86
+    400052: group87
+    400054: headK
+    400056: headK 1
+    400058: Locator_featherHead_O_featherCrown_nurbsToPoly19_vtx_7
+    400060: Locator_featherHead_O_featherCrown_nurbsToPoly19_vtx_7 1
+    400062: Locator_featherHead_O_featherCrown_nurbsToPoly28_vtx_7
+    400064: Locator_featherHead_O_featherCrown_nurbsToPoly28_vtx_7 1
+    400066: Locator_featherHead_O_featherCrown_nurbsToPoly29_vtx_7
+    400068: Locator_featherHead_O_featherCrown_nurbsToPoly29_vtx_7 1
+    400070: Locator_featherHead_O_featherCrown_nurbsToPoly30_vtx_7
+    400072: Locator_featherHead_O_featherCrown_nurbsToPoly30_vtx_7 1
+    400074: Locator_featherHead_O_featherCrown_nurbsToPoly31_vtx_7
+    400076: Locator_featherHead_O_featherCrown_nurbsToPoly31_vtx_7 1
+    400078: Locator_featherHead_O_featherCrown_nurbsToPoly32_vtx_7
+    400080: Locator_featherHead_O_featherCrown_nurbsToPoly32_vtx_7 1
+    400082: Locator_featherHead_O_featherCrown_nurbsToPoly33_vtx_7
+    400084: Locator_featherHead_O_featherCrown_nurbsToPoly33_vtx_7 1
+    400086: Locator_featherHead_O_featherCrown_nurbsToPoly34_vtx_7
+    400088: Locator_featherHead_O_featherCrown_nurbsToPoly34_vtx_7 1
+    400090: nurbsToPoly11
+    400092: nurbsToPoly12
+    400094: nurbsToPoly13
+    400096: nurbsToPoly14
+    400098: nurbsToPoly19
+    400100: nurbsToPoly19 1
+    400102: nurbsToPoly19 2
+    400104: nurbsToPoly25
+    400106: nurbsToPoly26
+    400108: nurbsToPoly27
+    400110: nurbsToPoly28
+    400112: nurbsToPoly28 1
+    400114: nurbsToPoly28 2
+    400116: nurbsToPoly28 3
+    400118: nurbsToPoly29
+    400120: nurbsToPoly29 1
+    400122: nurbsToPoly29 2
+    400124: nurbsToPoly29 3
+    400126: nurbsToPoly30
+    400128: nurbsToPoly30 1
+    400130: nurbsToPoly30 2
+    400132: nurbsToPoly30 3
+    400134: nurbsToPoly31
+    400136: nurbsToPoly31 1
+    400138: nurbsToPoly31 2
+    400140: nurbsToPoly31 3
+    400142: nurbsToPoly32
+    400144: nurbsToPoly32 1
+    400146: nurbsToPoly32 2
+    400148: nurbsToPoly32 3
+    400150: nurbsToPoly33
+    400152: nurbsToPoly33 1
+    400154: nurbsToPoly33 2
+    400156: nurbsToPoly33 3
+    400158: nurbsToPoly34
+    400160: nurbsToPoly34 1
+    400162: nurbsToPoly34 2
+    400164: nurbsToPoly34 3
+    400166: nurbsToPoly35
+    400168: nurbsToPoly35 1
+    400170: nurbsToPoly36
+    400172: nurbsToPoly36 1
+    400174: nurbsToPoly37
+    400176: nurbsToPoly37 1
+    400178: nurbsToPoly38
+    400180: nurbsToPoly38 1
+    400182: nurbsToPoly39
+    400184: nurbsToPoly39 1
+    400186: nurbsToPoly40
+    400188: nurbsToPoly40 1
+    400190: nurbsToPoly41
+    400192: nurbsToPoly41 1
+    400194: nurbsToPoly42
+    400196: nurbsToPoly42 1
+    400198: nurbsToPoly44
+    400200: nurbsToPoly44 1
+    400202: nurbsToPoly45
+    400204: nurbsToPoly45 1
+    400206: nurbsToPoly46
+    400208: nurbsToPoly46 1
+    400210: perp2_nurbsToPoly11
+    400212: perp2_nurbsToPoly12
+    400214: perp2_nurbsToPoly13
+    400216: perp2_nurbsToPoly14
+    400218: perp2_nurbsToPoly19
+    400220: perp2_nurbsToPoly19 1
+    400222: perp2_nurbsToPoly19 2
+    400224: perp2_nurbsToPoly25
+    400226: perp2_nurbsToPoly26
+    400228: perp2_nurbsToPoly27
+    400230: perp2_nurbsToPoly28
+    400232: perp2_nurbsToPoly28 1
+    400234: perp2_nurbsToPoly28 2
+    400236: perp2_nurbsToPoly29
+    400238: perp2_nurbsToPoly29 1
+    400240: perp2_nurbsToPoly29 2
+    400242: perp2_nurbsToPoly30
+    400244: perp2_nurbsToPoly30 1
+    400246: perp2_nurbsToPoly30 2
+    400248: perp2_nurbsToPoly31
+    400250: perp2_nurbsToPoly31 1
+    400252: perp2_nurbsToPoly31 2
+    400254: perp2_nurbsToPoly32
+    400256: perp2_nurbsToPoly32 1
+    400258: perp2_nurbsToPoly32 2
+    400260: perp2_nurbsToPoly33
+    400262: perp2_nurbsToPoly33 1
+    400264: perp2_nurbsToPoly33 2
+    400266: perp2_nurbsToPoly34
+    400268: perp2_nurbsToPoly34 1
+    400270: perp2_nurbsToPoly34 2
+    400272: perp2_nurbsToPoly35
+    400274: perp2_nurbsToPoly35 1
+    400276: perp2_nurbsToPoly36
+    400278: perp2_nurbsToPoly36 1
+    400280: perp2_nurbsToPoly37
+    400282: perp2_nurbsToPoly37 1
+    400284: perp2_nurbsToPoly38
+    400286: perp2_nurbsToPoly38 1
+    400288: perp2_nurbsToPoly39
+    400290: perp2_nurbsToPoly39 1
+    400292: perp2_nurbsToPoly40
+    400294: perp2_nurbsToPoly40 1
+    400296: perp2_nurbsToPoly41
+    400298: perp2_nurbsToPoly41 1
+    2300000: beak45_test4
+    2300002: beak45_test4 1
+    2300004: beak45_test4 2
+    2300006: beak46
+    2300008: beak47
+    2300010: eyeTemp8
+    2300012: eyeTemp8 1
+    2300014: eyeTemp8 2
+    2300016: eyeTemp9
+    2300018: eyeTemp9 1
+    2300020: eyeTemp9 2
+    2300022: flatHeadPlate2
+    2300024: flatHeadPlate2 1
+    2300026: flatHeadPlate3
+    2300028: flatHeadPlate4
+    2300030: headK
+    2300032: headK 1
+    2300034: nurbsToPoly11
+    2300036: nurbsToPoly12
+    2300038: nurbsToPoly13
+    2300040: nurbsToPoly14
+    2300042: nurbsToPoly19
+    2300044: nurbsToPoly19 1
+    2300046: nurbsToPoly19 2
+    2300048: nurbsToPoly25
+    2300050: nurbsToPoly26
+    2300052: nurbsToPoly27
+    2300054: nurbsToPoly28
+    2300056: nurbsToPoly28 1
+    2300058: nurbsToPoly28 2
+    2300060: nurbsToPoly28 3
+    2300062: nurbsToPoly29
+    2300064: nurbsToPoly29 1
+    2300066: nurbsToPoly29 2
+    2300068: nurbsToPoly29 3
+    2300070: nurbsToPoly30
+    2300072: nurbsToPoly30 1
+    2300074: nurbsToPoly30 2
+    2300076: nurbsToPoly30 3
+    2300078: nurbsToPoly31
+    2300080: nurbsToPoly31 1
+    2300082: nurbsToPoly31 2
+    2300084: nurbsToPoly31 3
+    2300086: nurbsToPoly32
+    2300088: nurbsToPoly32 1
+    2300090: nurbsToPoly32 2
+    2300092: nurbsToPoly32 3
+    2300094: nurbsToPoly33
+    2300096: nurbsToPoly33 1
+    2300098: nurbsToPoly33 2
+    2300100: nurbsToPoly33 3
+    2300102: nurbsToPoly34
+    2300104: nurbsToPoly34 1
+    2300106: nurbsToPoly34 2
+    2300108: nurbsToPoly34 3
+    2300110: nurbsToPoly35
+    2300112: nurbsToPoly35 1
+    2300114: nurbsToPoly36
+    2300116: nurbsToPoly36 1
+    2300118: nurbsToPoly37
+    2300120: nurbsToPoly37 1
+    2300122: nurbsToPoly38
+    2300124: nurbsToPoly38 1
+    2300126: nurbsToPoly39
+    2300128: nurbsToPoly39 1
+    2300130: nurbsToPoly40
+    2300132: nurbsToPoly40 1
+    2300134: nurbsToPoly41
+    2300136: nurbsToPoly41 1
+    2300138: nurbsToPoly42
+    2300140: nurbsToPoly42 1
+    2300142: nurbsToPoly44
+    2300144: nurbsToPoly44 1
+    2300146: nurbsToPoly45
+    2300148: nurbsToPoly45 1
+    2300150: nurbsToPoly46
+    2300152: nurbsToPoly46 1
+    2300154: perp2_nurbsToPoly11
+    2300156: perp2_nurbsToPoly12
+    2300158: perp2_nurbsToPoly13
+    2300160: perp2_nurbsToPoly14
+    2300162: perp2_nurbsToPoly19
+    2300164: perp2_nurbsToPoly19 1
+    2300166: perp2_nurbsToPoly19 2
+    2300168: perp2_nurbsToPoly25
+    2300170: perp2_nurbsToPoly26
+    2300172: perp2_nurbsToPoly27
+    2300174: perp2_nurbsToPoly28
+    2300176: perp2_nurbsToPoly28 1
+    2300178: perp2_nurbsToPoly28 2
+    2300180: perp2_nurbsToPoly29
+    2300182: perp2_nurbsToPoly29 1
+    2300184: perp2_nurbsToPoly29 2
+    2300186: perp2_nurbsToPoly30
+    2300188: perp2_nurbsToPoly30 1
+    2300190: perp2_nurbsToPoly30 2
+    2300192: perp2_nurbsToPoly31
+    2300194: perp2_nurbsToPoly31 1
+    2300196: perp2_nurbsToPoly31 2
+    2300198: perp2_nurbsToPoly32
+    2300200: perp2_nurbsToPoly32 1
+    2300202: perp2_nurbsToPoly32 2
+    2300204: perp2_nurbsToPoly33
+    2300206: perp2_nurbsToPoly33 1
+    2300208: perp2_nurbsToPoly33 2
+    2300210: perp2_nurbsToPoly34
+    2300212: perp2_nurbsToPoly34 1
+    2300214: perp2_nurbsToPoly34 2
+    2300216: perp2_nurbsToPoly35
+    2300218: perp2_nurbsToPoly35 1
+    2300220: perp2_nurbsToPoly36
+    2300222: perp2_nurbsToPoly36 1
+    2300224: perp2_nurbsToPoly37
+    2300226: perp2_nurbsToPoly37 1
+    2300228: perp2_nurbsToPoly38
+    2300230: perp2_nurbsToPoly38 1
+    2300232: perp2_nurbsToPoly39
+    2300234: perp2_nurbsToPoly39 1
+    2300236: perp2_nurbsToPoly40
+    2300238: perp2_nurbsToPoly40 1
+    2300240: perp2_nurbsToPoly41
+    2300242: perp2_nurbsToPoly41 1
+    3300000: beak45_test4
+    3300002: beak45_test4 1
+    3300004: beak45_test4 2
+    3300006: beak46
+    3300008: beak47
+    3300010: eyeTemp8
+    3300012: eyeTemp8 1
+    3300014: eyeTemp8 2
+    3300016: eyeTemp9
+    3300018: eyeTemp9 1
+    3300020: eyeTemp9 2
+    3300022: flatHeadPlate2
+    3300024: flatHeadPlate2 1
+    3300026: flatHeadPlate3
+    3300028: flatHeadPlate4
+    3300030: headK
+    3300032: headK 1
+    3300034: nurbsToPoly11
+    3300036: nurbsToPoly12
+    3300038: nurbsToPoly13
+    3300040: nurbsToPoly14
+    3300042: nurbsToPoly19
+    3300044: nurbsToPoly19 1
+    3300046: nurbsToPoly19 2
+    3300048: nurbsToPoly25
+    3300050: nurbsToPoly26
+    3300052: nurbsToPoly27
+    3300054: nurbsToPoly28
+    3300056: nurbsToPoly28 1
+    3300058: nurbsToPoly28 2
+    3300060: nurbsToPoly28 3
+    3300062: nurbsToPoly29
+    3300064: nurbsToPoly29 1
+    3300066: nurbsToPoly29 2
+    3300068: nurbsToPoly29 3
+    3300070: nurbsToPoly30
+    3300072: nurbsToPoly30 1
+    3300074: nurbsToPoly30 2
+    3300076: nurbsToPoly30 3
+    3300078: nurbsToPoly31
+    3300080: nurbsToPoly31 1
+    3300082: nurbsToPoly31 2
+    3300084: nurbsToPoly31 3
+    3300086: nurbsToPoly32
+    3300088: nurbsToPoly32 1
+    3300090: nurbsToPoly32 2
+    3300092: nurbsToPoly32 3
+    3300094: nurbsToPoly33
+    3300096: nurbsToPoly33 1
+    3300098: nurbsToPoly33 2
+    3300100: nurbsToPoly33 3
+    3300102: nurbsToPoly34
+    3300104: nurbsToPoly34 1
+    3300106: nurbsToPoly34 2
+    3300108: nurbsToPoly34 3
+    3300110: nurbsToPoly35
+    3300112: nurbsToPoly35 1
+    3300114: nurbsToPoly36
+    3300116: nurbsToPoly36 1
+    3300118: nurbsToPoly37
+    3300120: nurbsToPoly37 1
+    3300122: nurbsToPoly38
+    3300124: nurbsToPoly38 1
+    3300126: nurbsToPoly39
+    3300128: nurbsToPoly39 1
+    3300130: nurbsToPoly40
+    3300132: nurbsToPoly40 1
+    3300134: nurbsToPoly41
+    3300136: nurbsToPoly41 1
+    3300138: nurbsToPoly42
+    3300140: nurbsToPoly42 1
+    3300142: nurbsToPoly44
+    3300144: nurbsToPoly44 1
+    3300146: nurbsToPoly45
+    3300148: nurbsToPoly45 1
+    3300150: nurbsToPoly46
+    3300152: nurbsToPoly46 1
+    3300154: perp2_nurbsToPoly11
+    3300156: perp2_nurbsToPoly12
+    3300158: perp2_nurbsToPoly13
+    3300160: perp2_nurbsToPoly14
+    3300162: perp2_nurbsToPoly19
+    3300164: perp2_nurbsToPoly19 1
+    3300166: perp2_nurbsToPoly19 2
+    3300168: perp2_nurbsToPoly25
+    3300170: perp2_nurbsToPoly26
+    3300172: perp2_nurbsToPoly27
+    3300174: perp2_nurbsToPoly28
+    3300176: perp2_nurbsToPoly28 1
+    3300178: perp2_nurbsToPoly28 2
+    3300180: perp2_nurbsToPoly29
+    3300182: perp2_nurbsToPoly29 1
+    3300184: perp2_nurbsToPoly29 2
+    3300186: perp2_nurbsToPoly30
+    3300188: perp2_nurbsToPoly30 1
+    3300190: perp2_nurbsToPoly30 2
+    3300192: perp2_nurbsToPoly31
+    3300194: perp2_nurbsToPoly31 1
+    3300196: perp2_nurbsToPoly31 2
+    3300198: perp2_nurbsToPoly32
+    3300200: perp2_nurbsToPoly32 1
+    3300202: perp2_nurbsToPoly32 2
+    3300204: perp2_nurbsToPoly33
+    3300206: perp2_nurbsToPoly33 1
+    3300208: perp2_nurbsToPoly33 2
+    3300210: perp2_nurbsToPoly34
+    3300212: perp2_nurbsToPoly34 1
+    3300214: perp2_nurbsToPoly34 2
+    3300216: perp2_nurbsToPoly35
+    3300218: perp2_nurbsToPoly35 1
+    3300220: perp2_nurbsToPoly36
+    3300222: perp2_nurbsToPoly36 1
+    3300224: perp2_nurbsToPoly37
+    3300226: perp2_nurbsToPoly37 1
+    3300228: perp2_nurbsToPoly38
+    3300230: perp2_nurbsToPoly38 1
+    3300232: perp2_nurbsToPoly39
+    3300234: perp2_nurbsToPoly39 1
+    3300236: perp2_nurbsToPoly40
+    3300238: perp2_nurbsToPoly40 1
+    3300240: perp2_nurbsToPoly41
+    3300242: perp2_nurbsToPoly41 1
+    4300000: headK
+    4300002: beak45_test4
+    4300004: eyeTemp8
+    4300006: eyeTemp9
+    4300008: perp2_nurbsToPoly28
+    4300010: perp2_nurbsToPoly29
+    4300012: perp2_nurbsToPoly30
+    4300014: perp2_nurbsToPoly31
+    4300016: perp2_nurbsToPoly32
+    4300018: perp2_nurbsToPoly33
+    4300020: perp2_nurbsToPoly34
+    4300022: perp2_nurbsToPoly19
+    4300024: nurbsToPoly30
+    4300026: nurbsToPoly31
+    4300028: nurbsToPoly34
+    4300030: nurbsToPoly33
+    4300032: nurbsToPoly29
+    4300034: nurbsToPoly28
+    4300036: nurbsToPoly32
+    4300038: nurbsToPoly19
+    4300040: nurbsToPoly35
+    4300042: nurbsToPoly36
+    4300044: nurbsToPoly37
+    4300046: nurbsToPoly38
+    4300048: nurbsToPoly39
+    4300050: nurbsToPoly40
+    4300052: nurbsToPoly41
+    4300054: perp2_nurbsToPoly35
+    4300056: perp2_nurbsToPoly36
+    4300058: perp2_nurbsToPoly37
+    4300060: perp2_nurbsToPoly38
+    4300062: perp2_nurbsToPoly39
+    4300064: perp2_nurbsToPoly40
+    4300066: perp2_nurbsToPoly41
+    4300068: flatHeadPlate2
+    4300070: beak46
+    4300072: headK
+    4300074: beak45_test4
+    4300076: eyeTemp8
+    4300078: eyeTemp9
+    4300080: perp2_nurbsToPoly28
+    4300082: perp2_nurbsToPoly29
+    4300084: perp2_nurbsToPoly30
+    4300086: perp2_nurbsToPoly31
+    4300088: perp2_nurbsToPoly32
+    4300090: perp2_nurbsToPoly33
+    4300092: perp2_nurbsToPoly34
+    4300094: perp2_nurbsToPoly19
+    4300096: nurbsToPoly30
+    4300098: nurbsToPoly31
+    4300100: nurbsToPoly34
+    4300102: nurbsToPoly33
+    4300104: nurbsToPoly29
+    4300106: nurbsToPoly28
+    4300108: nurbsToPoly32
+    4300110: nurbsToPoly19
+    4300112: nurbsToPoly35
+    4300114: nurbsToPoly36
+    4300116: nurbsToPoly37
+    4300118: nurbsToPoly38
+    4300120: nurbsToPoly39
+    4300122: nurbsToPoly40
+    4300124: nurbsToPoly41
+    4300126: perp2_nurbsToPoly35
+    4300128: perp2_nurbsToPoly36
+    4300130: perp2_nurbsToPoly37
+    4300132: perp2_nurbsToPoly38
+    4300134: perp2_nurbsToPoly39
+    4300136: perp2_nurbsToPoly40
+    4300138: perp2_nurbsToPoly41
+    4300140: nurbsToPoly30
+    4300142: nurbsToPoly31
+    4300144: nurbsToPoly34
+    4300146: nurbsToPoly33
+    4300148: nurbsToPoly29
+    4300150: nurbsToPoly28
+    4300152: nurbsToPoly32
+    4300154: flatHeadPlate2
+    4300156: beak45_test4
+    4300158: eyeTemp8
+    4300160: eyeTemp9
+    4300162: perp2_nurbsToPoly13
+    4300164: perp2_nurbsToPoly14
+    4300166: perp2_nurbsToPoly26
+    4300168: perp2_nurbsToPoly12
+    4300170: perp2_nurbsToPoly27
+    4300172: perp2_nurbsToPoly25
+    4300174: perp2_nurbsToPoly11
+    4300176: nurbsToPoly11
+    4300178: nurbsToPoly12
+    4300180: nurbsToPoly13
+    4300182: nurbsToPoly14
+    4300184: nurbsToPoly25
+    4300186: nurbsToPoly26
+    4300188: nurbsToPoly27
+    4300190: perp2_nurbsToPoly28
+    4300192: perp2_nurbsToPoly29
+    4300194: perp2_nurbsToPoly30
+    4300196: perp2_nurbsToPoly31
+    4300198: perp2_nurbsToPoly32
+    4300200: perp2_nurbsToPoly33
+    4300202: perp2_nurbsToPoly34
+    4300204: nurbsToPoly28
+    4300206: nurbsToPoly29
+    4300208: nurbsToPoly30
+    4300210: nurbsToPoly31
+    4300212: nurbsToPoly32
+    4300214: nurbsToPoly33
+    4300216: nurbsToPoly34
+    4300218: perp2_nurbsToPoly19
+    4300220: nurbsToPoly19
+    4300222: flatHeadPlate3
+    4300224: flatHeadPlate4
+    4300226: nurbsToPoly42
+    4300228: nurbsToPoly44
+    4300230: nurbsToPoly45
+    4300232: nurbsToPoly46
+    4300234: nurbsToPoly42
+    4300236: nurbsToPoly44
+    4300238: nurbsToPoly45
+    4300240: nurbsToPoly46
+    4300242: beak47
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 100
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
