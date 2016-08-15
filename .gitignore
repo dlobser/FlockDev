@@ -28,3 +28,15 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+# Examples
+/Assets/VRSampleScenes*
+/Assets/WellFired/usequencer/Example*
+
+# WIP
+
+/Assets/WIP*
+
+# ON
+
+.DS_Store
