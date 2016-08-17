@@ -45,6 +45,64 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Holojam\Demo\Scripts\ActorController.cs" />
+     <Compile Include="Assets\Holojam\Demo\Scripts\DebugSphere.cs" />
+     <Compile Include="Assets\Holojam\Demo\Scripts\ExampleFloor.cs" />
+     <Compile Include="Assets\Holojam\Demo\Scripts\HoloTime.cs" />
+     <Compile Include="Assets\Holojam\Demo\Scripts\Laptop.cs" />
+     <Compile Include="Assets\Holojam\Demo\Scripts\Messenger.cs" />
+     <Compile Include="Assets\Holojam\Demo\Scripts\RoomGenerator.cs" />
+     <Compile Include="Assets\Holojam\Demo\Scripts\Stylus.cs" />
+     <Compile Include="Assets\Holojam\Demo\Scripts\Wisp.cs" />
+     <Compile Include="Assets\Holojam\Demo\Scripts\makeLine.cs" />
+     <Compile Include="Assets\Holojam\Input\Deprecated\Hand\HandGlobalReceiver.cs" />
+     <Compile Include="Assets\Holojam\Input\Deprecated\Hand\HandModule.cs" />
+     <Compile Include="Assets\Holojam\Input\Deprecated\Hand\IHandHandler.cs" />
+     <Compile Include="Assets\Holojam\Input\Deprecated\WandController.cs" />
+     <Compile Include="Assets\Holojam\Input\GlobalReceiver.cs" />
+     <Compile Include="Assets\Holojam\Input\Vive\IViveHandler.cs" />
+     <Compile Include="Assets\Holojam\Input\Vive\ViveControllerModule.cs" />
+     <Compile Include="Assets\Holojam\Input\WiiMote\IWiiMoteHandler.cs" />
+     <Compile Include="Assets\Holojam\Input\WiiMote\WiiMoteModule.cs" />
+     <Compile Include="Assets\Holojam\Server\Deprecated\CustomTrackedObject.cs" />
+     <Compile Include="Assets\Holojam\Server\Deprecated\MasterServer.cs" />
+     <Compile Include="Assets\Holojam\Server\Deprecated\MasterStream.cs" />
+     <Compile Include="Assets\Holojam\Server\Deprecated\ObjectWithOffsetController.cs" />
+     <Compile Include="Assets\Holojam\Server\Deprecated\SynchronizedObject.cs" />
+     <Compile Include="Assets\Holojam\Server\Deprecated\TrackedHeadset.cs" />
+     <Compile Include="Assets\Holojam\Server\Deprecated\TrackedObject.cs" />
+     <Compile Include="Assets\Holojam\Server\HolojamNetwork.cs" />
+     <Compile Include="Assets\Holojam\Server\HolojamView.cs" />
+     <Compile Include="Assets\Holojam\Server\NetworkUtils.cs" />
+     <Compile Include="Assets\Holojam\Server\Protocol\UpdateProtocol-Net.cs" />
+     <Compile Include="Assets\Holojam\Server\Protocol\UpdateProtocolV3.cs" />
+     <Compile Include="Assets\Holojam\Tools\Actor.cs" />
+     <Compile Include="Assets\Holojam\Tools\ActorInstantiator.cs" />
+     <Compile Include="Assets\Holojam\Tools\ActorManager.cs" />
+     <Compile Include="Assets\Holojam\Tools\BoundsOffset.cs" />
+     <Compile Include="Assets\Holojam\Tools\Fence.cs" />
+     <Compile Include="Assets\Holojam\Tools\Holobounds.cs" />
+     <Compile Include="Assets\Holojam\Tools\HolojamViewDebugger.cs" />
+     <Compile Include="Assets\Holojam\Tools\Pairable.cs" />
+     <Compile Include="Assets\Holojam\Tools\PairableManager.cs" />
+     <Compile Include="Assets\Holojam\Tools\Synchronizable.cs" />
+     <Compile Include="Assets\Holojam\Tools\Trackable.cs" />
+     <Compile Include="Assets\Holojam\Tools\VRConsole.cs" />
+     <Compile Include="Assets\Holojam\Tools\VRDebug.cs" />
+     <Compile Include="Assets\Holojam\Tools\Viewer.cs" />
+     <Compile Include="Assets\Holojam\Utility\Billboard\Billboard.cs" />
+     <Compile Include="Assets\Holojam\Utility\Billboard\BillboardBox.cs" />
+     <Compile Include="Assets\Holojam\Utility\Billboard\BillboardComponent.cs" />
+     <Compile Include="Assets\Holojam\Utility\Billboard\BillboardGraph.cs" />
+     <Compile Include="Assets\Holojam\Utility\Billboard\BillboardLabel.cs" />
+     <Compile Include="Assets\Holojam\Utility\Drawer.cs" />
+     <Compile Include="Assets\Holojam\Utility\OneModuleGrabbable.cs" />
+     <Compile Include="Assets\Holojam\Utility\PoseToColorChanger.cs" />
+     <Compile Include="Assets\Holojam\Utility\Singleton.cs" />
+     <Compile Include="Assets\Holojam\Utility\TransformUniversal.cs" />
+     <Compile Include="Assets\Holojam\Utility\TwoModuleScalable.cs" />
+     <Compile Include="Assets\Holojam\Utility\Utility.cs" />
+     <Compile Include="Assets\Holojam\Utility\ViveTransformable.cs" />
      <Compile Include="Assets\InsectSwarm\Scripts\DieAfterSeconds.cs" />
      <Compile Include="Assets\InsectSwarm\Scripts\Fly.cs" />
      <Compile Include="Assets\InsectSwarm\Scripts\InstantiateBurst.cs" />
@@ -54,12 +112,18 @@
      <Compile Include="Assets\InsectSwarm\Scripts\Swarm.cs" />
      <Compile Include="Assets\InsectSwarm\Scripts\TransformUniversal.cs" />
      <Compile Include="Assets\InsectSwarm\Scripts\UVLookup.cs" />
+     <None Include="Assets\Holojam\Demo\Shaders\AlphaBlendedColorTexture.shader" />
      <None Include="Assets\InsectSwarm\MatShadTex\SpriteShader.shader" />
+     <None Include="Assets\Holojam\Demo\Shaders\CrayonShader.shader" />
+     <None Include="Assets\Holojam\Demo\Shaders\AlphaBlendedColorHard.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ </Reference>
+ <Reference Include="protobuf-net">
+ <HintPath>/Applications/Unity/FlockDev/Assets/Plugins/protobuf-net.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
