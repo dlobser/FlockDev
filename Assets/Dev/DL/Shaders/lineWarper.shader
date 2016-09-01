@@ -54,7 +54,7 @@
 
 				float4 offset = ( (v.vertex * float4(v.uv.x,v.uv.x,v.uv.x,0)  - v2 ) ) * v.uv.x *10 ;
 
-				o.vertex = mul(UNITY_MATRIX_MVP, (v.vertex + offset)  );
+				o.vertex = mul(UNITY_MATRIX_MVP, (v.vertex + offset) +noise*2 );
 
 				o.pos = float4(v.uv.x,v.uv.x,v.uv.x,0);
 
