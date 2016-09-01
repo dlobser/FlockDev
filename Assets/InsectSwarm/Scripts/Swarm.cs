@@ -50,7 +50,8 @@ public class Swarm : MonoBehaviour {
 		for (int i = 0; i < amount; i++) {
 
 			Vector3 flyPosition = Vector3.Scale( Random.insideUnitSphere,spread*this.transform.localScale);
-			GameObject flyInstance = Instantiate (flyPrefab,flyPosition,Quaternion.identity,this.transform) as GameObject;
+			GameObject flyInstance = Instantiate (flyPrefab,flyPosition,Quaternion.identity) as GameObject;
+			flyInstance.transform.SetParent(this.transform);
 			flyInstance.name = "fly_" + i;
 
 			Fly flyScript = flyInstance.GetComponent<Fly> ();

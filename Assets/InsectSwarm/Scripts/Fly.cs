@@ -76,8 +76,8 @@ public class Fly : MonoBehaviour {
 		meshRend.enabled = false;
 		active = false;
 		deathTimer = 0;
-		Instantiate (splat,this.transform.position,Quaternion.identity,this.transform);
-
+		GameObject obj = Instantiate (splat,this.transform.position,Quaternion.identity) as GameObject;
+		obj.transform.SetParent(this.transform);
 	}
 
 }
