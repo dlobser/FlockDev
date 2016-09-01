@@ -72,12 +72,13 @@ public class Fly : MonoBehaviour {
 		}
 	}
 
-	void OnTriggerEnter(Collider other) {
+	void OnCollisionEnter(Collision other) {
 		meshRend.enabled = false;
 		active = false;
 		deathTimer = 0;
-		Instantiate (splat,this.transform.position,Quaternion.identity,this.transform);
-
+		GameObject sp = Instantiate (splat,this.transform.position,Quaternion.identity) as GameObject;
+		sp.transform.SetParent (this.transform);
+		print ("Splat");
 	}
 
 }
