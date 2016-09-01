@@ -53,12 +53,16 @@ public class Swarm : MonoBehaviour {
 			GameObject flyInstance = Instantiate (flyPrefab,flyPosition,Quaternion.identity) as GameObject;
 			flyInstance.transform.SetParent(this.transform);
 			flyInstance.name = "fly_" + i;
+			flyInstance.transform.SetParent (this.transform);
 
 			Fly flyScript = flyInstance.GetComponent<Fly> ();
 			flyScript.target = flyPosition;
 			flyScript.origin = flyPosition;
 			flyScript.spriteAimer.uvLookup = uvLookup;
 			flyScript.spriteAimer.Init ();
+
+			flyInstance.GetComponent<Holojam.Synchronizable> ().label  += i;
+
 			flies .Add(flyScript);
 
 			//			yield return null;
@@ -70,7 +74,7 @@ public class Swarm : MonoBehaviour {
 		if (initialized) {
 			if (activated && flyScale > 0) {
 				for (int i = 0; i < amount; i++) {
-					Vector3 newPos = schoolAnimator.transform.localToWorldMatrix.MultiplyVector (flies [i].origin) + schoolAnimator.transform.position;
+					Vector3 newPos = schoolAnimator.transform.localToWorldMatrix.MultiplyVector (flies [i].origin) + schoolAnimator.transform.position / 100f;
 					if (useNoiseBehavior) {
 						float off = .5f;
 						float scale = noiseScale*.01f;
