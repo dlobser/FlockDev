@@ -61,7 +61,7 @@ public class Swarm : MonoBehaviour {
 			flyScript.spriteAimer.uvLookup = uvLookup;
 			flyScript.spriteAimer.Init ();
 
-			flyInstance.GetComponent<Holojam.Synchronizable> ().label  += i;
+			flyInstance.GetComponent<Holojam.Tools.Synchronizable> ().label  += i;
 
 			flies .Add(flyScript);
 

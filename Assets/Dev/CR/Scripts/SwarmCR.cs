@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Swarm : MonoBehaviour {
+public class SwarmCR : MonoBehaviour {
 
 	public GameObject flyPrefab;
 	List<Fly> flies;
@@ -61,7 +61,7 @@ public class Swarm : MonoBehaviour {
 			flyScript.spriteAimer.uvLookup = uvLookup;
 			flyScript.spriteAimer.Init ();
 
-			flyInstance.GetComponent<Holojam.Synchronizable> ().label  += i;
+			flyInstance.GetComponent<Holojam.Tools.Synchronizable> ().label  += i;
 
 			flies .Add(flyScript);
 
