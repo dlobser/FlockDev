@@ -315,7 +315,12 @@ public static class TREEUtils{
 				tempStack = intPush (tempStack, 0);
 
 				int min = range[i][0];
-				int max = range[i][1];
+				int max = range [i] [0];
+				if(range[i].Length>1)
+					max = range[i][1];
+
+//				Debug.Log (min + "," + max);
+
 
 				GameObject g = findJoint (tempStack, 0, tree.transform.GetChild (0).gameObject);
 				int joints = g.gameObject.GetComponent<Joint> ().joints;

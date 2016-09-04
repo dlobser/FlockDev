@@ -102,7 +102,7 @@ public class tester2 : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		xForm2.Update ();
+		xForm2.Animate (Time.time);
 //		xForm.Update ();
 //		for (int i = 0; i < testList.Count; i++) {
 //			GameObject g = TREEUtils.findJoint (testList [i], 0, transform.GetChild (0).gameObject);

@@ -44,25 +44,11 @@ public class tester4 : MonoBehaviour {
 
 		xForm.Setup(selectJoints,transformJoints,tree);
 
-//		xForm.Setup(
-//			new string[]{
-//				"0|-1|-1|-1|-1|-1|-1",
-//				"0|-1|-1|-1|-1",
-//				"0|-1|-1",
-//			},
-//			new string[]{
-//				"ory:90,orx:0",
-//				"ssrx:-3.3,sfrx:.2,smrx:0,sMult:1.4,sorx:.5",
-//				"nsrx:0,nfrx:.2,nmrx:10,nMult:1.4"
-//			},tree);
-
 	}
-
-
-
+		
 	// Update is called once per frame
 	void Update () {
-		xForm.Update ();
+		xForm.Animate (Time.time);
 	}
 		
 }

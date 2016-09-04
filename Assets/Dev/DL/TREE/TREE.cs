@@ -120,7 +120,6 @@ public class TREE : MonoBehaviour {
 				t = (Trait)args[i];
 			if (args [i].GetType () == typeof(Transform)) {
 				container = (Transform)args [i];
-//				Debug.Log ("groot");
 			}
 			if(args[i].GetType() == typeof(int[]))
 				dictName = (int[])args[i];
@@ -128,8 +127,7 @@ public class TREE : MonoBehaviour {
 
 
 		t.joints = amount;
-//		GameObject j = TREEUtils.JointFactory(t);
-//		j.transform.parent = container.transform;
+
 
 		return RecursiveAdd (amount, 0, container, t, dictName);
 		
@@ -142,6 +140,16 @@ public class TREE : MonoBehaviour {
 		t.Apply (trait);
 		t.id = counter;
 
+//		if (counter == 0) {
+//			if (obj.transform.parent != null) {
+//				if (obj.transform.parent.GetComponent<Joint> () != null) {
+//					t.offset = obj.transform.parent.GetComponent<Joint> ().joint;
+//					Debug.Log (obj.transform.parent.gameObject.name);
+//				}
+//			}
+//
+//		}
+
 //		if (obj.gameObject.name == "ROOT")
 //			Debug.Log ("ROOT");
 		
@@ -149,6 +157,7 @@ public class TREE : MonoBehaviour {
 		j.transform.parent = obj;
 		obj.GetComponent<Joint> ().childJoint = j;
 		j.GetComponent<Joint> ().dictionaryName = dict;
+
 //		Debug.Log (obj.name);
 		float yOffset = t.jointScale;
 
@@ -157,6 +166,9 @@ public class TREE : MonoBehaviour {
 		}
 
 		j.GetComponent<Joint> ().joints = amount;
+
+		j.GetComponent<Joint> ().offset = (int)t.offset;
+
 		j.transform.localPosition = new Vector3 (0, yOffset, 0);
 
 		if (counter == amount ) {
@@ -222,6 +234,8 @@ public class TREE : MonoBehaviour {
 
 				Trait t = new Trait ();
 				t.Apply(trait);
+
+				t.offset = kidJoint.gameObject.GetComponent<Joint> ().joint;
 
 				t.jointScale = g.length [counter];
 
