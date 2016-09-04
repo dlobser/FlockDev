@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class tester4 : MonoBehaviour {
+public class tester4: MonoBehaviour {
 	
 	TREE tree;
 	public GameObject defaultJoint;
@@ -13,9 +13,7 @@ public class tester4 : MonoBehaviour {
 	public string[] selectJoints;
 	public string[] transformJoints;
 
-	// Use this for initialization
 	void Start () {
-
 
 		tree = this.gameObject.AddComponent<TREE>();
 		tree.setDefaultJoint( defaultJoint);
@@ -46,7 +44,6 @@ public class tester4 : MonoBehaviour {
 
 	}
 		
-	// Update is called once per frame
 	void Update () {
 		xForm.Animate (Time.time);
 	}

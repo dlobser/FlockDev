@@ -66,12 +66,13 @@
      <Compile Include="Assets\Dev\DL\Scripts\lookAtTarget.cs" />
      <Compile Include="Assets\Dev\DL\TREE\GenomeUtils.cs" />
      <Compile Include="Assets\Dev\DL\TREE\Joint.cs" />
+     <Compile Include="Assets\Dev\DL\TREE\MakeTree.cs" />
      <Compile Include="Assets\Dev\DL\TREE\TREE.cs" />
      <Compile Include="Assets\Dev\DL\TREE\TREEUtils.cs" />
      <Compile Include="Assets\Dev\DL\TREE\Trait.cs" />
      <Compile Include="Assets\Dev\DL\TREE\TreeTransform.cs" />
-     <Compile Include="Assets\Dev\DL\TREE\tester2.cs" />
-     <Compile Include="Assets\Dev\DL\TREE\tester4.cs" />
+     <Compile Include="Assets\Dev\DL\TREE\old\tester2.cs" />
+     <Compile Include="Assets\Dev\DL\TREE\old\tester4.cs" />
      <Compile Include="Assets\Holojam\Demo\Scripts\ActorController.cs" />
      <Compile Include="Assets\Holojam\Demo\Scripts\DebugSphere.cs" />
      <Compile Include="Assets\Holojam\Demo\Scripts\ExampleFloor.cs" />

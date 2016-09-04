@@ -39,23 +39,12 @@ public class TREE : MonoBehaviour {
 		traits = Traits.Instance;
 		traits.build ();
 
-		print (defaultJoint);
-
 		if (defaultJoint == null)
 			defaultJointExists = false;
-
 
 		trait = new Trait ();
 		trait.makeDefault ();
 
-		//make an invisible root joint
-//		Trait rootTrait = new Trait ();
-//		rootTrait.makeDefault ();
-//		rootTrait.jointMesh = null;
-//		rootTrait.ballMesh = null;
-//		root = TREEUtils.JointFactory (rootTrait);
-//		root.name = "root";
-//		root = makeRoot();
 		Joint j = this.gameObject.AddComponent<Joint> ();
 		Trait rootTrait = new Trait ();
 		rootTrait.makeDefault ();
@@ -64,7 +53,6 @@ public class TREE : MonoBehaviour {
 		j.trait = rootTrait;
 		this.name = "root";
 		root = this.gameObject;
-//		root.transform.parent = transform;
 	}
 
 	public void setDefaultJoint(GameObject Joint){
@@ -79,7 +67,7 @@ public class TREE : MonoBehaviour {
 		rootTrait.makeDefault ();
 		rootTrait.jointMesh = null;
 		rootTrait.ballMesh = null;
-		GameObject root = makeJoint (rootTrait);// TREEUtils.JointFactory (rootTrait);
+		GameObject root = makeJoint (rootTrait);
 		root.name = "root";
 		return root;
 	}
@@ -91,7 +79,6 @@ public class TREE : MonoBehaviour {
 		else {
 			GameObject G = Instantiate (defaultJoint);
 			G.name = "joint_" + t.id;
-//			G.AddComponent<Joint> ();
 			Joint J = G.GetComponent<Joint> ();
 			J.setTrait (t);
 			J.setScale (t.jointScale);
@@ -100,16 +87,12 @@ public class TREE : MonoBehaviour {
 		}
 	}
 
-
 	public GameObject Branch(params object[] args){
 		
 		int amount = 10;
 		Transform container = root.transform;
 		Trait t = new Trait();
 		t.Apply (trait);
-
-//		container.GetComponent<Joint> ().trait = t;
-//		container.name = "ROOT";
 
 		int[] dictName = new int[1];
 
@@ -124,41 +107,21 @@ public class TREE : MonoBehaviour {
 			if(args[i].GetType() == typeof(int[]))
 				dictName = (int[])args[i];
 		}
-
-
+			
 		t.joints = amount;
-
-
 		return RecursiveAdd (amount, 0, container, t, dictName);
-		
 	}
-
 
 	public GameObject RecursiveAdd (int amount ,int counter, Transform obj, Trait trait, int[] dict){
 
 		Trait t = new Trait ();
 		t.Apply (trait);
 		t.id = counter;
-
-//		if (counter == 0) {
-//			if (obj.transform.parent != null) {
-//				if (obj.transform.parent.GetComponent<Joint> () != null) {
-//					t.offset = obj.transform.parent.GetComponent<Joint> ().joint;
-//					Debug.Log (obj.transform.parent.gameObject.name);
-//				}
-//			}
-//
-//		}
-
-//		if (obj.gameObject.name == "ROOT")
-//			Debug.Log ("ROOT");
-		
-		GameObject j = makeJoint (t);// TREEUtils.JointFactory(t);
+		GameObject j = makeJoint (t);
 		j.transform.parent = obj;
 		obj.GetComponent<Joint> ().childJoint = j;
 		j.GetComponent<Joint> ().dictionaryName = dict;
 
-//		Debug.Log (obj.name);
 		float yOffset = t.jointScale;
 
 		if (counter == 0) {
@@ -186,24 +149,25 @@ public class TREE : MonoBehaviour {
 
 	public void generate(params string[] gene){
 		
-		
 		genome = GenomeUtils.fixGenome (gene);
 		Genome g = GenomeUtils.getGenome (new Genome (), genome);
 
 		Trait t = new Trait();
 		t.Apply (trait);
-		GameObject tempRoot = makeJoint (t);// TREEUtils.JointFactory(t);
+		GameObject tempRoot = makeJoint (t);
 		tempRoot.transform.parent = transform;
 
+
 		for (int i = 0; i < g.rads[0]; i++) {
-//			Trait t = new Trait ();
-//			t.Apply (trait);
+
 			t.jointScale = g.length [0];
 
 			GameObject thisRoot = Branch ((int)g.joints [0]-1,tempRoot.transform, t);
 			thisRoot.transform.Rotate( new Vector3 (0, i * 360 / g.rads [0], g.angles [0]));
 
 			tempRoot.GetComponent<Joint> ().limbs.Add (thisRoot);
+
+			this.GetComponent<Joint>().limbs.Add(thisRoot);
 
 			if(g.joints.Length>1)
 				recursiveBranch (g, 1, thisRoot);
@@ -241,7 +205,6 @@ public class TREE : MonoBehaviour {
 
 				newBranch = Branch ((int)g.joints [counter]-1, t);
 				newBranch.transform.parent = kidJoint.transform;
-//				kidJoint.GetComponent<Joint> ().childJoint = newBranch;
 				TREEUtils.zeroTransforms (newBranch);
 				newBranch.transform.localEulerAngles = ( new Vector3 (0, j * 360 / g.rads [counter], g.angles [counter]));
 				newBranch.transform.localPosition = (new Vector3 (0,kidJoint.GetComponent<Joint> ().trait.jointScale,0));
@@ -254,7 +217,5 @@ public class TREE : MonoBehaviour {
 				}
 			}
 		}
-
-//		Debug.Log (TREEUtils.testCounter);
 	}
 }

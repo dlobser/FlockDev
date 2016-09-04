@@ -165,17 +165,14 @@ public static class TREEUtils{
 			else
 				c=selector[counter];
 
-//			Debug.Log (j.Length);
-//			Debug.Log (c);
 			if (j.Length > 0) {
 				GameObject joint = j [c];
-//			Debug.Log (joint);
+
 				returner = findJoint (selector, counter + 2, joint.GetComponent<Joint> ().limbs [selector [counter + 1]]);
 			} else
 				return null;
 		}
 		else{
-//			Debug.Log (branch.GetComponent<Joint>());
 			returner = findJointOnBranch(branch,selector[counter]);
 		}
 
@@ -319,9 +316,6 @@ public static class TREEUtils{
 				if(range[i].Length>1)
 					max = range[i][1];
 
-//				Debug.Log (min + "," + max);
-
-
 				GameObject g = findJoint (tempStack, 0, tree.transform.GetChild (0).gameObject);
 				int joints = g.gameObject.GetComponent<Joint> ().joints;
 
@@ -355,16 +349,6 @@ public static class TREEUtils{
 		} else {
 			stackArray.Add (stack);
 		}
-//		string s = "";
-//
-//		for (int i = 0; i < stackArray.Count; i++) {
-//			s += "FF";
-//			for (int j = 0; j < stackArray[i].Length; j++) {
-//				s+=","+stackArray [i][ j];
-//			}
-//		}
-//		Debug.Log (s);
-//		Debug.Log ("\n");
 
 		return stackArray;
 	}
@@ -389,6 +373,7 @@ public static class TREEUtils{
 
 	public static void makeDictionary(GameObject joint, List<int> stack, List<List<int>> stackArray, int pusher){
 
+
 		stack.Add (pusher);
 
 		for (int i = 0; i < joint.GetComponent<Joint> ().limbs.Count; i++) {
@@ -398,6 +383,7 @@ public static class TREEUtils{
 			int[] tempStack = stack.ToArray ();
 
 			GameObject[] jarr = new GameObject[0];
+
 			GameObject g = findJoint (tempStack, 0, joint.transform.GetChild(0).gameObject);
 			jarr = findLimbs(g,jarr);
 
@@ -423,14 +409,6 @@ public static class TREEUtils{
 
 			stack.RemoveAt(stack.Count-1);
 
-//	
-//			for (int j = 0 ; j < limbs.Count ; j++){
-//
-//				stack = intPush (stack, j);
-//				int[] tempStack2 = makeTempStack (stack);
-//				_makeList (range, tempStack2, stackArray, i + 1, tree);
-//				stack = intPop (stack);
-//			}
 
 		}
 		stack.RemoveAt(stack.Count-1);
