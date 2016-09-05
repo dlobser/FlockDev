@@ -42,11 +42,17 @@ public class TREE : MonoBehaviour {
 		if (defaultJoint == null)
 			defaultJointExists = false;
 
-		trait = new Trait ();
+		if (GetComponent<Trait> () == null)
+			trait = this.gameObject.AddComponent<Trait> ();
+		else
+			trait = this.gameObject.GetComponent<Trait> ();
+
+
+		
 		trait.makeDefault ();
 
 		Joint j = this.gameObject.AddComponent<Joint> ();
-		Trait rootTrait = new Trait ();
+		Trait rootTrait = trait;// new Trait ();
 		rootTrait.makeDefault ();
 		rootTrait.jointMesh = null;
 		rootTrait.ballMesh = null;
@@ -91,7 +97,14 @@ public class TREE : MonoBehaviour {
 		
 		int amount = 10;
 		Transform container = root.transform;
-		Trait t = new Trait();
+
+		Trait t;
+
+		if (GetComponent<Trait> () == null)
+			t = this.gameObject.AddComponent<Trait> ();
+		else
+			t = this.gameObject.GetComponent<Trait> ();
+		
 		t.Apply (trait);
 
 		int[] dictName = new int[1];
@@ -113,8 +126,13 @@ public class TREE : MonoBehaviour {
 	}
 
 	public GameObject RecursiveAdd (int amount ,int counter, Transform obj, Trait trait, int[] dict){
+		Trait t;
 
-		Trait t = new Trait ();
+		if (GetComponent<Trait> () == null)
+			t = this.gameObject.AddComponent<Trait> ();
+		else
+			t = this.gameObject.GetComponent<Trait> ();
+		
 		t.Apply (trait);
 		t.id = counter;
 		GameObject j = makeJoint (t);
@@ -152,7 +170,13 @@ public class TREE : MonoBehaviour {
 		genome = GenomeUtils.fixGenome (gene);
 		Genome g = GenomeUtils.getGenome (new Genome (), genome);
 
-		Trait t = new Trait();
+		Trait t;
+
+		if (GetComponent<Trait> () == null)
+			t = this.gameObject.AddComponent<Trait> ();
+		else
+			t = this.gameObject.GetComponent<Trait> ();
+		
 		t.Apply (trait);
 		GameObject tempRoot = makeJoint (t);
 		tempRoot.transform.parent = transform;
@@ -196,7 +220,13 @@ public class TREE : MonoBehaviour {
 
 			for (int j = 0; j < (int)g.rads[counter]; j++) {
 
-				Trait t = new Trait ();
+				Trait t;
+
+				if (GetComponent<Trait> () == null)
+					t = this.gameObject.AddComponent<Trait> ();
+				else
+					t = this.gameObject.GetComponent<Trait> ();
+				
 				t.Apply(trait);
 
 				t.offset = kidJoint.gameObject.GetComponent<Joint> ().joint;

@@ -14,7 +14,10 @@ public class TreeTransform : MonoBehaviour {
 	Vector3 noiseRotate = Vector3.zero;
 	Vector3 rotateOffset = Vector3.zero;
 
+	bool defaultsMade = false;
+
 	void makeDefaults(int amount){
+		Transforms.Clear ();
 		for (int i = 0; i < amount; i++) {
 			Transforms.Add (new Dictionary<string,float> ());
 			Transforms[i].Add ("rx", 0);
@@ -85,8 +88,14 @@ public class TreeTransform : MonoBehaviour {
 
 	public void Setup(string[] joints, string[] args, TREE tree){
 
-		makeDefaults (joints.Length);
-		root = tree.gameObject;
+//		if (!defaultsMade) {
+			makeDefaults (joints.Length);
+			root = tree.gameObject;
+			defaultsMade = true;
+//		}
+
+		initialRotation.Clear ();
+		SelectedJoints.Clear ();
 
 		for (int i = 0; i < joints.Length; i++) {
 
