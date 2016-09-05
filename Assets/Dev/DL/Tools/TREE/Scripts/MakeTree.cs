@@ -18,6 +18,8 @@ public class MakeTree : MonoBehaviour {
 	public float counter { get; set; }
 	public float countSpeed { get; set; }
 
+	public float timeScale = 1;
+
 	void Start () {
 
 		tree = this.gameObject.AddComponent<TREE>();
@@ -41,7 +43,7 @@ public class MakeTree : MonoBehaviour {
 		
 	void Update () {
 		if (animate)
-			xForm.Animate (Time.time);
+			xForm.Animate (Time.time*timeScale);
 		else
 			Animate ();
 	}
