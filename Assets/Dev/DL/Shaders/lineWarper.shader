@@ -4,7 +4,7 @@
 	{
 		_MainTex ("Texture", 2D) = "white" {}
 		_Pos ("position",Vector) = (0,0,0,0)
-		_Data ("data", Vector ) = (0,0,0,0)
+		_Data ("X:Dist, Y:Mult, Z:Freq, W:Speed", Vector ) = (0,0,0,0)
 	}
 	SubShader
 	{
@@ -54,7 +54,6 @@
 
 				float4 noise = float4(snoise(v.vertex*sm+float3(_Data.w*_Time.x,v.uv.x,1)),snoise(sm*v.vertex+float3(1,_Data.w*_Time.x,v.uv.x)),snoise(sm*v.vertex+float3(v.uv.x,1,_Data.w*_Time.x)),0)*v.uv.x*2;
 
-//				float4 v2 = lerp(float4(0,0,0,0), sub, v.uv.x );
 				float dist = max(0,((distance(_Pos,v.vertex)-1.5)*-1));
 				float mult = _Data.x*dist;
 				float4 sub = ((_Pos*mult) - v.vertex ) * v.uv.x ;
