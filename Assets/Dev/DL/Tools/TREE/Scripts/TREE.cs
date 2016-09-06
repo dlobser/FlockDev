@@ -15,7 +15,7 @@ public class TREE : MonoBehaviour {
 	public GameObject[] jointChildren;
 
 
-	public Dictionary<int[],GameObject> jointDictionary;
+	public Dictionary<string,GameObject> jointDictionary;
 	int jCounter = 0;
 	int[] JCounter;
 
@@ -35,7 +35,7 @@ public class TREE : MonoBehaviour {
 	void Awake(){
 		
 		JCounter = new int[1];
-		jointDictionary = new Dictionary<int[],GameObject> ();
+		jointDictionary = new Dictionary<string,GameObject> ();
 		traits = Traits.Instance;
 		traits.build ();
 
@@ -155,7 +155,7 @@ public class TREE : MonoBehaviour {
 		Trait t = new Trait();
 		t.Apply (trait);
 		GameObject tempRoot = makeJoint (t);
-		tempRoot.transform.parent = transform;
+
 
 
 		for (int i = 0; i < g.rads[0]; i++) {
@@ -172,6 +172,8 @@ public class TREE : MonoBehaviour {
 			if(g.joints.Length>1)
 				recursiveBranch (g, 1, thisRoot);
 		}
+		TREEUtils.copyTransforms (tempRoot, root);
+		tempRoot.transform.parent = transform;
 
 	}
 
@@ -192,7 +194,7 @@ public class TREE : MonoBehaviour {
 			kidJoint.name = "branchRoot_"+i;
 
 			int[] jcounter = {++jCounter};
-			jointDictionary.Add (jcounter, kidJoint);
+//			jointDictionary.Add (jcounter, kidJoint);
 
 			for (int j = 0; j < (int)g.rads[counter]; j++) {
 

@@ -19,7 +19,7 @@ public class Joint : MonoBehaviour {
 	void Awake(){
 		limbs = new List<GameObject> ();
 
-		trait = gameObject.AddComponent<Trait> ();
+		trait = new Trait ();// gameObject.AddComponent<Trait> ();
 	}
 
 	public void Construct(){

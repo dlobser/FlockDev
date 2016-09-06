@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Trait : MonoBehaviour {
+public class Trait : Object {
 
 	public int id = 0;
 	public Mesh ballMesh;

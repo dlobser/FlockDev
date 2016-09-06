@@ -64,6 +64,11 @@ namespace SpriteMaker{
 
 					count++;
 
+				for (int i = 0; i < trees.Length; i++) {
+					trees [i].countSpeed = timeCap;
+					trees [i].Animate ();
+				}
+
 				counter += timeCap;
 			} else if (!snapshotted && gridMade) {
 				snap.takeSnapshot ();

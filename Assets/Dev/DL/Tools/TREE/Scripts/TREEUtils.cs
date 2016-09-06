@@ -8,8 +8,6 @@ public static class TREEUtils{
 
 	public static float testCounter = 0;
 
-//	public static GameObject nullGameObject = new GameObject();
-
 	public static GameObject makePart(Mesh mesh, Material mat){
 		GameObject part = new GameObject ();
 		MeshFilter m = part.AddComponent<MeshFilter> ();
@@ -366,107 +364,50 @@ public static class TREEUtils{
 		List<List<int>> stackArray = new List<List<int>> ();
 		int pusher = 0;
 
-		makeDictionary (joint, stack, stackArray, pusher);
+		makeDictionary (joint, joint, stack, stackArray, pusher);
 
 	}
 
-	public static void makeDictionary(GameObject joint, List<int> stack, List<List<int>> stackArray, int pusher){
-
-
+	public static void makeDictionary(GameObject tree, GameObject joint, List<int> stack, List<List<int>> stackArray, int pusher){
 		stack.Add (pusher);
-
 		for (int i = 0; i < joint.GetComponent<Joint> ().limbs.Count; i++) {
 
 			stack.Add (i);
-
 			int[] tempStack = stack.ToArray ();
-
 			GameObject[] jarr = new GameObject[0];
-
-			GameObject g = findJoint (tempStack, 0, joint.transform.GetChild(0).gameObject);
+			GameObject g = joint.GetComponent<Joint> ().limbs [i];
 			jarr = findLimbs(g,jarr);
 
-			List<GameObject> limbs = jarr[0].GetComponent<Joint>().limbs;
-
-			List<int> tempStack2 = new List<int> (stack);
-			List<int> t2 = new List<int> (stack);
+			List<int> tempStack2 = new List<int> ();
+			for (int j = 0; j < stack.Count; j++) {
+				tempStack2.Add(stack[j]);
+			}
+			List<int> t2 = new List<int> ();
+			for (int j = 0; j < stack.Count; j++) {
+				t2.Add(stack[j]);
+			}
 
 			stackArray.Add (tempStack2);
-
 			t2.Add (-1);
-			List<int[]> t3 = makeList ( listToString(t2), joint.GetComponent<TREE> ());
+			List<int[]> t3 = makeList ( listToString(t2), tree.GetComponent<TREE> ());
 
 			for (int k = 0; k < t3.Count; k++) {
 				string tempString = arrayToString (t3 [k]);
-				GameObject tempJoint = findJoint (t3[k], 0, joint);
-				tempJoint.GetComponent<Joint> ().dictionaryName = t3[k];
+				GameObject tempJoint = findJoint (t3[k], 0, tree);
+				tempJoint.GetComponent<Joint> ().dictionaryName =  t3[k];
+				tree.GetComponent<TREE> ().jointDictionary[TREEUtils.arrayToString( t3 [k])] = tempJoint;
 			}
 
 			for(var j = 0 ; j < jarr.Length ; j++){
-				makeDictionary(jarr[j], tempStack2, stackArray, j);
+				makeDictionary(tree, jarr[j], tempStack2, stackArray, j);
 			}
 
 			stack.RemoveAt(stack.Count-1);
 
-
 		}
+
 		stack.RemoveAt(stack.Count-1);
 	}
-
-	/*
-	TREE.prototype.makeDictionary = function(obj,stacker,stackArray,pusher){
-
-		var joint = obj || this;
-		var stack = stacker || [];
-		var stackArray = stackArray || [];
-		var pusher = pusher || 0;
-
-		stack.push(pusher);
-
-		for(var i = 0 ; i < joint.limbs.length ; i++){
-
-			stack.push(i);
-
-			var jarr = [];
-			this.findLimbs(joint.limbs[i],jarr);
-
-			var tempStack = [];
-			var t2 = [];
-
-			for(var k = 0 ; k < stack.length ; k++){
-				tempStack[k] = stack[k];
-				t2[k] = stack[k];
-			}
-
-			stackArray.push(tempStack);
-
-			t2.push("all");
-			var t3 = this.makeList(t2);
-			var t4 = t3;//this.makeList(t3[0]);
-
-			for(var k = 0 ; k < t4.length ; k++){
-				var tempString = t4[k].toString();
-				var tempJoint = this.FIND(t4[k]);
-				this.parts[tempString] = tempJoint;
-				tempJoint.dictionaryName = tempString;
-				// console.log(tempString);
-				// console.log(joint.id);
-			}
-
-			for(var j = 0 ; j < jarr.length ; j++){
-				this.makeDictionary(jarr[j],tempStack,stackArray,j	);
-			}
-
-			stack.pop();
-
-		}
-
-		stack.pop();
-
-		return stackArray;
-	}
-		*/
-
 
 	public static string arrayToString(int[] jointList){
 		string s = "";

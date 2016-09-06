@@ -23,16 +23,17 @@ public class MakeTree : MonoBehaviour {
 	public bool reSetupXform = true;
 	public bool rebuildTree = true;
 
-
-
-
 	void Start () {
-		
-//		buildTree ();
 
 	}
 
 	public void buildTree(){
+		
+		if (this.GetComponent<Joint> () != null) {
+			if (this.GetComponent<Joint> ().limbs.Count > 0) {
+				this.GetComponent<Joint> ().limbs.Clear ();
+			}
+		}
 
 		if (this.gameObject.GetComponent<TREE> () == null) {
 			tree = this.gameObject.AddComponent<TREE> ();
@@ -56,8 +57,8 @@ public class MakeTree : MonoBehaviour {
 			"end",		end
 		);
 
-
-
+		tree.jointDictionary.Clear ();
+		TREEUtils.makeDictionary (tree.gameObject);
 
 	}
 		
@@ -66,27 +67,27 @@ public class MakeTree : MonoBehaviour {
 			rebuildTree = false;
 			buildTree ();
 			reSetupXform = true;
-		}
-
-		else if (reSetupXform) {
+		} else if (reSetupXform) {
 			reSetupXform = false;
 			if (this.gameObject.GetComponent<TreeTransform> () == null) {
 				xForm = this.gameObject.AddComponent<TreeTransform> ();
 			} else
 				xForm = this.gameObject.GetComponent<TreeTransform> ();
 			
-			xForm.Setup(selectJoints,transformJoints,tree);
-		}
-
-		else if (animate && !reSetupXform && !rebuildTree)
-			xForm.Animate (Time.time*timeScale);
-		else if(!reSetupXform && !rebuildTree)
+			xForm.Setup (selectJoints, transformJoints, tree);
 			Animate ();
-		
+		} else if (animate && !reSetupXform && !rebuildTree)
+			xForm.Animate (Time.time * timeScale);
+//		else if (!reSetupXform && !rebuildTree) {
+//			Animate ();
+//			countSpeed = 0;
+//			counter = 0;
+//		}
+//		
 	}
 
 	public void Animate(){
-		counter += countSpeed;
+		counter += countSpeed * timeScale;
 		xForm.Animate (counter);
 	}
 

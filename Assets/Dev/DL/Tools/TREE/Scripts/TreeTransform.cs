@@ -11,6 +11,7 @@ public class TreeTransform : MonoBehaviour {
 	List<List<Vector3>> initialRotation = new List<List<Vector3>>();
 
 	Vector3 sinRotate = Vector3.zero;
+	Vector3 sinScale = Vector3.zero;
 	Vector3 noiseRotate = Vector3.zero;
 	Vector3 rotateOffset = Vector3.zero;
 
@@ -55,6 +56,29 @@ public class TreeTransform : MonoBehaviour {
 			Transforms[i].Add ("smrx", 0);
 			Transforms[i].Add ("smry", 0);
 			Transforms[i].Add ("smrz", 0);
+
+
+			Transforms[i].Add ("ssMult", 0);
+			//sin offset from root offset
+			Transforms[i].Add ("srosx", 0);
+			Transforms[i].Add ("srosy", 0);
+			Transforms[i].Add ("srosz", 0);
+			//sin offset		  s
+			Transforms[i].Add ("sosx", 0);
+			Transforms[i].Add ("sosy", 0);
+			Transforms[i].Add ("sosz", 0);
+			//sin frequency	  	s
+			Transforms[i].Add ("sfsx", 0);
+			Transforms[i].Add ("sfsy", 0);
+			Transforms[i].Add ("sfsz", 0);
+			//sin speed		  	s
+			Transforms[i].Add ("sssx", 0);
+			Transforms[i].Add ("sssy", 0);
+			Transforms[i].Add ("sssz", 0);
+			//sin multiply	      s
+			Transforms[i].Add ("smsx", 0);
+			Transforms[i].Add ("smsy", 0);
+			Transforms[i].Add ("smsz", 0);
 
 			//noise joint multiply
 			Transforms[i].Add ("nMult", 0);
@@ -128,7 +152,8 @@ public class TreeTransform : MonoBehaviour {
 			for (int j = 0; j < SelectedJoints [i].Count; j++) {
 
 
-				GameObject g = TREEUtils.findJoint (SelectedJoints [i] [j], 0, root.transform.GetChild (0).gameObject);
+				GameObject g = root.GetComponent<TREE>().jointDictionary[TREEUtils.arrayToString(SelectedJoints[i][j])].gameObject;
+//				GameObject g = TREEUtils.findJoint (SelectedJoints [i] [j], 0, root.transform.GetChild (0).gameObject);
 				int jointNumber = g.GetComponent<Joint> ().joint;
 				int jointOffset = g.GetComponent<Joint> ().offset;
 				Vector3 init = initialRotation [i] [j];
@@ -136,6 +161,7 @@ public class TreeTransform : MonoBehaviour {
 				sinRotate = Vector3.zero;
              	noiseRotate = Vector3.zero;
 				rotateOffset = Vector3.zero;
+				sinScale = Vector3.zero;
 
 				Vector3 rotate = new Vector3 (
 					Transforms[i]["rx"],
@@ -157,11 +183,18 @@ public class TreeTransform : MonoBehaviour {
 						((Transforms [i] ["nMult"]*jointNumber)+Transforms [i] ["nmrz"]) * TREEUtils.Noise (((Transforms [i] ["nsrz"] * -timer) + Transforms [i] ["norz"] +  (Transforms [i] ["nrorz"]*jointOffset) + (Transforms [i] ["nfrz"] * jointNumber)))
 					);
 
+				if(Transforms [i] ["smsx"]!=0||Transforms [i] ["smsy"]!=0||Transforms [i] ["smsz"]!=0)
+					sinScale.Set(
+						((Transforms [i] ["ssMult"]*jointNumber)+Transforms [i] ["smsx"]) * Mathf.Sin (((Transforms [i] ["sssx"] * timer + Transforms [i] ["sosx"] + (Transforms [i] ["srosx"]*jointOffset)) + (Transforms [i] ["sfsx"] * jointNumber))),
+						((Transforms [i] ["ssMult"]*jointNumber)+Transforms [i] ["smsy"]) * Mathf.Sin (((Transforms [i] ["sssy"] * timer + Transforms [i] ["sosy"] + (Transforms [i] ["srosy"]*jointOffset)) + (Transforms [i] ["sfsy"] * jointNumber))),
+						((Transforms [i] ["ssMult"]*jointNumber)+Transforms [i] ["smsz"]) * Mathf.Sin (((Transforms [i] ["sssz"] * timer + Transforms [i] ["sosz"] + (Transforms [i] ["srosz"]*jointOffset)) + (Transforms [i] ["sfsz"] * jointNumber)))
+					);
+
 				rotateOffset.Set (Transforms [i] ["orx"] * timer, Transforms [i] ["ory"] * timer, Transforms [i] ["orz"] * timer);
 				g.transform.localEulerAngles = rotate+init+sinRotate+noiseRotate+rotateOffset;
 
 //				g.transform.Rotate (rotateOffset.x,rotateOffset.y,rotateOffset.z);
-				Vector3 overallScale = 	new Vector3 (Transforms [i] ["scale"], Transforms [i] ["scale"], Transforms [i] ["scale"]);
+				Vector3 overallScale = sinScale + new Vector3 (Transforms [i] ["scale"], Transforms [i] ["scale"], Transforms [i] ["scale"]);
 
 				if (Transforms [i] ["cr"] != 1 || Transforms [i] ["cg"] != 1 || Transforms [i] ["cb"] != 1)
 					g.GetComponent<Joint>().scalar.transform.GetChild(0).GetComponent<MeshRenderer> ().material.color = 
