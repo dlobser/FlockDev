@@ -152,11 +152,12 @@ namespace TREESharp{
 			for (int i = 0; i < SelectedJoints.Count; i++) {
 				for (int j = 0; j < SelectedJoints [i].Count; j++) {
 					GameObject g;
-					if(root.GetComponent<TREE>().jointDictionary.Count>0)
+					if(root.GetComponent<TREE>().jointDictionary.Count>0 && root.GetComponent<TREE>().jointDictionary.ContainsKey(TREEUtils.arrayToString(SelectedJoints[i][j])))
 						g = root.GetComponent<TREE>().jointDictionary[TREEUtils.arrayToString(SelectedJoints[i][j])].gameObject;
 					else
 						g = TREEUtils.findJoint (SelectedJoints [i] [j], 0, root.transform.GetChild (0).gameObject);
-					g.transform.localEulerAngles = initialRotation [i] [j];
+					if(g!=null)
+						g.transform.localEulerAngles = initialRotation [i] [j];
 
 				}
 			}

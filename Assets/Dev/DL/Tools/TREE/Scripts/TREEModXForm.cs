@@ -18,18 +18,27 @@ namespace TREESharp{
 
 		public override void Setup(){
 
+			if (this.gameObject.GetComponent<TreeTransform> () == null) {
+				xForm = this.gameObject.AddComponent<TreeTransform> ();
+			} else {
+				xForm.returnToInitialState ();
+				DestroyImmediate (xForm);
+				DestroyImmediate (this.gameObject.AddComponent<TreeTransform> ());
+				xForm = this.gameObject.AddComponent<TreeTransform> ();
+			}
+
+			xForm.Setup (selectJoints, transformJoints, tree);
+			Step ();
 			rebuild = false;
-			
+		}
+
+		public override void HardReset(){
+			DestroyImmediate (xForm);
 			if (this.gameObject.GetComponent<TreeTransform> () == null) {
 				xForm = this.gameObject.AddComponent<TreeTransform> ();
 			} else {
 				xForm = this.gameObject.GetComponent<TreeTransform> ();
-//				xForm.returnToInitialState ();
 			}
-
-			xForm.Setup (selectJoints, transformJoints, tree);
-
-			Step ();
 		}
 			
 		public override void Animate () {

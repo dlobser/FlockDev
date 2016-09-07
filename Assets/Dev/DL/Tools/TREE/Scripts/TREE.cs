@@ -45,8 +45,11 @@ public class TREE : MonoBehaviour {
 
 		trait = new Trait ();
 		trait.makeDefault ();
-
-		Joint j = this.gameObject.AddComponent<Joint> ();
+			Joint j;
+			if(this.gameObject.GetComponent<Joint>()==null)
+				j = this.gameObject.AddComponent<Joint> ();
+			else 
+				j = this.gameObject.GetComponent<Joint>();
 		Trait rootTrait = new Trait ();
 		rootTrait.makeDefault ();
 		rootTrait.jointMesh = null;
@@ -175,7 +178,6 @@ public class TREE : MonoBehaviour {
 		}
 		TREEUtils.copyTransforms (tempRoot, root);
 		tempRoot.transform.parent = transform;
-			Debug.Log ("done");
 
 	}
 

@@ -72,12 +72,12 @@
      <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\GenomeUtils.cs" />
      <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\Joint.cs" />
      <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\MakeTree.cs" />
-     <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\MakeTree2.cs" />
      <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\TREE.cs" />
      <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\TREEMod.cs" />
+     <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\TREEModBuild.cs" />
      <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\TREEModCtrl.cs" />
+     <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\TREEModSwapGeo.cs" />
      <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\TREEModXForm.cs" />
-     <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\TREESwapGeo.cs" />
      <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\TREEUtils.cs" />
      <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\Trait.cs" />
      <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\TreeTransform.cs" />

@@ -277,28 +277,32 @@ namespace TREESharp{
 					tempStack = intPush (tempStack, 0);
 
 					GameObject g = findJoint (tempStack, 0, tree.transform.GetChild (0).gameObject);
-					int joints = g.gameObject.GetComponent<Joint> ().joints;
+//					if (g != null) {
+					int joints = 0;
+					if(g!=null)
+						joints = g.gameObject.GetComponent<Joint> ().joints;
 
-					int min = 0;
-					int max = joints+1;
+						int min = 0;
+						int max = joints + 1;
 
-					if(range[i][0] == -2)
-						min=1;
+						if (range [i] [0] == -2)
+							min = 1;
 
-					if(range[i][0] == -3)
-						min=max-1;
+						if (range [i] [0] == -3)
+							min = max - 1;
 
-					for (var j = min ; j < max ; j++){
+						for (var j = min; j < max; j++) {
 
-						stack = intPush (stack, j);
-						tempStack = makeTempStack (stack);
-						for(var k = 0 ; k < stack.Length ; k++){
-							tempStack[k] = stack[k];
+							stack = intPush (stack, j);
+							tempStack = makeTempStack (stack);
+							for (var k = 0; k < stack.Length; k++) {
+								tempStack [k] = stack [k];
+							}
+
+							_makeList (range, tempStack, stackArray, i + 1, tree);
+							stack = intPop (stack);
 						}
-
-						_makeList (range, tempStack, stackArray, i + 1, tree);
-						stack = intPop (stack);
-					}
+//					}
 
 				}
 

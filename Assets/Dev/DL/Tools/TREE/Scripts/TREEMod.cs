@@ -9,6 +9,8 @@ namespace TREESharp{
 		public bool animate = false;
 		public virtual void Setup (){
 		}
+		public virtual void HardReset(){
+		}
 		public virtual void Animate (){
 		}
 	}

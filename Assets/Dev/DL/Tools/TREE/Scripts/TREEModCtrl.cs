@@ -16,13 +16,31 @@ namespace TREESharp{
 		}
 
 		public void Build(){
+			tree = GetComponent<TREE> ();
 			for (int i = 0; i < mods.Length; i++) {
 				mods [i].tree = tree;
+//				Debug.Log (mods [i]);
+//				Debug.Log ((mods [i].tree));
 				mods [i].animate = false;
-				mods [i].Setup ();
 			}
+			StartCoroutine(reBuild());
 			rebuild = false;
 		}
+
+		IEnumerator reBuild()
+		{
+			//This is a coroutine
+			for (int i = 0; i < mods.Length; i++) {
+				mods [i].tree = tree;
+				if (i > 0)
+					mods [i - 1].animate = true;
+				mods[i].HardReset();
+				mods [i].Setup ();
+				yield return null;
+			}
+			mods [mods.Length - 1].animate = true;
+		}
+
 		
 		// Update is called once per frame
 		public void Update () {

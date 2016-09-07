@@ -5,14 +5,14 @@ using System.Collections.Generic;
 namespace TREESharp{
 //	[RequireComponent (typeof (TREE))]
 
-	public class MakeTree2 : TREEMod {
+	public class TREEModBuild : TREEMod {
 		
 		public GameObject defaultJoint;
 
 		public string joints= "10",rads= "1",angles= "0",length= "1",divs= "1",start = "0",end = "-1";
 
 		public override void Setup(){
-
+			
 			if (this.GetComponent<Joint> () != null) {
 				if (this.GetComponent<Joint> ().limbs.Count > 0) {
 					this.GetComponent<Joint> ().limbs.Clear ();
@@ -42,14 +42,12 @@ namespace TREESharp{
 			);
 			tree.jointDictionary.Clear ();
 			TREEUtils.makeDictionary (tree.gameObject);
-			tree.jointDictionary.Clear ();
-			TREEUtils.makeDictionary (tree.gameObject);
+			rebuild = false;
 
 		}
 			
 		public override void Animate () {
 			if (rebuild) {
-				rebuild = false;
 				Setup ();
 //				if(this.GetComponent<TREEModCtrl> ()!=null)
 //					this.GetComponent<TREEModCtrl> ().Build ();
