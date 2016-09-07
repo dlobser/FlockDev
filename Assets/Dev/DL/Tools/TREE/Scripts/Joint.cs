@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+namespace TREESharp{
 public class Joint : MonoBehaviour {
 
 	public List<GameObject> limbs;
@@ -75,4 +76,5 @@ public class Joint : MonoBehaviour {
 	}
 
 
+}
 }

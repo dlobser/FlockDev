@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+namespace TREESharp{
 public class TREE : MonoBehaviour {
 
 	public GameObject defaultJoint;
@@ -174,6 +175,7 @@ public class TREE : MonoBehaviour {
 		}
 		TREEUtils.copyTransforms (tempRoot, root);
 		tempRoot.transform.parent = transform;
+			Debug.Log ("done");
 
 	}
 
@@ -220,4 +222,5 @@ public class TREE : MonoBehaviour {
 			}
 		}
 	}
+}
 }

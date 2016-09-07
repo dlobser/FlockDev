@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using TREESharp;
 #if UNITY_EDITOR
 
 namespace SpriteMaker{

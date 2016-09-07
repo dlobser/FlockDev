@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
+namespace TREESharp{
 public class Genome{
 
 	public float[] joints;
@@ -86,4 +86,5 @@ public static class GenomeUtils {
 		return genome;
 
 	}
+}
 }

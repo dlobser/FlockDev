@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+namespace TREESharp{
 public class Trait : Object {
 
 	public int id = 0;
@@ -53,4 +54,5 @@ public class Traits : Singleton<Traits>{
 		GameObject.Destroy (tempSphere);
 		GameObject.Destroy (tempCylinder);
 	}
+}
 }

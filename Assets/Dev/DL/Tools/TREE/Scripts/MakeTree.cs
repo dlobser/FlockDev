@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
+namespace TREESharp{
+	
 public class MakeTree : MonoBehaviour {
 	
 	TREE tree;
@@ -96,4 +98,5 @@ public class MakeTree : MonoBehaviour {
 		xForm.Animate (counter);
 	}
 		
+}
 }
