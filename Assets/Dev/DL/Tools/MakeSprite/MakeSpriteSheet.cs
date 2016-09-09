@@ -21,6 +21,7 @@ namespace SpriteMaker{
 		bool snapshotted = false;
 		public TransformUniversalSetTime[] transformer;
 		public MakeTree[] trees;
+		public TREEModXForm[] treeMods;
 
 		bool gridMade = false;
 		// Use this for initialization
@@ -69,6 +70,10 @@ namespace SpriteMaker{
 					trees [i].countSpeed = timeCap;
 					trees [i].Animate ();
 				}
+				for (int i = 0; i < treeMods.Length; i++) {
+					treeMods [i].countSpeed = timeCap;
+					treeMods [i].Step ();
+				}
 
 				counter += timeCap;
 			} else if (!snapshotted && gridMade) {
@@ -83,6 +88,9 @@ namespace SpriteMaker{
 		
 				for (int i = 0; i < trees.Length; i++) {
 					trees [i].countSpeed = timeCap;
+				}
+				for (int i = 0; i < treeMods.Length; i++) {
+					treeMods [i].countSpeed = timeCap;
 				}
 			}
 		}

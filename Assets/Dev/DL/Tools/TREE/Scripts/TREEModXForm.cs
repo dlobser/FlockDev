@@ -16,6 +16,8 @@ namespace TREESharp{
 
 		public float timeScale = 1;
 
+		public bool animating = false;
+
 		public override void Setup(){
 
 			if (this.gameObject.GetComponent<TreeTransform> () == null) {
@@ -26,8 +28,8 @@ namespace TREESharp{
 				DestroyImmediate (this.gameObject.AddComponent<TreeTransform> ());
 				xForm = this.gameObject.AddComponent<TreeTransform> ();
 			}
-
-			xForm.Setup (selectJoints, transformJoints, tree);
+			if(tree!=null)
+				xForm.Setup (selectJoints, transformJoints, tree);
 			Step ();
 			rebuild = false;
 		}
@@ -42,7 +44,7 @@ namespace TREESharp{
 		}
 			
 		public override void Animate () {
-			if (animate && !rebuild)
+			if (animating && animate && !rebuild)
 				xForm.Animate (Time.time * timeScale);
 			if (rebuild) {
 				Setup ();

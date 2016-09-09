@@ -15,6 +15,8 @@ namespace TREESharp{
 		Vector3 sinScale = Vector3.zero;
 		Vector3 noiseRotate = Vector3.zero;
 		Vector3 rotateOffset = Vector3.zero;
+		Vector3 rotate = Vector3.zero;
+		Vector3 scale = Vector3.one;
 
 		bool defaultsMade = false;
 
@@ -32,12 +34,17 @@ namespace TREESharp{
 				Transforms[i].Add ("orz", 0);
 
 				Transforms[i].Add ("scale", 1);
-				Transforms[i].Add ("sx", 1);
-				Transforms[i].Add ("sy", 1);
-				Transforms[i].Add ("sz", 1);
+				Transforms[i].Add ("sx", 0);
+				Transforms[i].Add ("sy", 0);
+				Transforms[i].Add ("sz", 0);
 
 				Transforms[i].Add ("sMult", 0);
 				//sin offset from root offset
+				//sin offset axial
+				Transforms[i].Add ("saorx", 0);
+				Transforms[i].Add ("saory", 0);
+				Transforms[i].Add ("saorz", 0);
+
 				Transforms[i].Add ("srorx", 0);
 				Transforms[i].Add ("srory", 0);
 				Transforms[i].Add ("srorz", 0);
@@ -64,6 +71,7 @@ namespace TREESharp{
 				Transforms[i].Add ("srosx", 0);
 				Transforms[i].Add ("srosy", 0);
 				Transforms[i].Add ("srosz", 0);
+
 				//sin offset		  s
 				Transforms[i].Add ("sosx", 0);
 				Transforms[i].Add ("sosy", 0);
@@ -114,32 +122,34 @@ namespace TREESharp{
 		public void Setup(string[] joints, string[] args, TREE tree){
 
 	//		if (!defaultsMade) {
+			if (joints != null) {
 				makeDefaults (joints.Length);
 				root = tree.gameObject;
 				defaultsMade = true;
-	//		}
+				//		}
 
-			initialRotation.Clear ();
-			SelectedJoints.Clear ();
+				initialRotation.Clear ();
+				SelectedJoints.Clear ();
 
-			for (int i = 0; i < joints.Length; i++) {
+				for (int i = 0; i < joints.Length; i++) {
 
-				List<int[]> firstList = TREEUtils.makeList  (joints[i], tree.GetComponent<TREE>());
-				List<Vector3> initRotations = new List<Vector3>();
+					List<int[]> firstList = TREEUtils.makeList (joints [i], tree.GetComponent<TREE> ());
+					List<Vector3> initRotations = new List<Vector3> ();
 
-				for (int p = 0; p < firstList.Count; p++) {
-					GameObject g = TREEUtils.findJoint (firstList[p], 0, root.transform.GetChild (0).gameObject);
-					initRotations.Add(g.transform.localEulerAngles);
-				}
+					for (int p = 0; p < firstList.Count; p++) {
+						GameObject g = TREEUtils.findJoint (firstList [p], 0, root.transform.GetChild (0).gameObject);
+						initRotations.Add (g.transform.localEulerAngles);
+					}
 
-				initialRotation.Add (initRotations);	
-				SelectedJoints.Add(firstList);
+					initialRotation.Add (initRotations);	
+					SelectedJoints.Add (firstList);
 
-				string[] arg = args[i].Split (new string[] { "," }, System.StringSplitOptions.None);
-				for (int j = 0; j < arg.Length; j++) {
-					string[] a = arg[j].Split (new string[] { ":" }, System.StringSplitOptions.None);
-					if(a.Length>1)
-						Transforms[i] [a [0]] = float.Parse (a [1]);
+					string[] arg = args [i].Split (new string[] { "," }, System.StringSplitOptions.None);
+					for (int j = 0; j < arg.Length; j++) {
+						string[] a = arg [j].Split (new string[] { ":" }, System.StringSplitOptions.None);
+						if (a.Length > 1)
+							Transforms [i] [a [0]] = float.Parse (a [1]);
+					}
 				}
 			}
 		}
@@ -176,6 +186,7 @@ namespace TREESharp{
 					if(g!=null){
 						int jointNumber = g.GetComponent<Joint> ().joint;
 						int jointOffset = g.GetComponent<Joint> ().offset;
+						int jointOffset2 = g.GetComponent<Joint> ().offset2;
 						Vector3 init = initialRotation [i] [j];
 
 						sinRotate = Vector3.zero;
@@ -183,7 +194,7 @@ namespace TREESharp{
 						rotateOffset = Vector3.zero;
 						sinScale = Vector3.zero;
 
-						Vector3 rotate = new Vector3 (
+						rotate.Set(
 							Transforms[i]["rx"],
 							Transforms[i]["ry"],
 							Transforms[i]["rz"]
@@ -192,9 +203,9 @@ namespace TREESharp{
 
 						if(Transforms [i] ["smrx"]!=0||Transforms [i] ["smry"]!=0||Transforms [i] ["smrz"]!=0)
 							sinRotate.Set(
-								((Transforms [i] ["sMult"]*jointNumber)+Transforms [i] ["smrx"]) * Mathf.Sin (((Transforms [i] ["ssrx"] * timer + Transforms [i] ["sorx"] + (Transforms [i] ["srorx"]*jointOffset)) + (Transforms [i] ["sfrx"] * jointNumber))),
-								((Transforms [i] ["sMult"]*jointNumber)+Transforms [i] ["smry"]) * Mathf.Sin (((Transforms [i] ["ssry"] * timer + Transforms [i] ["sory"] + (Transforms [i] ["srory"]*jointOffset)) + (Transforms [i] ["sfry"] * jointNumber))),
-								((Transforms [i] ["sMult"]*jointNumber)+Transforms [i] ["smrz"]) * Mathf.Sin (((Transforms [i] ["ssrz"] * timer + Transforms [i] ["sorz"] + (Transforms [i] ["srorz"]*jointOffset)) + (Transforms [i] ["sfrz"] * jointNumber)))
+								((Transforms [i] ["sMult"]*jointNumber)+Transforms [i] ["smrx"]) * Mathf.Sin (((Transforms [i] ["ssrx"] * timer + Transforms [i] ["sorx"] + (Transforms [i] ["srorx"]*jointOffset) +  (Transforms [i] ["saorx"]*jointOffset2)) + (Transforms [i] ["sfrx"] * jointNumber))),
+								((Transforms [i] ["sMult"]*jointNumber)+Transforms [i] ["smry"]) * Mathf.Sin (((Transforms [i] ["ssry"] * timer + Transforms [i] ["sory"] + (Transforms [i] ["srory"]*jointOffset) +  (Transforms [i] ["saory"]*jointOffset2)) + (Transforms [i] ["sfry"] * jointNumber))),
+								((Transforms [i] ["sMult"]*jointNumber)+Transforms [i] ["smrz"]) * Mathf.Sin (((Transforms [i] ["ssrz"] * timer + Transforms [i] ["sorz"] + (Transforms [i] ["srorz"]*jointOffset) +  (Transforms [i] ["saorz"]*jointOffset2)) + (Transforms [i] ["sfrz"] * jointNumber)))
 							);
 						if(Transforms [i] ["nmrx"]!=0||Transforms [i] ["nmry"]!=0||Transforms [i] ["nmrz"]!=0)
 							noiseRotate.Set (
@@ -214,7 +225,8 @@ namespace TREESharp{
 						g.transform.localEulerAngles = rotate+init+sinRotate+noiseRotate+rotateOffset;
 
 		//				g.transform.Rotate (rotateOffset.x,rotateOffset.y,rotateOffset.z);
-						Vector3 overallScale = sinScale + new Vector3 (Transforms [i] ["scale"], Transforms [i] ["scale"], Transforms [i] ["scale"]);
+						scale.Set(Transforms [i] ["scale"] + Transforms [i] ["sx"],Transforms [i] ["scale"] + Transforms [i] ["sy"],Transforms [i] ["scale"] + Transforms [i] ["sz"]);
+						Vector3 overallScale = sinScale + scale;
 
 						if (Transforms [i] ["cr"] != 1 || Transforms [i] ["cg"] != 1 || Transforms [i] ["cb"] != 1)
 							g.GetComponent<Joint>().scalar.transform.GetChild(0).GetComponent<MeshRenderer> ().material.color = 

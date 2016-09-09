@@ -13,21 +13,21 @@ namespace TREESharp{
 
 		public override void Setup(){
 			
-			if (this.GetComponent<Joint> () != null) {
-				if (this.GetComponent<Joint> ().limbs.Count > 0) {
-					this.GetComponent<Joint> ().limbs.Clear ();
-				}
-			}
-
-			if (this.gameObject.GetComponent<TREE> () == null) {
-				tree = this.gameObject.AddComponent<TREE> ();
-			}
-			else {
-				for (int i = 0; i < this.transform.childCount; i++) {
-					Destroy (this.transform.GetChild (0).gameObject);
-				}
-				tree = GetComponent<TREE> ();
-			}
+//			if (this.GetComponent<Joint> () != null) {
+//				if (this.GetComponent<Joint> ().limbs.Count > 0) {
+//					this.GetComponent<Joint> ().limbs.Clear ();
+//				}
+//			}
+//
+//			if (this.gameObject.GetComponent<TREE> () == null) {
+//				tree = this.gameObject.AddComponent<TREE> ();
+//			}
+//			else {
+//				for (int i = 0; i < this.transform.childCount; i++) {
+//					Destroy (this.transform.GetChild (0).gameObject);
+//				}
+//				tree = GetComponent<TREE> ();
+//			}
 
 			tree.setDefaultJoint(defaultJoint);
 
