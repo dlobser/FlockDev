@@ -11,6 +11,7 @@ public class Poop : MonoBehaviour {
 	AudioSource aud;
 	bool killed = false;
 
+
 	// Use this for initialization
 	void Awake () {
 		rend = GetComponent<MeshRenderer> ();
@@ -52,9 +53,19 @@ public class Poop : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
-		rend.enabled = false;
-		enabled = false;
-		aud.enabled = true;
-		aud.Play ();
+		Debug.Log (other.name);
+		Material swapMaterial;
+		swapMaterial = Resources.Load("swapMaterial") as Material;
+
+		Renderer myRend = GetComponent<Renderer>();
+		if (myRend != null){
+			myRend.material = swapMaterial;
+		}
+
+
+		//		rend.enabled = false;
+		//		enabled = false;
+		//		aud.enabled = true;
+		//		aud.Play ();
 	}
 }
