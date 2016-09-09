@@ -1,0 +1,157 @@
+fileFormatVersion: 2
+guid: 4e0dfb2b61ffa407d8552b4ca7e7b8ea
+timeCreated: 1473442508
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: beakScale
+    100002: beakScale 1
+    100004: BirdHead_Far
+    100006: BirdHead_Med
+    100008: //RootNode
+    100010: eyesBeakTemp
+    100012: eyesBeakTemp 1
+    100014: featherBase
+    100016: featherBase 1
+    100018: featherEnd
+    100020: featherEnd 1
+    100022: featherLoRes
+    100024: featherLoRes 1
+    100026: GEO
+    100028: GEO 1
+    100030: Head
+    100032: Head 1
+    100034: L_eye
+    100036: L_eye 1
+    100038: Lower_Beak
+    100040: Lower_Beak5
+    100042: R_eye
+    100044: R_eye 1
+    100046: RIG
+    100048: RIG 1
+    100050: Top_Beak
+    100052: Top_Beak4
+    400000: beakScale
+    400002: beakScale 1
+    400004: BirdHead_Far
+    400006: BirdHead_Med
+    400008: //RootNode
+    400010: eyesBeakTemp
+    400012: eyesBeakTemp 1
+    400014: featherBase
+    400016: featherBase 1
+    400018: featherEnd
+    400020: featherEnd 1
+    400022: featherLoRes
+    400024: featherLoRes 1
+    400026: GEO
+    400028: GEO 1
+    400030: Head
+    400032: Head 1
+    400034: L_eye
+    400036: L_eye 1
+    400038: Lower_Beak
+    400040: Lower_Beak5
+    400042: R_eye
+    400044: R_eye 1
+    400046: RIG
+    400048: RIG 1
+    400050: Top_Beak
+    400052: Top_Beak4
+    2300000: featherLoRes
+    2300002: featherLoRes 1
+    2300004: L_eye
+    2300006: L_eye 1
+    2300008: Lower_Beak
+    2300010: Lower_Beak5
+    2300012: R_eye
+    2300014: R_eye 1
+    2300016: Top_Beak
+    2300018: Top_Beak4
+    3300000: featherLoRes
+    3300002: featherLoRes 1
+    3300004: L_eye
+    3300006: L_eye 1
+    3300008: Lower_Beak
+    3300010: Lower_Beak5
+    3300012: R_eye
+    3300014: R_eye 1
+    3300016: Top_Beak
+    3300018: Top_Beak4
+    4300000: R_eye
+    4300002: L_eye
+    4300004: Lower_Beak
+    4300006: Top_Beak
+    4300008: featherLoRes
+    4300010: R_eye
+    4300012: L_eye
+    4300014: Lower_Beak5
+    4300016: Top_Beak4
+    4300018: featherLoRes
+    7400000: Take 001
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
