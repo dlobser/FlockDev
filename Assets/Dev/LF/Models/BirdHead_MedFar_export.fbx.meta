@@ -69,6 +69,8 @@ ModelImporter:
     2300014: R_eye 1
     2300016: Top_Beak
     2300018: Top_Beak4
+    2300020: BirdHead_Far
+    2300022: BirdHead_Med
     3300000: featherLoRes
     3300002: featherLoRes 1
     3300004: L_eye
@@ -79,6 +81,8 @@ ModelImporter:
     3300014: R_eye 1
     3300016: Top_Beak
     3300018: Top_Beak4
+    3300020: BirdHead_Far
+    3300022: BirdHead_Med
     4300000: R_eye
     4300002: L_eye
     4300004: Lower_Beak
@@ -89,6 +93,8 @@ ModelImporter:
     4300014: Lower_Beak5
     4300016: Top_Beak4
     4300018: featherLoRes
+    4300020: BirdHead_Far
+    4300022: BirdHead_Med
     7400000: Take 001
     9500000: //RootNode
   materials:
@@ -115,7 +121,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 100
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
