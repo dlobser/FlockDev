@@ -91,10 +91,15 @@ namespace TREESharp{
 
 				//noise joint multiply
 				Transforms[i].Add ("nMult", 0);
-				//noise offset
+				//noise root offset
 				Transforms[i].Add ("nrorx", 0);
 				Transforms[i].Add ("nrory", 0);
 				Transforms[i].Add ("nrorz", 0);
+				//noise offset axial
+				Transforms[i].Add ("naorx", 0);
+				Transforms[i].Add ("naory", 0);
+				Transforms[i].Add ("naorz", 0);
+
 				//noise offset
 				Transforms[i].Add ("norx", 0);
 				Transforms[i].Add ("nory", 0);
@@ -209,9 +214,9 @@ namespace TREESharp{
 							);
 						if(Transforms [i] ["nmrx"]!=0||Transforms [i] ["nmry"]!=0||Transforms [i] ["nmrz"]!=0)
 							noiseRotate.Set (
-								((Transforms [i] ["nMult"]*jointNumber)+Transforms [i] ["nmrx"]) * TREEUtils.Noise (((Transforms [i] ["nsrx"] * -timer) + Transforms [i] ["norx"] +  (Transforms [i] ["nrorx"]*jointOffset) + (Transforms [i] ["nfrx"] * jointNumber))),
-								((Transforms [i] ["nMult"]*jointNumber)+Transforms [i] ["nmry"]) * TREEUtils.Noise (((Transforms [i] ["nsry"] * -timer) + Transforms [i] ["nory"] +  (Transforms [i] ["nrory"]*jointOffset) + (Transforms [i] ["nfry"] * jointNumber))),
-								((Transforms [i] ["nMult"]*jointNumber)+Transforms [i] ["nmrz"]) * TREEUtils.Noise (((Transforms [i] ["nsrz"] * -timer) + Transforms [i] ["norz"] +  (Transforms [i] ["nrorz"]*jointOffset) + (Transforms [i] ["nfrz"] * jointNumber)))
+								((Transforms [i] ["nMult"]*jointNumber)+Transforms [i] ["nmrx"]) * TREEUtils.Noise (((Transforms [i] ["nsrx"] * -timer + Transforms [i] ["norx"] +  (Transforms [i] ["nrorx"]*jointOffset) + (Transforms [i] ["naorx"]*jointOffset2)) + (Transforms [i] ["nfrx"] * jointNumber))),
+								((Transforms [i] ["nMult"]*jointNumber)+Transforms [i] ["nmry"]) * TREEUtils.Noise (((Transforms [i] ["nsry"] * -timer + Transforms [i] ["nory"] +  (Transforms [i] ["nrory"]*jointOffset) + (Transforms [i] ["naory"]*jointOffset2)) + (Transforms [i] ["nfry"] * jointNumber))),
+								((Transforms [i] ["nMult"]*jointNumber)+Transforms [i] ["nmrz"]) * TREEUtils.Noise (((Transforms [i] ["nsrz"] * -timer + Transforms [i] ["norz"] +  (Transforms [i] ["nrorz"]*jointOffset) + (Transforms [i] ["naorz"]*jointOffset2)) + (Transforms [i] ["nfrz"] * jointNumber)))
 							);
 
 						if(Transforms [i] ["smsx"]!=0||Transforms [i] ["smsy"]!=0||Transforms [i] ["smsz"]!=0)
