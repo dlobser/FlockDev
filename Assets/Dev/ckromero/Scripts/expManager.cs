@@ -10,18 +10,12 @@ public class expManager : MonoBehaviour {
 	public Environment environment;
 	public bool environmentStatus=true;
 
-
-
 	//AUDIO SETTINGS
 	public AudioMixerGroup Master;
-	public bool muteAudio=false;
+	public bool muteAudio;
 	private float storedVolume;
 	private float startVolume;
 	private const float NOVOLUME = -80.0f;
-
-
-
-
 
 
 //	public ZoneManager zonemanager;
@@ -39,6 +33,8 @@ public class expManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		//TODO: Make singleton
+
 		Master.audioMixer.GetFloat("MasterVolume",out startVolume);	
 	}
 	
@@ -46,8 +42,11 @@ public class expManager : MonoBehaviour {
 	void Update () {
 		//ENVIRONMENT
 		if (environmentStatus == false) {
-			environment.enabled = false;
+			environment.environmentContainer.gameObject.SetActive (false);
+		} else {
+			environment.environmentContainer.gameObject.SetActive (true);
 		}
+
 
 		//AUDIO
 		if (debugOn) Debug.Log (storedVolume.ToString ());
