@@ -83,6 +83,8 @@
      <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\TreeTransform.cs" />
      <Compile Include="Assets\Dev\DL\Tools\TREE\old\tester2.cs" />
      <Compile Include="Assets\Dev\DL\Tools\TREE\old\tester4.cs" />
+     <Compile Include="Assets\Dev\ckromero\Scripts\Environment.cs" />
+     <Compile Include="Assets\Dev\ckromero\Scripts\expManager.cs" />
      <Compile Include="Assets\Holojam\Demo\Scripts\ActorController.cs" />
      <Compile Include="Assets\Holojam\Demo\Scripts\DebugSphere.cs" />
      <Compile Include="Assets\Holojam\Demo\Scripts\ExampleFloor.cs" />
@@ -179,7 +181,7 @@
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="protobuf-net">
- <HintPath>/Users/ckromero/code/refFlockDev/FlockDev/Assets/Plugins/protobuf-net.dll</HintPath>
+ <HintPath>/Users/ckromero/code/FlockDev/Assets/Plugins/protobuf-net.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
