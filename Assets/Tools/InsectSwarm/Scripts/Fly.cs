@@ -25,7 +25,6 @@ public class Fly : MonoBehaviour {
 
 	public GameObject splat;
 
-
 	void Start(){
 		meshRend = spriteAimer.gameObject.GetComponent<MeshRenderer> ();
 		meshRend.enabled = true;
@@ -71,14 +70,24 @@ public class Fly : MonoBehaviour {
 			active = true;
 		}
 	}
-
-	void OnCollisionEnter(Collision other) {
-		meshRend.enabled = false;
-		active = false;
-		deathTimer = 0;
-		GameObject obj = Instantiate (splat,this.transform.position,Quaternion.identity) as GameObject;
-		obj.transform.SetParent(this.transform);
-
+	void OnTriggerEnter(Collider other) {
+		if(Holojam.Utility.IsMasterPC()){
+		if (Time.time > 1) {
+			Debug.Log ("Fly script: " + this.name + " collided with " + other.transform.parent.name);
+			if (other.transform.parent.parent.name == "ActorManager") {
+				meshRend.enabled = false;
+				active = false;
+				deathTimer = 0;
+				GameObject obj = Instantiate (splat, this.transform.position, Quaternion.identity) as GameObject;
+				obj.transform.SetParent (this.transform);
+			}
+		}
+		}
+			
 	}
 
 }
+
+//Holojam.Utility.IsMasterPC()
+//Destroy(this)
+//Destroy(gameObject)
