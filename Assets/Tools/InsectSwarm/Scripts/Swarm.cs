@@ -36,6 +36,8 @@ public class Swarm : MonoBehaviour {
 	public float noiseScale = 2.2f;
 	public float noiseWorldScale = .1f;
 
+	public float rotationOffsetRandomize = 0;
+
 
 	// Use this for initialization
 	void Start () {
@@ -60,6 +62,7 @@ public class Swarm : MonoBehaviour {
 			flyScript.origin = flyPosition;
 			flyScript.spriteAimer.uvLookup = uvLookup;
 			flyScript.spriteAimer.Init ();
+			flyScript.spriteAimer.rotationOffet = Random.value * rotationOffsetRandomize;
 
 			flyInstance.GetComponent<Holojam.Tools.Synchronizable> ().label  += i;
 

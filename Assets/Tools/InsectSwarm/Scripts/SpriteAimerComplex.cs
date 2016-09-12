@@ -27,6 +27,9 @@ public class SpriteAimerComplex : MonoBehaviour {
 
 	public UVLookup uvLookup;
 
+	public float rotationOffsetSpeed;
+	float rotationCounter = 0;
+
 //	void Start(){
 //		Init ();
 //	}
@@ -65,7 +68,8 @@ public class SpriteAimerComplex : MonoBehaviour {
 		
 	// Update is called once per frame
 	public void UpdatePosition () {
-		float angle = (this.transform.eulerAngles.y-container.transform.eulerAngles.y) + rotationOffet;
+		rotationCounter += rotationOffsetSpeed * Time.deltaTime;
+		float angle = (this.transform.eulerAngles.y-container.transform.eulerAngles.y) + rotationOffet + rotationCounter + ID;
 		SetFrame (angle);
 		SetAngle (angle);
 		Aim ();
@@ -107,8 +111,10 @@ public class SpriteAimerComplex : MonoBehaviour {
 
 	public void SetFrame(float degree){
 //		degree += 180;
+		degree = degree%360;
 		if (degree < 0)
 			degree += 360;
+//		Debug.Log (degree);
 		float pos = Mathf.Floor ((1f-(degree % 360 / 360f)) * X*Y);
 //		Vector2 px = positions [(int)Mathf.Min(positions.Length-1,positions.Length-(int)pos)];
 //		Vector2[] nUV = new Vector2[mesh.uv.Length];
