@@ -3,17 +3,19 @@ using System.Collections;
 
 public class Poop : MonoBehaviour {
 
-	MeshRenderer rend;
 	public float maxScale;
-	bool enabled = false;
 	public float scaleSpeed = .1f;
+
+	MeshRenderer rend;
 	Vector3 scalar = Vector3.zero;
 	AudioSource aud;
+	Material swapMaterial;
+	bool enabled = false;
 	bool killed = false;
-
 
 	// Use this for initialization
 	void Awake () {
+		swapMaterial=Resources.Load("swapMaterial") as Material;
 		rend = GetComponent<MeshRenderer> ();
 		aud = GetComponent<AudioSource> ();
 		aud.enabled = false;
@@ -53,15 +55,17 @@ public class Poop : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
-		Debug.Log (other.name);
-		Material swapMaterial;
-		swapMaterial = Resources.Load("swapMaterial") as Material;
+		
 
-		Renderer myRend = GetComponent<Renderer>();
-		if (myRend != null){
-			myRend.material = swapMaterial;
+		Debug.Log (this.name + " collided with " + other.name + " at: " + Time.time);
+
+		//TODO: Is this really necessary? Need to aoivd checking this every time
+		if (Time.time > 1) {
+			Renderer myRend = GetComponent<Renderer> ();
+			if (myRend != null) {
+				myRend.material = swapMaterial;
+			}
 		}
-
 
 		//		rend.enabled = false;
 		//		enabled = false;

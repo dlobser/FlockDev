@@ -83,6 +83,10 @@
      <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\TreeTransform.cs" />
      <Compile Include="Assets\Dev\DL\Tools\TREE\old\tester2.cs" />
      <Compile Include="Assets\Dev\DL\Tools\TREE\old\tester4.cs" />
+     <Compile Include="Assets\Dev\ckromero\Scripts\Environment.cs" />
+     <Compile Include="Assets\Dev\ckromero\Scripts\ZoneCollider.cs" />
+     <Compile Include="Assets\Dev\ckromero\Scripts\ZoneManager.cs" />
+     <Compile Include="Assets\Dev\ckromero\Scripts\expManager.cs" />
      <Compile Include="Assets\Holojam\Demo\Scripts\ActorController.cs" />
      <Compile Include="Assets\Holojam\Demo\Scripts\DebugSphere.cs" />
      <Compile Include="Assets\Holojam\Demo\Scripts\ExampleFloor.cs" />
@@ -144,6 +148,7 @@
      <Compile Include="Assets\Tools\WingRig\scripts\copyTransforms.cs" />
      <Compile Include="Assets\Tools\WingRig\scripts\unitySpring.cs" />
      <Compile Include="Assets\Tools\WingRig\scripts\wingFlap.cs" />
+     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderRGB.shader" />
      <None Include="Assets\Holojam\Demo\Shaders\AlphaBlendedColorTexture.shader" />
      <None Include="Assets\Standard Assets\Effects\AntiAliasing\FXAA\Resources\FXAA3.cginc" />
      <None Include="Assets\Dev\DL\Shaders\lineWarp.shader" />
@@ -162,13 +167,17 @@
      <None Include="Assets\Dev\DL\Shaders\GoTheRightWay.shader" />
      <None Include="Assets\Standard Assets\Effects\AntiAliasing\SMAA\Resources\SMAA.shader" />
      <None Include="Assets\Standard Assets\Effects\Bloom\Resources\Bloom.shader" />
+     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderYUV.shader" />
      <None Include="Assets\Dev\DL\Shaders\lineWarper.shader" />
      <None Include="Assets\Standard Assets\Effects\AntiAliasing\SMAA\Resources\SMAA.cginc" />
+     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseAndGrainDX11.shader" />
      <None Include="Assets\Standard Assets\Effects\TonemappingColorGrading\Resources\TonemappingColorGrading.shader" />
+     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseAndGrain.shader" />
      <None Include="Assets\Standard Assets\Effects\Bloom\Resources\Bloom.cginc" />
      <None Include="Assets\Dev\DL\Shaders\test.shader" />
      <None Include="Assets\Standard Assets\Effects\DepthOfField\Resources\MedianFilter.shader" />
      <None Include="Assets\Standard Assets\Effects\DepthOfField\Resources\BokehSplatting.shader" />
+     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\BlendModesOverlay.shader" />
      <None Include="Assets\Standard Assets\Effects\LensAberrations\Resources\LensAberrations.shader" />
      <None Include="Assets\Standard Assets\Effects\TonemappingColorGrading\Resources\HistogramCompute.compute" />
      <None Include="Assets\Holojam\Demo\Shaders\AlphaBlendedColorHard.shader" />
@@ -179,7 +188,7 @@
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="protobuf-net">
- <HintPath>/Users/ckromero/code/refFlockDev/FlockDev/Assets/Plugins/protobuf-net.dll</HintPath>
+ <HintPath>/Users/ckromero/code/FlockDev/Assets/Plugins/protobuf-net.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
