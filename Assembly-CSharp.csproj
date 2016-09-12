@@ -84,6 +84,7 @@
      <Compile Include="Assets\Dev\DL\Tools\TREE\old\tester2.cs" />
      <Compile Include="Assets\Dev\DL\Tools\TREE\old\tester4.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\Environment.cs" />
+     <Compile Include="Assets\Dev\ckromero\Scripts\ZoneCollider.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\ZoneManager.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\expManager.cs" />
      <Compile Include="Assets\Holojam\Demo\Scripts\ActorController.cs" />

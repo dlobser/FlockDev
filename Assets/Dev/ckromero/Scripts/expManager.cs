@@ -18,7 +18,12 @@ public class expManager : MonoBehaviour {
 	private const float NOVOLUME = -80.0f;
 
 
-//	public ZoneManager zonemanager;
+	//ZONES
+	public ZoneManager zonemanager;
+
+
+
+
 //	public MommaBird mommabird;
 //	public Food food;
 //	public ActionTree actionTree;
@@ -27,14 +32,10 @@ public class expManager : MonoBehaviour {
 //	public GestureManager gestureManager;
 //	public MatingSpot matingSpot;
 //	public CliffsEdge cliffsEdge;
-	
-
-
 
 	// Use this for initialization
 	void Start () {
 		//TODO: Make singleton
-
 		Master.audioMixer.GetFloat("MasterVolume",out startVolume);	
 	}
 	

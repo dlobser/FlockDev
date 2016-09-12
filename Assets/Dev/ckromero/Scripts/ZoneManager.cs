@@ -3,13 +3,8 @@ using System.Collections;
 
 public class ZoneManager : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
+	protected virtual void OnTriggerEnter(Collider other) {
+		Debug.Log ("ZoneManager received: " + this.name + " collided with " + other.name + " at: " + Time.time);
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
 }

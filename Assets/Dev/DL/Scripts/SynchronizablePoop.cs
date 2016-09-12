@@ -31,7 +31,7 @@ public class SynchronizablePoop : MonoBehaviour {
 			if (which > poops.Count-1)
 				which = 0;
 			poops [which].makeAlive (Momma.transform.position + Random.insideUnitSphere*.2f);
-			Debug.Log (which);
+//			Debug.Log (which);
 		}
 		for (int i = 0; i < poops.Count; i++) {
 			if (poops [i].enabled)
