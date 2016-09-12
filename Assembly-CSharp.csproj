@@ -87,6 +87,7 @@
      <Compile Include="Assets\Dev\ckromero\Scripts\ZoneCollider.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\ZoneManager.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\expManager.cs" />
+     <Compile Include="Assets\Dev\ckromero\Scripts\flySync.cs" />
      <Compile Include="Assets\Holojam\Demo\Scripts\ActorController.cs" />
      <Compile Include="Assets\Holojam\Demo\Scripts\DebugSphere.cs" />
      <Compile Include="Assets\Holojam\Demo\Scripts\ExampleFloor.cs" />

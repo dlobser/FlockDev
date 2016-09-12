@@ -73,8 +73,8 @@ public class Fly : MonoBehaviour {
 	void OnTriggerEnter(Collider other) {
 		if(Holojam.Utility.IsMasterPC()){
 		if (Time.time > 1) {
-			Debug.Log ("Fly script: " + this.name + " collided with " + other.transform.parent.name);
 			if (other.transform.parent.parent.name == "ActorManager") {
+				Debug.Log ("Fly script: " + this.name + " collided with " + other.transform.parent.name);
 				meshRend.enabled = false;
 				active = false;
 				deathTimer = 0;

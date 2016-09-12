@@ -39,6 +39,11 @@ public class Swarm : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		if (!Holojam.Utility.IsMasterPC ()) {
+			Destroy (this);
+		}
+
+			//Destroy(this)
 		PNoise = new ImageTools.Core.PerlinNoise (1);
 		flies = new List<Fly> ();
 		uvLookup.Init ();
