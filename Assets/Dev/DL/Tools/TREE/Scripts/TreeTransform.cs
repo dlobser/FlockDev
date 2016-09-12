@@ -33,13 +33,10 @@ namespace TREESharp{
 				Transforms[i].Add ("ory", 0);
 				Transforms[i].Add ("orz", 0);
 
-				Transforms[i].Add ("scale", 1);
-				Transforms[i].Add ("sx", 0);
-				Transforms[i].Add ("sy", 0);
-				Transforms[i].Add ("sz", 0);
 
+
+				//sin mult
 				Transforms[i].Add ("sMult", 0);
-				//sin offset from root offset
 				//sin offset axial
 				Transforms[i].Add ("saorx", 0);
 				Transforms[i].Add ("saory", 0);
@@ -65,13 +62,20 @@ namespace TREESharp{
 				Transforms[i].Add ("smry", 0);
 				Transforms[i].Add ("smrz", 0);
 
+				//sin uniform scale (true/false 1/0)
+				Transforms[i].Add ("sus", 0);
 
+				Transforms[i].Add ("scale", 1);
+				//scale xyz
+				Transforms[i].Add ("sx", 0);
+				Transforms[i].Add ("sy", 0);
+				Transforms[i].Add ("sz", 0);
+				//sin scale mult
 				Transforms[i].Add ("ssMult", 0);
 				//sin offset from root offset
 				Transforms[i].Add ("srosx", 0);
 				Transforms[i].Add ("srosy", 0);
 				Transforms[i].Add ("srosz", 0);
-
 				//sin offset		  s
 				Transforms[i].Add ("sosx", 0);
 				Transforms[i].Add ("sosy", 0);
@@ -218,13 +222,19 @@ namespace TREESharp{
 								((Transforms [i] ["nMult"]*jointNumber)+Transforms [i] ["nmry"]) * TREEUtils.Noise (((Transforms [i] ["nsry"] * -timer + Transforms [i] ["nory"] +  (Transforms [i] ["nrory"]*jointOffset) + (Transforms [i] ["naory"]*jointOffset2)) + (Transforms [i] ["nfry"] * jointNumber))),
 								((Transforms [i] ["nMult"]*jointNumber)+Transforms [i] ["nmrz"]) * TREEUtils.Noise (((Transforms [i] ["nsrz"] * -timer + Transforms [i] ["norz"] +  (Transforms [i] ["nrorz"]*jointOffset) + (Transforms [i] ["naorz"]*jointOffset2)) + (Transforms [i] ["nfrz"] * jointNumber)))
 							);
-
+						
+					
 						if(Transforms [i] ["smsx"]!=0||Transforms [i] ["smsy"]!=0||Transforms [i] ["smsz"]!=0)
 							sinScale.Set(
 								((Transforms [i] ["ssMult"]*jointNumber)+Transforms [i] ["smsx"]) * Mathf.Sin (((Transforms [i] ["sssx"] * timer + Transforms [i] ["sosx"] + (Transforms [i] ["srosx"]*jointOffset)) + (Transforms [i] ["sfsx"] * jointNumber))),
 								((Transforms [i] ["ssMult"]*jointNumber)+Transforms [i] ["smsy"]) * Mathf.Sin (((Transforms [i] ["sssy"] * timer + Transforms [i] ["sosy"] + (Transforms [i] ["srosy"]*jointOffset)) + (Transforms [i] ["sfsy"] * jointNumber))),
 								((Transforms [i] ["ssMult"]*jointNumber)+Transforms [i] ["smsz"]) * Mathf.Sin (((Transforms [i] ["sssz"] * timer + Transforms [i] ["sosz"] + (Transforms [i] ["srosz"]*jointOffset)) + (Transforms [i] ["sfsz"] * jointNumber)))
 							);
+
+						if (Transforms [i] ["sus"] != 0) {
+							sinScale.Set (sinScale.x, sinScale.x, sinScale.x);
+						}
+
 
 						rotateOffset.Set (Transforms [i] ["orx"] * timer, Transforms [i] ["ory"] * timer, Transforms [i] ["orz"] * timer);
 						g.transform.localEulerAngles = rotate+init+sinRotate+noiseRotate+rotateOffset;
