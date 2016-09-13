@@ -8,17 +8,37 @@ ModelImporter:
     100000: //RootNode
     100002: snakeForest_01
     100004: snakeForest_wider_02
+    100006: eggNest4
+    100008: snakeForest_03
+    100010: snakeForest_retopo_04
+    100012: snakeForest_retopo_05
     400000: //RootNode
     400002: snakeForest_01
     400004: snakeForest_wider_02
+    400006: eggNest4
+    400008: snakeForest_03
+    400010: snakeForest_retopo_04
+    400012: snakeForest_retopo_05
     2300000: //RootNode
     2300002: snakeForest_01
     2300004: snakeForest_wider_02
+    2300006: eggNest4
+    2300008: snakeForest_03
+    2300010: snakeForest_retopo_04
+    2300012: snakeForest_retopo_05
     3300000: //RootNode
     3300002: snakeForest_01
     3300004: snakeForest_wider_02
+    3300006: eggNest4
+    3300008: snakeForest_03
+    3300010: snakeForest_retopo_04
+    3300012: snakeForest_retopo_05
     4300000: snakeForest_01
     4300002: snakeForest_wider_02
+    4300004: snakeForest_03
+    4300006: snakeForest_retopo_04
+    4300008: eggNest4
+    4300010: snakeForest_retopo_05
     9500000: //RootNode
   materials:
     importMaterials: 1
