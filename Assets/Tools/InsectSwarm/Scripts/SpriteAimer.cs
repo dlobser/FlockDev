@@ -26,6 +26,7 @@ public class SpriteAimer: MonoBehaviour {
 	public UVLookup uvLookup;
 
 	public float speed;
+	public float IDOffset;
 	float offsetCounter = 0;
 
 	void Start(){
@@ -67,7 +68,7 @@ public class SpriteAimer: MonoBehaviour {
 	// Update is called once per frame
 	public void UpdatePosition () {
 		offsetCounter += speed * Time.deltaTime;
-		float angle = offsetCounter;
+		float angle = offsetCounter + ID*IDOffset;
 		SetFrame (angle);
 		SetAngle (angle);
 		Aim ();
