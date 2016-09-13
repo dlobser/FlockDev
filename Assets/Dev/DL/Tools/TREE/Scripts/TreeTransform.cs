@@ -121,10 +121,43 @@ namespace TREESharp{
 				Transforms[i].Add ("nmry", 0);
 				Transforms[i].Add ("nmrz", 0);
 
+				Transforms[i].Add ("length", 0);
+
+				//length mult
+				Transforms[i].Add ("lMult", 0);
+				//sin offset length
+				Transforms[i].Add ("sol", 0);
+				//sin frequency length
+				Transforms[i].Add ("sfl", 0);
+				//sin speed length
+				Transforms[i].Add ("ssl", 0);
+				//sin axis offset length
+				Transforms[i].Add ("saol", 0);
+				//sin root offset length
+				Transforms[i].Add ("srol", 0);
+				//sin multiply length
+				Transforms[i].Add ("sml", 0);
+
+				//length color
+				Transforms[i].Add ("cMult", 0);
+				//sin offset color
+				Transforms[i].Add ("soc", 0);
+				//sin frequency color
+				Transforms[i].Add ("sfc", 0);
+				//sin speed color
+				Transforms[i].Add ("ssc", 0);
+				//sin axis offset color
+				Transforms[i].Add ("saoc", 0);
+				//sin root offset color
+				Transforms[i].Add ("sroc", 0);
+				//sin multiply color
+				Transforms[i].Add ("smc", 0);
+
+
 				//colors
-				Transforms[i].Add ("cr", 1);
-				Transforms[i].Add ("cg", 1);
-				Transforms[i].Add ("cb", 1);
+				Transforms[i].Add ("cr", 0);
+				Transforms[i].Add ("cg", 0);
+				Transforms[i].Add ("cb", 0);
 			}
 		}
 				
@@ -235,6 +268,16 @@ namespace TREESharp{
 							sinScale.Set (sinScale.x, sinScale.x, sinScale.x);
 						}
 
+						if (Transforms [i] ["length"] != 0) {
+							if (g.GetComponent<Joint> ().childJoint != null) {
+								float off;
+								off = ((Transforms [i] ["lMult"] * jointNumber) + Transforms [i] ["sml"]) * Mathf.Sin (((Transforms [i] ["ssl"] * timer + Transforms [i] ["sol"] + (Transforms [i] ["srol"] * jointOffset) + (Transforms [i] ["saol"]*jointOffset2)) + (Transforms [i] ["sfl"] * jointNumber)));
+								g.GetComponent<Joint> ().childJoint.transform.localPosition = new Vector3 (0, Transforms [i] ["length"] + off, 0);
+								Vector3 sc = g.GetComponent<Joint> ().scalar.transform.localScale;
+								g.GetComponent<Joint> ().scalar.transform.localScale = new Vector3 (sc.x, Transforms [i] ["length"] + off, sc.z);
+							}
+						}
+
 
 						rotateOffset.Set (Transforms [i] ["orx"] * timer, Transforms [i] ["ory"] * timer, Transforms [i] ["orz"] * timer);
 						g.transform.localEulerAngles = rotate+init+sinRotate+noiseRotate+rotateOffset;
@@ -242,13 +285,29 @@ namespace TREESharp{
 		//				g.transform.Rotate (rotateOffset.x,rotateOffset.y,rotateOffset.z);
 						scale.Set(Transforms [i] ["scale"] + Transforms [i] ["sx"],Transforms [i] ["scale"] + Transforms [i] ["sy"],Transforms [i] ["scale"] + Transforms [i] ["sz"]);
 						Vector3 overallScale = sinScale + scale;
+					
+						if (Transforms [i] ["cr"] != 0 || Transforms [i] ["cg"] != 0 || Transforms [i] ["cb"] != 0){
 
-						if (Transforms [i] ["cr"] != 1 || Transforms [i] ["cg"] != 1 || Transforms [i] ["cb"] != 1)
-							g.GetComponent<Joint>().scalar.transform.GetChild(0).GetComponent<MeshRenderer> ().material.color = 
-								new Color (
-									Random.Range( Transforms [i] ["cr"],1), 
-									Random.Range( Transforms [i] ["cg"],1), 
-									Random.Range( Transforms [i] ["cb"],1));
+							Color initCol = new Color (
+									Transforms [i] ["cr"], 
+									Transforms [i] ["cg"], 
+									Transforms [i] ["cb"]);
+							float hue, S, V;
+							Color.RGBToHSV (initCol, out hue, out S, out V);
+							float off = ((Transforms [i] ["cMult"] * jointNumber) + Transforms [i] ["smc"]) * Mathf.Sin (((Transforms [i] ["ssc"] * timer + Transforms [i] ["soc"] + (Transforms [i] ["sroc"] * jointOffset) + (Transforms [i] ["saoc"]*jointOffset2)) + (Transforms [i] ["sfc"] * jointNumber)));
+							float fOff = off-Mathf.Floor(off);
+							if(fOff<0)
+								fOff -= Mathf.Floor(off);
+							for (int k = 0; k < g.GetComponent<Joint> ().scalar.transform.childCount; k++) {
+								if(g.GetComponent<Joint> ().scalar.transform.GetChild(k).GetComponent<MeshRenderer> ()!=null)
+									g.GetComponent<Joint> ().scalar.transform.GetChild(k).GetComponent<MeshRenderer> ().material.color = Color.HSVToRGB (fOff, 1, 1);;
+							}
+							for (int k = 0; k < g.GetComponent<Joint> ().rotator.transform.childCount; k++) {
+								if(g.GetComponent<Joint> ().rotator.transform.GetChild(k).GetComponent<MeshRenderer> ()!=null)
+									g.GetComponent<Joint> ().rotator.transform.GetChild(k).GetComponent<MeshRenderer> ().material.color = Color.HSVToRGB (fOff, 1,1);;
+							}
+//							g.GetComponent<Joint> ().scalar.transform.GetChild (0).GetComponent<MeshRenderer> ().material.color = Color.HSVToRGB (fOff, 1, 1);
+						}
 
 						if(!overallScale.Equals(Vector3.one))
 							g.transform.localScale = overallScale;// Vector3.Scale(overallScale , new Vector3 (Transforms [i] ["sx"], Transforms [i] ["sy"], Transforms [i] ["sz"]));
