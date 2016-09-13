@@ -48,6 +48,7 @@
      <Compile Include="Assets\Dev\CR\Scripts\SwarmCR.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\ActorBirdController.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\AudioDistance.cs" />
+     <Compile Include="Assets\Dev\DL\Scripts\BirdAvatarLOD.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\DistanceToMomma.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\FadeInAudio.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\FeatherFollow.cs" />
@@ -141,6 +142,7 @@
      <Compile Include="Assets\Tools\InsectSwarm\Scripts\InstantiateBurst.cs" />
      <Compile Include="Assets\Tools\InsectSwarm\Scripts\PerlinNoise.cs" />
      <Compile Include="Assets\Tools\InsectSwarm\Scripts\ScaleToCamDistance.cs" />
+     <Compile Include="Assets\Tools\InsectSwarm\Scripts\SpriteAimer.cs" />
      <Compile Include="Assets\Tools\InsectSwarm\Scripts\SpriteAimerComplex.cs" />
      <Compile Include="Assets\Tools\InsectSwarm\Scripts\SpriteAimerSimple.cs" />
      <Compile Include="Assets\Tools\InsectSwarm\Scripts\Swarm.cs" />
@@ -178,6 +180,7 @@
      <None Include="Assets\Standard Assets\Effects\Bloom\Resources\Bloom.cginc" />
      <None Include="Assets\Dev\DL\Shaders\test.shader" />
      <None Include="Assets\Standard Assets\Effects\DepthOfField\Resources\MedianFilter.shader" />
+     <None Include="Assets\Dev\DL\Shaders\RGBRemapOpaque.shader" />
      <None Include="Assets\Standard Assets\Effects\DepthOfField\Resources\BokehSplatting.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\BlendModesOverlay.shader" />
      <None Include="Assets\Dev\DL\Shaders\RGBRemap.shader" />
