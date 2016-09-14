@@ -13,6 +13,7 @@ ModelImporter:
     100010: BirdMask
     100012: wingLeft
     100014: wingRight
+    100016: BirdHead_FarInside
     400000: //RootNode
     400002: BirdBody
     400004: BirdFar
@@ -21,6 +22,7 @@ ModelImporter:
     400010: BirdMask
     400012: wingLeft
     400014: wingRight
+    400016: BirdHead_FarInside
     2300000: wingLeft
     2300002: wingRight
     3300000: wingLeft
@@ -29,9 +31,11 @@ ModelImporter:
     4300002: wingRight
     4300004: BirdHead_Med2
     4300006: BirdHead_Far
+    4300008: BirdHead_FarInside
     9500000: //RootNode
     13700000: BirdHead_Far
     13700002: BirdHead_Med2
+    13700004: BirdHead_FarInside
   materials:
     importMaterials: 1
     materialName: 0
