@@ -42,7 +42,7 @@ public class Fly : MonoBehaviour {
 
 	public void UpdatePosition(float fishScale){
 
-
+//		VRDebug.print (this.name + "synchronizable.synchronizedInt=" + synchronizable.synchronizedInt + "\n");
 //		Debug.Log (this.name + "synchronizable.synchronizedInt=" + synchronizable.synchronizedInt);
 
 //		if (lerpPosition){
@@ -73,6 +73,21 @@ public class Fly : MonoBehaviour {
 			if (scaleForDeath < 1) {
 				scaleForDeath += Time.deltaTime;
 			}
+		} else {
+			//clients use this to determine if their sprites should be enabled. 
+			if (synchronizable.synchronizedInt == 1) {
+				meshRend.enabled = false;
+				active = false;
+			} else {
+				meshRend.enabled = true;
+				active = true;
+			}
+
+//			if (Camera.main) {
+//				transform.LookAt (Camera.main.transform.position);
+//				transform.localEulerAngles = Vector3.Scale (transform.localEulerAngles, new Vector3 (0, 1, 0));
+//				//			transform.Rotate (0, 180, 0);
+//			}
 		}
 	}
 
@@ -102,12 +117,6 @@ public class Fly : MonoBehaviour {
 					//				obj.transform.SetParent (this.transform);
 			
 				}
-			}
-		} else {
-			if (synchronizable.synchronizedInt == 1) {
-				meshRend.enabled = false;
-			} else {
-				meshRend.enabled = true;
 			}
 		}
 			
