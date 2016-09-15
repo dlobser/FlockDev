@@ -16,6 +16,8 @@ public class Bug : Synchronizable{
 	float initScale;
 	Vector3 scalar = Vector3.one;
 
+	Holojam.Tools.Viewer viewer;
+
 	Renderer[] renderers;
 
 	protected override void Sync(){
@@ -43,6 +45,7 @@ public class Bug : Synchronizable{
 	void Awake(){
 		//Okay to do in Awake
 		bb = GameObject.Find("BugManager").GetComponent<BugManager>();
+		viewer = GameObject.Find("Viewer").GetComponent<Holojam.Tools.Viewer>();
 		renderers = GetComponentsInChildren<Renderer> ();
 		scale = this.transform.localScale.x;
 		initScale = scale;
@@ -54,13 +57,12 @@ public class Bug : Synchronizable{
 		if(!sending || active!=1)return;
 		Holojam.Tools.Actor a = c.GetComponent<Holojam.Tools.Actor>();
 		Holojam.Tools.Viewer v =  c.GetComponent<Holojam.Tools.Viewer>();
-		if(a!=null||v!=null){
-			Debug.Log ("hi");
+		if(a!=null){
 			bb.SendMessage("ProcessCollision",this); //Callback
 			StartCoroutine(DisableThis());
 		}
 	}
-		
+
 
 	IEnumerator DisableThis(){
 		while(!doneScalingDown){
@@ -77,7 +79,6 @@ public class Bug : Synchronizable{
 		yield return new WaitForSeconds(bb.disableTime);
 		active = 1;
 		while (!doneScalingUp) {
-			Debug.Log (scale);
 			if (scale < initScale) {
 				scale = Mathf.MoveTowards (scale, initScale, scaleSpeed);
 				scalar.Set (scale, scale, scale);

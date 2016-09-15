@@ -2,7 +2,8 @@
 using UnityEngine;
 
 public class BugManager : MonoBehaviour {
-	public Bug bug;
+//	public Bug bug;
+	public Bug[] bugPrefabs;
 	public int gridWidth = 2;
 	public float scale = 0.5f;
 
@@ -23,6 +24,7 @@ public class BugManager : MonoBehaviour {
 	public float bugHeight = 0;
 
 	ImageTools.Core.PerlinNoise PNoise;
+	public ParticleSystem part;
 
 
 	void Awake(){
@@ -40,7 +42,8 @@ public class BugManager : MonoBehaviour {
 				Vector3 posA = new Vector3 ((x-gridWidth/2) * scale, bugHeight, (y-gridWidth/2) * scale);
 				Vector3 pos = transform.position + posA;
 				targets [x + gridWidth * y] = pos;
-				GameObject myBug = Instantiate (bug.gameObject, pos, Quaternion.identity) as GameObject;
+				GameObject b = bugPrefabs [(int)Mathf.Floor (Random.value * bugPrefabs.Length)].gameObject;
+				GameObject myBug = Instantiate (b.gameObject, pos, Quaternion.identity) as GameObject;
 				myBug.transform.parent = transform;
 				string label = "Bug" + x + "." + y;
 				myBug.name = label;
@@ -76,7 +79,12 @@ public class BugManager : MonoBehaviour {
 
 
 	public void ProcessCollision(Bug b){
-		if(!init)return;
+		if (!init)
+			return;
+		else {
+			ParticleSystem p = Instantiate (part, b.transform.position, Quaternion.identity) as ParticleSystem;
+			p.Emit (10);
+		}
 		//do something about state here
 		//eg increment 'bugs eaten' var
 	}
