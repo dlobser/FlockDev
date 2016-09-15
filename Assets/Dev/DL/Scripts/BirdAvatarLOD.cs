@@ -17,6 +17,7 @@ public class BirdAvatarLOD : MonoBehaviour {
 	float distToCam = 0;
 	public Vector4 distances;
 	public bool manualSet = false;
+	private float slide = 0;
 	// Use this for initialization
 	void Start () {
 		dist = GetComponent<DistanceToCamera> ();
@@ -29,32 +30,33 @@ public class BirdAvatarLOD : MonoBehaviour {
 
 	public void DeactivateWings(){
 		for (int i = 0; i < wings.Length; i++) {
-			wings [i].SetActive (false);
+			wings [i].GetComponent<MeshRenderer> ().enabled = false;
 		}
 		wingsActive = false;
 	}
 	public void ActivateWings(){
 		for (int i = 0; i < wings.Length; i++) {
-			wings [i].SetActive (true);
+			wings [i].GetComponent<MeshRenderer> ().enabled = true;
 		}
 		wingsActive = true;
 	}
 
 	public void Slide(){
+		slide = slider;
 		if (!manualSet) {
 			distToCam = dist.distance;
-			slider = DLUtility.remap (distToCam, distances.x, distances.y, distances.z, distances.w);
+			slide = DLUtility.remap (distToCam, distances.x, distances.y, distances.z, distances.w);
 		}
 		for (int i = 0; i < skins.Length; i++) {
-			skins [i].SetBlendShapeWeight (0, slider * 100);
+			skins [i].SetBlendShapeWeight (0, slide * 100);
 		}
-		if(slider>=1&&wingsActive)
+		if(slide>=1&&wingsActive)
 			DeactivateWings ();
-		else if(slider<1&&!wingsActive)
+		else if(slide<1&&!wingsActive)
 			ActivateWings();
 
 		if (wingsActive) {
-			float newSlide = Mathf.Clamp (1 - slider, 0, 1);
+			float newSlide = Mathf.Clamp (1 - slide, 0, 1);
 			flapCount += Time.deltaTime * flapSpeed;
 			scalar.Set (newSlide, newSlide, newSlide);
 			leftWingRotation.Set (0, 0, Mathf.Sin (flapCount) * flapAmount);
