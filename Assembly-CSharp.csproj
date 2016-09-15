@@ -45,6 +45,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\ActorSyncer.cs" />
      <Compile Include="Assets\Dev\CR\Scripts\SwarmCR.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\ActorBirdController.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\AudioDistance.cs" />
@@ -87,8 +88,16 @@
      <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\TreeTransform.cs" />
      <Compile Include="Assets\Dev\DL\Tools\TREE\old\tester2.cs" />
      <Compile Include="Assets\Dev\DL\Tools\TREE\old\tester4.cs" />
+     <Compile Include="Assets\Dev\ckromero\Scripts\ActorData.cs" />
+     <Compile Include="Assets\Dev\ckromero\Scripts\ActorJson.cs" />
+     <Compile Include="Assets\Dev\ckromero\Scripts\ActorSetJSON.cs" />
+     <Compile Include="Assets\Dev\ckromero\Scripts\BugManager\BugManager_cs__Multiple_Synch__.cs" />
+     <Compile Include="Assets\Dev\ckromero\Scripts\BugManager\BugManager_cs__Single_Synch__.cs" />
+     <Compile Include="Assets\Dev\ckromero\Scripts\BugManager\Bug_cs__Multiple_Synch__.cs" />
+     <Compile Include="Assets\Dev\ckromero\Scripts\BugManager\Bug_cs__Single_Synch__.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\Environment.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\FlySync.cs" />
+     <Compile Include="Assets\Dev\ckromero\Scripts\NiceJson.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\ZoneCollider.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\ZoneManager.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\expManager.cs" />

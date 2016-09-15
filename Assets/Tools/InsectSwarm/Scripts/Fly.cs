@@ -4,33 +4,34 @@ using Holojam.Tools;
 
 public class Fly : MonoBehaviour {
 
+	public Synchronizable synchronizable;
+	public GameObject splat;
 	public SpriteAimerComplex spriteAimer;
-	private Vector3 prevPosition;
+
 	public Vector3 target;
 	public Vector3 origin;
-	public bool lerpRotation = false;
 	public float rotationInterpolationSpeed = .1f;
+	public float scaleForDeath = 1;
+	public bool lerpRotation = false;
+	public bool active = false;
+	public float deadForHowLong;
+
+	ActorData actorData;
+	private Vector3 prevPosition;
+	Quaternion prev = Quaternion.identity;
+	MeshRenderer meshRend;
+	private float deathTimer;
+
 
 //	public bool lerpPosition = false;
 //	public float positionInterpolationSpeed = .1f;
-
-	Quaternion prev = Quaternion.identity;
 //	Vector3 prevPosition = Vector3.zero;
-
-	public bool active = false;
-	MeshRenderer meshRend;
-
-	public float deadForHowLong;
-	private float deathTimer;
-	public float scaleForDeath = 1;
-
-	public GameObject splat;
-
-	public Synchronizable synchronizable;
 
 	void Start(){
 
 		synchronizable = GetComponent<Synchronizable> ();
+		actorData = GetComponent<ActorData> (); 
+
 
 //		if (!Holojam.Utility.IsMasterPC ()) { 
 //			Destroy (this);
@@ -41,7 +42,7 @@ public class Fly : MonoBehaviour {
 	}
 
 	public void UpdatePosition(float fishScale){
-
+//
 //		VRDebug.print (this.name + "synchronizable.synchronizedInt=" + synchronizable.synchronizedInt + "\n");
 //		Debug.Log (this.name + "synchronizable.synchronizedInt=" + synchronizable.synchronizedInt);
 
@@ -83,12 +84,10 @@ public class Fly : MonoBehaviour {
 				active = true;
 			}
 
-//			if (Camera.main) {
-//				transform.LookAt (Camera.main.transform.position);
-//				transform.localEulerAngles = Vector3.Scale (transform.localEulerAngles, new Vector3 (0, 1, 0));
-//				//			transform.Rotate (0, 180, 0);
-//			}
 		}
+
+			Debug.Log ("current actor bugs eaten is: " + actorData.ActorBugsEaten());
+
 	}
 
 	void updateDeathTimer(){
@@ -107,7 +106,11 @@ public class Fly : MonoBehaviour {
 		if (Holojam.Utility.IsMasterPC ()) {
 			if (Time.time > 1) {
 				if (other.transform.parent.parent.name != null && other.transform.parent.parent.name == "ActorManager") {
+
 					Debug.Log ("Fly script: " + this.name + " collided with " + other.transform.parent.name + ", " + this.name + " is not active now.");
+
+					actorData.UpdateActor(synchronizable, other.transform.parent.name,this.name,1);
+
 					meshRend.enabled = false;
 					active = false;
 					deathTimer = 0;
