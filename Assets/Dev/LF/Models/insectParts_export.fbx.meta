@@ -15,6 +15,19 @@ ModelImporter:
     100014: legFootA
     100016: legMidA
     100018: legUpA
+    100020: abdomenB
+    100022: wingA
+    100024: wingB
+    100026: wingC
+    100028: wingD
+    100030: wingF
+    100032: ballC
+    100034: ballD
+    100036: ballE
+    100038: ballF
+    100040: ballG
+    100042: ballH
+    100044: ballK
     400000: abdomenA
     400002: antennaA
     400004: ballA
@@ -25,6 +38,19 @@ ModelImporter:
     400014: legFootA
     400016: legMidA
     400018: legUpA
+    400020: abdomenB
+    400022: wingA
+    400024: wingB
+    400026: wingC
+    400028: wingD
+    400030: wingF
+    400032: ballC
+    400034: ballD
+    400036: ballE
+    400038: ballF
+    400040: ballG
+    400042: ballH
+    400044: ballK
     2300000: abdomenA
     2300002: antennaA
     2300004: ballA
@@ -34,6 +60,19 @@ ModelImporter:
     2300012: legFootA
     2300014: legMidA
     2300016: legUpA
+    2300018: abdomenB
+    2300020: wingA
+    2300022: wingB
+    2300024: wingC
+    2300026: wingD
+    2300028: wingF
+    2300030: ballC
+    2300032: ballD
+    2300034: ballE
+    2300036: ballF
+    2300038: ballG
+    2300040: ballH
+    2300042: ballK
     3300000: abdomenA
     3300002: antennaA
     3300004: ballA
@@ -43,6 +82,19 @@ ModelImporter:
     3300012: legFootA
     3300014: legMidA
     3300016: legUpA
+    3300018: abdomenB
+    3300020: wingA
+    3300022: wingB
+    3300024: wingC
+    3300026: wingD
+    3300028: wingF
+    3300030: ballC
+    3300032: ballD
+    3300034: ballE
+    3300036: ballF
+    3300038: ballG
+    3300040: ballH
+    3300042: ballK
     4300000: abdomenA
     4300002: antennaA
     4300004: ballA_loRes
@@ -52,6 +104,19 @@ ModelImporter:
     4300012: legFootA
     4300014: legMidA
     4300016: legUpA
+    4300018: abdomenB
+    4300020: wingA
+    4300022: wingB
+    4300024: wingC
+    4300026: wingD
+    4300028: wingF
+    4300030: ballC
+    4300032: ballD
+    4300034: ballE
+    4300036: ballF
+    4300038: ballG
+    4300040: ballH
+    4300042: ballK
     9500000: //RootNode
   materials:
     importMaterials: 1
