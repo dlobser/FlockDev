@@ -141,7 +141,7 @@ public class ActorData : MonoBehaviour
 
 		List<IndexedPos> leastPopulatedQuadrant = Lip [Lip.Count - 1];
 
-		IndexedPos bestQuad = Lip [0];
+//		IndexedPos bestQuad = Lip [0];
 
 		return result;
 	}

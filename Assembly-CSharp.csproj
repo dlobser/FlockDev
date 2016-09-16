@@ -52,6 +52,7 @@
      <Compile Include="Assets\Dev\DL\Scripts\BirdAvatarLOD.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Bug.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\BugManager.cs" />
+     <Compile Include="Assets\Dev\DL\Scripts\BurstParticles.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\DistanceToCamera.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\DistanceToMomma.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\FadeInAudio.cs" />
@@ -63,7 +64,6 @@
      <Compile Include="Assets\Dev\DL\Scripts\SynchronizableMomma.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\SynchronizablePoop.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Utility\DLUtility.cs" />
-     <Compile Include="Assets\Dev\DL\Scripts\Utility\MergeMesh.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Utility\copyPos.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Utility\lookAtCam.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Utility\lookAtTarget.cs" />
@@ -71,6 +71,7 @@
      <Compile Include="Assets\Dev\DL\Scripts\copyTransformsSimple.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\deactivate.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\directionHintOpacity.cs" />
+     <Compile Include="Assets\Dev\DL\Scripts\killAfterTime.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\offsetUV.cs" />
      <Compile Include="Assets\Dev\DL\Tools\MakeSprite\MakeSpriteSheet.cs" />
      <Compile Include="Assets\Dev\DL\Tools\MakeSprite\TransformUniversalSetTime.cs" />
