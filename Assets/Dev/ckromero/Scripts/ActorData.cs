@@ -63,7 +63,7 @@ public class ActorData : MonoBehaviour
 //		List<IndexedPos> ip = GetActorPositions ();
 
 //		Debug.Log(ip[2].position.ToString());
-		GetGoodSpawnPoint();
+		GetGoodSpawnPoint ();
 
 	}
 
@@ -79,10 +79,13 @@ public class ActorData : MonoBehaviour
 
 		return indexedPos;
 	}
+
+
+	//TODO: this could really use a unit test to ensure sane boundaries. 
 	//returns a reasonably uncrowded spot in the holobounds
 	private Vector3 GetGoodSpawnPoint ()
 	{
-		Vector3 result = new Vector3 ();
+//		Vector3 result = new Vector3 ();
 
 		//could so this with points? 
 		//corners are ordered counter-clockwise from lower left	
@@ -98,15 +101,46 @@ public class ActorData : MonoBehaviour
 
 		//Holobounds is not a perfect square so average the values on the side.
 		//Calculations for odd shapes are more involved. 
-		float axl = (x1 + x0)/2.0f;
-		float axr = (x2 + x3)/2.0f;
-		float azb = (z3 + z0)/2.0f; 
-		float azt = (z2 + z1)/2.0f;
+		float axl = (x1 + x0) / 2.0f;
+		float axr = (x2 + x3) / 2.0f;
+		float azb = (z3 + z0) / 2.0f; 
+		float azt = (z2 + z1) / 2.0f;
 
-		float xR = Math.Abs (axl) + Math.Abs(axr);
-		float zR = Math.Abs (azt) + Math.Abs(azb);
+		//width and depth of the area
+		float xR = Math.Abs (axl) + Math.Abs (axr);
+		float zR = Math.Abs (azt) + Math.Abs (azb);
 
 
+
+		Vector3[] qb0 = new [] { 
+			new Vector3(x0,0.0f,z0),
+			new Vector3 (x0+xR/2.0f ,0.0f,z0),
+			new Vector3 (x0+xR/2.0f ,0.0f,z0+zR/2.0f),
+			new Vector3 (x0 ,0.0f,z0+zR/2.0f)
+		};
+
+		Vector3[] qb1 = new [] { 
+			new Vector3 (x0 + xR / 2.0f, 0.0f, z0),
+			new Vector3 (x0 + xR, 0.0f, z0),
+			new Vector3 (x0 + xR, 0.0f, z0 + zR / 2.0f),
+			new Vector3 (x0 + xR / 2.0f, 0.0f, z0 + zR / 2.0f)
+		};
+
+		Vector3[] qb2 = new [] { 
+			new Vector3 (x0 + xR / 2.0f, 0.0f, z0 + zR / 2.0f),
+			new Vector3 (x0 + xR, 0.0f, z0 + zR / 2.0f),
+			new Vector3 (x0 + xR, 0.0f, z0 + zR),
+			new Vector3 (x0 + xR / 2.0f, 0.0f, z0 + zR)
+		};
+
+		Vector3[] qb3 = new [] { 
+			new Vector3 (x0,0.0f,z0+zR/2.0f),
+			new Vector3 (x0+xR/2.0f,0.0f,z0+zR/2.0f),
+			new Vector3 (x0+xR/2,0.0f,z0+zR),
+			new Vector3 (x0 ,0.0f,z0+zR)
+		};
+			
+		//storage for actors in each area
 		List<IndexedPos> ipos = GetActorPositions ();
 		List<IndexedPos> q0 = new List<IndexedPos> ();
 		List<IndexedPos> q1 = new List<IndexedPos> ();
@@ -129,20 +163,79 @@ public class ActorData : MonoBehaviour
 				}
 			}
 		}
-		List<List<IndexedPos>> Lip = new List<List<IndexedPos>>();
+
+		//compare counts in each quadrant;
+		List<List<IndexedPos>> Lip = new List<List<IndexedPos>> ();
+
+
 		Lip.Add (q0);
 		Lip.Add (q1);
 		Lip.Add (q2);
 		Lip.Add (q3);
 
-//		SectionList.Sort((a,b) => a.Count - b.Count);
-	
-		Lip.Sort((a,b)=>a.Count - b.Count);
+		int fewestActors=-1;
+		//sort to determine element with lowest count 
+		for (int i = 0; i <= Lip.Count - 1; i++) {
+			for (int j = 0; j <= Lip.Count - 1; j++) {
+				if (i != j) {
+					if (Lip [i].Count <= Lip [j].Count) {
+						fewestActors = i;
+					}
+				}
+			}
+		}
 
-		List<IndexedPos> leastPopulatedQuadrant = Lip [Lip.Count - 1];
+		//leastPopulatedQuad is now a quad with least elements
+		//Match to Boundaries of quads
 
-//		IndexedPos bestQuad = Lip [0];
+		Vector3[] leastPopulatedQuad = qb0;
 
-		return result;
+		//HACK - this is brittle, an object model that stored the referenced
+		//		quad would be much better
+		switch (fewestActors) {
+		case 0:
+			leastPopulatedQuad  = qb0; 	
+			break;
+		case 1:
+
+			leastPopulatedQuad  = qb1; 	
+			break;
+		case 2:
+
+			leastPopulatedQuad  = qb2; 
+			break;
+
+		case 3:
+
+			leastPopulatedQuad  = qb3; 	
+			break;
+		}
+
+		//see how many quads have the same low count
+		int lipcount = Lip.Count;
+
+		List<List<IndexedPos>> emptierQuads = new List<List<IndexedPos>> ();
+
+		for (int i = 1; i < lipcount; i++) {
+			if (Lip [i].Count <= fewestActors) {
+				emptierQuads.Add (Lip [i]);
+			}
+		}
+
+		//even though we've found a quad with low population we may wnat to 
+		//pick randomly from quads with the ame population. 
+		System.Random rnd = new System.Random();
+		int pickQuad = rnd.Next (emptierQuads.Count);	
+
+		Bounds bounds = new Bounds ();
+
+		//populate bounds with the corners of the winning quad and return its center as 
+		//a spawn or action point.
+		foreach (Vector3 vec in leastPopulatedQuad) {
+			bounds.Encapsulate (vec);
+		}
+
+//		Debug.Log(bounds.center.ToString());
+		return bounds.center;
 	}
 }
