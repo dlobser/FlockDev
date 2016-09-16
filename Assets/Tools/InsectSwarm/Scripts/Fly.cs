@@ -86,7 +86,7 @@ public class Fly : MonoBehaviour {
 
 		}
 
-			Debug.Log ("current actor bugs eaten is: " + actorData.ActorBugsEaten());
+//			Debug.Log ("current actor bugs eaten is: " + actorData.ActorBugsEaten());
 
 	}
 
