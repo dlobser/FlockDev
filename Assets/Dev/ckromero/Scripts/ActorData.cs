@@ -14,7 +14,8 @@ public class ActorData : MonoBehaviour
 	private Actor[] actors;
 	private List<IndexedPos> indexedPos = new List<IndexedPos> ();
 	private Holobounds hb;
-
+	private bool canCallFunction = true;
+	private GameObject swarmMaker;
 	// Use this for initialization
 	void Start ()
 	{
@@ -25,10 +26,8 @@ public class ActorData : MonoBehaviour
 
 		GameObject hbgo = GameObject.Find ("Holobounds");
 		hb = (Holobounds)hbgo.GetComponent (typeof(Holobounds));
-//		Debug.Log("hb.Corner: " + hb.Corner (0));
-//		Debug.Log("hb.Corner: " + hb.Corner (1));
-//		Debug.Log("hb.Corner: " + hb.Corner (2));
-//		Debug.Log("hb.Corner: " + hb.Corner (3));
+
+		swarmMaker = GameObject.Find ("SwarmSpawnPoint");
 
 		actors = actorManager.actors;
 		foreach (Actor a in actors) {
@@ -37,6 +36,8 @@ public class ActorData : MonoBehaviour
 				Debug.Log ("curentActor is: " + currentActor);
 			}
 		}
+
+//		MoveSpawner (5.0f);
 	}
 
 	public void UpdateActor (Synchronizable synchronizable, string actorName, string interactorName, int updateType)
@@ -63,8 +64,26 @@ public class ActorData : MonoBehaviour
 //		List<IndexedPos> ip = GetActorPositions ();
 
 //		Debug.Log(ip[2].position.ToString());
-		GetGoodSpawnPoint ();
+//		if (canCallFunction) {
+		MoveSpawner (5.0f);
+//		}
+	}
+	//IEnumerator
+	public void MoveSpawner (float time)
+	{
+//		canCallFunction= false;
 
+
+		Vector3 moveTo = GetGoodSpawnPoint ();
+
+		Debug.Log ("moveTo is: " + moveTo.ToString ());
+		swarmMaker.transform.position = moveTo;
+
+		Debug.Log ("time started");
+//		yield return new WaitForSeconds(time);
+
+		Debug.Log ("time ended");
+//		canCallFunction=true;
 	}
 
 	private List<IndexedPos> GetActorPositions ()
@@ -80,8 +99,12 @@ public class ActorData : MonoBehaviour
 		return indexedPos;
 	}
 
+	class QuadWithCount{
+		public Vector3[] quad;
+		public int count=0;
+	}
 
-	//TODO: this could really use a unit test to ensure sane boundaries. 
+	//TODO: this could really use a unit test to ensure sane boundaries.
 	//returns a reasonably uncrowded spot in the holobounds
 	private Vector3 GetGoodSpawnPoint ()
 	{
@@ -110,128 +133,74 @@ public class ActorData : MonoBehaviour
 		float xR = Math.Abs (axl) + Math.Abs (axr);
 		float zR = Math.Abs (azt) + Math.Abs (azb);
 
+		//Containers for areas that hold actors 
+		QuadWithCount qb0 = new QuadWithCount ();
+		qb0.quad = new [] { new Vector3 (x0, 0.0f, z0),
+							new Vector3 (x0 + xR / 2.0f, 0.0f, z0),
+							new Vector3 (x0 + xR / 2.0f, 0.0f, z0 + zR / 2.0f),
+							new Vector3 (x0, 0.0f, z0 + zR / 2.0f)
+						}; 
 
+		QuadWithCount qb1 = new QuadWithCount (); 
+		qb1.quad = new [] { 
+							new Vector3 (x0 + xR / 2.0f, 0.0f, z0),
+							new Vector3 (x0 + xR, 0.0f, z0),
+							new Vector3 (x0 + xR, 0.0f, z0 + zR / 2.0f),
+							new Vector3 (x0 + xR / 2.0f, 0.0f, z0 + zR / 2.0f)
+						};
 
-		Vector3[] qb0 = new [] { 
-			new Vector3(x0,0.0f,z0),
-			new Vector3 (x0+xR/2.0f ,0.0f,z0),
-			new Vector3 (x0+xR/2.0f ,0.0f,z0+zR/2.0f),
-			new Vector3 (x0 ,0.0f,z0+zR/2.0f)
-		};
-
-		Vector3[] qb1 = new [] { 
-			new Vector3 (x0 + xR / 2.0f, 0.0f, z0),
-			new Vector3 (x0 + xR, 0.0f, z0),
-			new Vector3 (x0 + xR, 0.0f, z0 + zR / 2.0f),
-			new Vector3 (x0 + xR / 2.0f, 0.0f, z0 + zR / 2.0f)
-		};
-
-		Vector3[] qb2 = new [] { 
+		QuadWithCount qb2 = new QuadWithCount (); 
+		qb2.quad = new [] { 
 			new Vector3 (x0 + xR / 2.0f, 0.0f, z0 + zR / 2.0f),
 			new Vector3 (x0 + xR, 0.0f, z0 + zR / 2.0f),
 			new Vector3 (x0 + xR, 0.0f, z0 + zR),
 			new Vector3 (x0 + xR / 2.0f, 0.0f, z0 + zR)
 		};
 
-		Vector3[] qb3 = new [] { 
-			new Vector3 (x0,0.0f,z0+zR/2.0f),
-			new Vector3 (x0+xR/2.0f,0.0f,z0+zR/2.0f),
-			new Vector3 (x0+xR/2,0.0f,z0+zR),
-			new Vector3 (x0 ,0.0f,z0+zR)
+		QuadWithCount qb3 = new QuadWithCount ();
+		qb3.quad = new [] { 
+			new Vector3 (x0, 0.0f, z0 + zR / 2.0f),
+			new Vector3 (x0 + xR / 2.0f, 0.0f, z0 + zR / 2.0f),
+			new Vector3 (x0 + xR / 2, 0.0f, z0 + zR),
+			new Vector3 (x0, 0.0f, z0 + zR)
 		};
-			
+
 		//storage for actors in each area
 		List<IndexedPos> ipos = GetActorPositions ();
-		List<IndexedPos> q0 = new List<IndexedPos> ();
-		List<IndexedPos> q1 = new List<IndexedPos> ();
-		List<IndexedPos> q2 = new List<IndexedPos> ();
-		List<IndexedPos> q3 = new List<IndexedPos> ();
 
 		//place the actors in quadrants
-		foreach (IndexedPos ip in ipos) {
-			if (ip.position.x / 2.0f < xR / 2.0f) {
-				if (ip.position.z < zR / 2.0f) {
-					q0.Add (ip);
+
+		int iposCount = ipos.Count;
+		for (int i = 0; i < iposCount; i++) {
+			if (ipos [i].position.x < x0 + (xR / 2.0f)) {
+				if (ipos [i].position.z < z0 + (zR / 2.0f)) {
+					qb0.count++;
 				} else {
-					q3.Add (ip);
+					qb3.count++;
 				}
 			} else {
-				if (ip.position.z < zR / 2.0f) {
-					q1.Add (ip);
+				if (ipos [i].position.z < z0 + zR / 2.0f) {
+					qb1.count++;
 				} else {
-					q2.Add (ip);
+					qb2.count++;
 				}
 			}
 		}
 
-		//compare counts in each quadrant;
-		List<List<IndexedPos>> Lip = new List<List<IndexedPos>> ();
+		List<QuadWithCount> allqb = new List<QuadWithCount> ();
+		allqb.Add (qb0);
+		allqb.Add (qb1);
+		allqb.Add (qb2);
+		allqb.Add (qb3);
+		allqb.Sort((x,y)=>(x.count.CompareTo(y.count)));
 
-
-		Lip.Add (q0);
-		Lip.Add (q1);
-		Lip.Add (q2);
-		Lip.Add (q3);
-
-		int fewestActors=-1;
-		//sort to determine element with lowest count 
-		for (int i = 0; i <= Lip.Count - 1; i++) {
-			for (int j = 0; j <= Lip.Count - 1; j++) {
-				if (i != j) {
-					if (Lip [i].Count <= Lip [j].Count) {
-						fewestActors = i;
-					}
-				}
-			}
-		}
-
-		//leastPopulatedQuad is now a quad with least elements
-		//Match to Boundaries of quads
-
-		Vector3[] leastPopulatedQuad = qb0;
-
-		//HACK - this is brittle, an object model that stored the referenced
-		//		quad would be much better
-		switch (fewestActors) {
-		case 0:
-			leastPopulatedQuad  = qb0; 	
-			break;
-		case 1:
-
-			leastPopulatedQuad  = qb1; 	
-			break;
-		case 2:
-
-			leastPopulatedQuad  = qb2; 
-			break;
-
-		case 3:
-
-			leastPopulatedQuad  = qb3; 	
-			break;
-		}
-
-		//see how many quads have the same low count
-		int lipcount = Lip.Count;
-
-		List<List<IndexedPos>> emptierQuads = new List<List<IndexedPos>> ();
-
-		for (int i = 1; i < lipcount; i++) {
-			if (Lip [i].Count <= fewestActors) {
-				emptierQuads.Add (Lip [i]);
-			}
-		}
-
-		//even though we've found a quad with low population we may wnat to 
-		//pick randomly from quads with the ame population. 
-		System.Random rnd = new System.Random();
-		int pickQuad = rnd.Next (emptierQuads.Count);	
+		QuadWithCount leastPopulatedQuad = allqb [0];
 
 		Bounds bounds = new Bounds ();
 
 		//populate bounds with the corners of the winning quad and return its center as 
 		//a spawn or action point.
-		foreach (Vector3 vec in leastPopulatedQuad) {
+		foreach (Vector3 vec in leastPopulatedQuad.quad) {
 			bounds.Encapsulate (vec);
 		}
 

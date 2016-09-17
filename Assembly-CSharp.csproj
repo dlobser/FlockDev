@@ -91,6 +91,7 @@
      <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\TreeTransform.cs" />
      <Compile Include="Assets\Dev\DL\Tools\TREE\old\tester2.cs" />
      <Compile Include="Assets\Dev\DL\Tools\TREE\old\tester4.cs" />
+     <Compile Include="Assets\Dev\LF\Scripts\MeshRendererSortingLayersEditor.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\ActorData.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\ActorJson.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\ActorSetJSON.cs" />
@@ -102,6 +103,7 @@
      <Compile Include="Assets\Dev\ckromero\Scripts\FlySync.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\IndexedPos.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\NiceJson.cs" />
+     <Compile Include="Assets\Dev\ckromero\Scripts\Spawner.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\ZoneCollider.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\ZoneManager.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\expManager.cs" />
