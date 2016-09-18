@@ -77,7 +77,7 @@ public class SpriteAimer: MonoBehaviour {
 	void Aim(){
 		if (Camera.main) {
 			transform.LookAt (Camera.main.transform.position);
-			transform.localEulerAngles = Vector3.Scale (transform.localEulerAngles, new Vector3 (0, 1, 0));
+//			transform.localEulerAngles = Vector3.Scale (transform.localEulerAngles, new Vector3 (0, 1, 0));
 			transform.Rotate (0, rotationOffet, 0);
 		}
 	}

@@ -16,6 +16,7 @@ public class Joint : MonoBehaviour {
 
 	public GameObject scalar;
 	public GameObject rotator;
+	public GameObject tip;
 
 	void Awake(){
 		limbs = new List<GameObject> ();

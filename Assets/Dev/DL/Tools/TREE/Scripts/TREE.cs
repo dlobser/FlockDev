@@ -124,7 +124,9 @@ namespace TREESharp{
 			GameObject j = makeJoint (t);
 			j.transform.parent = obj;
 			obj.GetComponent<Joint> ().childJoint = j;
-			j.GetComponent<Joint> ().dictionaryName = dict;
+
+			Joint thisJoint = j.GetComponent<Joint> ();
+			thisJoint.dictionaryName = dict;
 
 			float yOffset = t.jointScale;
 
@@ -132,19 +134,18 @@ namespace TREESharp{
 				yOffset = 0;
 			}
 
-			j.GetComponent<Joint> ().joints = amount;
-
-			j.GetComponent<Joint> ().offset = (int)t.offset;
-			j.GetComponent<Joint> ().offset2 = (int)t.offset2;
+			thisJoint.joints = amount;
+			thisJoint.offset = (int)t.offset;
+			thisJoint.offset2 = (int)t.offset2;
 
 			j.transform.localPosition = new Vector3 (0, yOffset, 0);
 
 			if (counter == amount ) {
 				t.endJoint = true;
-				GameObject end = Instantiate (j.GetComponent<Joint> ().rotator.transform.GetChild (0).gameObject);
-				end.transform.parent = j.GetComponent<Joint>().rotator.transform;
-				end.transform.localPosition = new Vector3(0,t.jointScale,0);
-
+				GameObject tip = Instantiate (j.GetComponent<Joint> ().rotator.transform.GetChild (0).gameObject);
+				tip.transform.parent = j.GetComponent<Joint>().rotator.transform;
+				tip.transform.localPosition = new Vector3(0,t.jointScale,0);
+				thisJoint.tip = tip;
 			}
 			if (counter < amount) {
 				RecursiveAdd (amount, ++counter, j.transform,t,dict);
