@@ -79,10 +79,10 @@ public class ActorData : MonoBehaviour
 		Debug.Log ("moveTo is: " + moveTo.ToString ());
 		swarmMaker.transform.position = moveTo;
 
-		Debug.Log ("time started");
+//		Debug.Log ("time started");
 //		yield return new WaitForSeconds(time);
 
-		Debug.Log ("time ended");
+//		Debug.Log ("time ended");
 //		canCallFunction=true;
 	}
 

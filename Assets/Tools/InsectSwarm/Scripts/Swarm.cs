@@ -51,10 +51,12 @@ public class Swarm : MonoBehaviour {
 		flies = new List<Fly> ();
 		uvLookup.Init ();
 //		if(spawnFly)
-			FillFly ();
+
+
+		FillFly ();
 	}
 
-	void FillFly() {
+	public void FillFly() {
 		for (int i = 0; i < amount; i++) {
 
 			Vector3 flyPosition = Vector3.Scale( Random.insideUnitSphere,spread*this.transform.localScale);
