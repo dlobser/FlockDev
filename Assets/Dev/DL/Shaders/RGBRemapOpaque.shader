@@ -119,7 +119,7 @@
 
 				float3 hsv = rgbToHsv(col.xyz);
                 hsv.x += _InHueShift + _Time.x * _InSpeed;
- 				hsv.x = frac(hsv.x);
+ 				hsv.x = clamp(frac(hsv.x),0,1);
                 fixed4 inShifted = fixed4( half3(hsvToRgb(hsv) ), col.a);
 
 				fixed4 colR = _ColorR * inShifted.x;
@@ -129,7 +129,7 @@
 
 				hsv = rgbToHsv(col2.xyz);
                 hsv.x += _OutHueShift + _Time.x * _OutSpeed;
- 				hsv.x = frac(hsv.x);
+ 				hsv.x = clamp(frac(hsv.x),0,1);
  				hsv.y*=_Saturation;
                 fixed4 outShifted = fixed4( half3(hsvToRgb(hsv) ), col.a)*_ColorMult;
 
