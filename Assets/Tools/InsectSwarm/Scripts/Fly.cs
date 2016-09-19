@@ -109,7 +109,7 @@ public class Fly : MonoBehaviour {
 
 					Debug.Log ("Fly script: " + this.name + " collided with " + other.transform.parent.name + ", " + this.name + " is not active now.");
 
-					actorData.UpdateActor(synchronizable, other.transform.parent.name,this.name,1);
+//					actorData.UpdateActor(synchronizable, other.transform.parent.name,this.name,1);
 
 					meshRend.enabled = false;
 					active = false;

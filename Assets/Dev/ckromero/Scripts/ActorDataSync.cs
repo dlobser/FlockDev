@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Holojam.Tools;
 using System;
 
-public class ActorData : MonoBehaviour
+public class ActorDataSync : MonoBehaviour
 {
 	public GameObject ActorSynchronizableManager;
 
@@ -21,14 +21,15 @@ public class ActorData : MonoBehaviour
 	void Start ()
 
 	{
-		GameObject go = GameObject.Find ("ActorSynchronizableManager");
-		actSync = (ActorSyncer)go.GetComponent (typeof(ActorSyncer));
+//		GameObject go = GameObject.Find ("ActorSynchronizableManager");
+//		actSync = (ActorSyncer)go.GetComponent (typeof(ActorSyncer));
+		actSync = GetComponent <ActorSyncer>();
 
 		GameObject am = GameObject.Find ("ActorManager");
 		ActorManager actorManager = (ActorManager)am.GetComponent (typeof(ActorManager));
 
-		GameObject hbgo = GameObject.Find ("Holobounds");
-		hb = (Holobounds)hbgo.GetComponent (typeof(Holobounds));
+//		GameObject hbgo = GameObject.Find ("Holobounds");
+//		hb = (Holobounds)hbgo.GetComponent (typeof(Holobounds));
 
 		swarmMaker = GameObject.Find ("SwarmSpawnPoint");
 
@@ -77,11 +78,11 @@ public class ActorData : MonoBehaviour
 	{
 //		canCallFunction= false;
 
-
-		Vector3 moveTo = GetGoodSpawnPoint ();
-
-		Debug.Log ("moveTo is: " + moveTo.ToString ());
-		swarmMaker.transform.position = moveTo;
+//
+//		Vector3 moveTo = GetGoodSpawnPoint ();
+//
+//		Debug.Log ("moveTo is: " + moveTo.ToString ());
+//		swarmMaker.transform.position = moveTo;
 
 //		Debug.Log ("time started");
 //		yield return new WaitForSeconds(time);

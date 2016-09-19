@@ -59,6 +59,8 @@ public class BugManager : MonoBehaviour {
 	void Update(){
 		if(init)
 			UpdateBugPosition ();
+
+
 	}
 
 	void UpdateBugPosition(){
@@ -73,9 +75,17 @@ public class BugManager : MonoBehaviour {
 				scale * (float)PNoise.Noise (wScale * newPos.x + noiseCounter, wScale * newPos.y + noiseCounter + off, noiseCounter + wScale * newPos.z),
 				scale * (float)PNoise.Noise (wScale * newPos.x + noiseCounter, wScale * newPos.y + noiseCounter, noiseCounter + wScale * newPos.z + off));
 			bugs [i].transform.position = newPos;
-		} 
-	}
 
+
+		} 
+
+	}
+	void UpdateBugAppearance(Bug b){
+
+
+//		b.renderers[0].material=
+		Debug.Log (b);
+	}
 
 
 	public void ProcessCollision(Bug b){
@@ -84,6 +94,8 @@ public class BugManager : MonoBehaviour {
 		else {
 			ParticleSystem p = Instantiate (part, b.transform.position, Quaternion.identity) as ParticleSystem;
 			p.Emit (10);
+//			Debug.Log (c.name + " collided with Bug " + b.name);
+
 		}
 		//do something about state here
 		//eg increment 'bugs eaten' var

@@ -3,22 +3,35 @@ using System.Collections;
 using Holojam.Tools;
 
 public class Bug : Synchronizable{
-	BugManager bb;
-	int active = 1;
-
 	public Vector3 lastPosition { get; set; }
 	public Vector3 origin { get; set; }
-
-	bool doneScalingDown = false;
-	bool doneScalingUp = false;
 	public float scaleSpeed = .1f;
-	float scale;
-	float initScale;
-	Vector3 scalar = Vector3.one;
-
-	Holojam.Tools.Viewer viewer;
 
 	Renderer[] renderers;
+	BugManager bb;
+	Vector3 scalar = Vector3.one;
+	ActorDataSync actorDataSync;
+//	Synchronizable synchronizable;
+	Holojam.Tools.Viewer viewer;
+
+	float scale;
+	float initScale;
+	int active = 1;
+	bool doneScalingDown = false;
+	bool doneScalingUp = false;
+
+	void Awake(){
+		//Okay to do in Awake
+		bb = GameObject.Find("BugManager").GetComponent<BugManager>();
+		viewer = GameObject.Find("Viewer").GetComponent<Holojam.Tools.Viewer>();
+		renderers = GetComponentsInChildren<Renderer> ();
+		scale = this.transform.localScale.x;
+		initScale = scale;
+
+		//prep for reporting on actor collisions
+		actorDataSync = GameObject.Find ("ActorSynchronizableManager").GetComponent<ActorDataSync> ();
+
+	}
 
 	protected override void Sync(){
 		if(sending){
@@ -31,9 +44,15 @@ public class Bug : Synchronizable{
 			transform.localScale = new Vector3 (synchronizedQuaternion.x, synchronizedQuaternion.y, synchronizedQuaternion.z);
 			active = synchronizedInt;
 		}
+		int bugsEaten = actorDataSync.ActorBugsEaten(); 
+		if (bugsEaten>5){
+			Material newMaterial = (Material)Resources.Load ("testScreenShot 3");
 
+			this.renderers [0].material = newMaterial;
+			}
+		
 //		r.enabled = active==1;
-
+//		this.renderers
 		ActivateDeactivateRenderer ();
 	}
 
@@ -41,14 +60,6 @@ public class Bug : Synchronizable{
 		foreach (Renderer r in renderers) {
 			r.enabled = active==1;
 		}
-	}
-	void Awake(){
-		//Okay to do in Awake
-		bb = GameObject.Find("BugManager").GetComponent<BugManager>();
-		viewer = GameObject.Find("Viewer").GetComponent<Holojam.Tools.Viewer>();
-		renderers = GetComponentsInChildren<Renderer> ();
-		scale = this.transform.localScale.x;
-		initScale = scale;
 	}
 
 	//Nothing below here executes on the client.
@@ -58,7 +69,21 @@ public class Bug : Synchronizable{
 		Holojam.Tools.Actor a = c.GetComponent<Holojam.Tools.Actor>();
 		Holojam.Tools.Viewer v =  c.GetComponent<Holojam.Tools.Viewer>();
 		if(a!=null){
-			bb.SendMessage("ProcessCollision",this); //Callback
+
+//			Debug.Log (c.name + " collided with Bug " + this.name);
+		
+			// add to bugsEaten for the colliding actor!!!!
+			if (Holojam.Utility.IsMasterPC ()) {
+				if (Time.time > 1) {
+					if (c.name != null && c.name!="") {
+//						Debug.Log (this.name + " collided with " + c.transform.parent.name + ", " + this.name + " is not active now.");
+						actorDataSync.UpdateActor( c.name,this.name,1);
+					}
+				}
+			} 
+
+			//This handles particle placement
+			bb.SendMessage("ProcessCollision", this); //Callback
 			StartCoroutine(DisableThis());
 		}
 	}
