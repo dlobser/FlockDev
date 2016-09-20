@@ -6,27 +6,37 @@ public class Bug : Synchronizable{
 	public Vector3 lastPosition { get; set; }
 	public Vector3 origin { get; set; }
 	public float scaleSpeed = .1f;
+	public int collisionWindow=2;
+
+	//	Synchronizable synchronizable;
+	Holojam.Tools.Viewer viewer;
 
 	Renderer[] renderers;
 	BugManager bb;
 	Vector3 scalar = Vector3.one;
 	ActorDataSync actorDataSync;
-//	Synchronizable synchronizable;
-	Holojam.Tools.Viewer viewer;
+	MaterialSwapper materialSwapper;
 
 	float scale;
 	float initScale;
 	int active = 1;
 	bool doneScalingDown = false;
 	bool doneScalingUp = false;
+	bool collisionAllowed = true;
+	bool materialSwapAllow = false;
 
 	void Awake(){
 		//Okay to do in Awake
 		bb = GameObject.Find("BugManager").GetComponent<BugManager>();
+
 		viewer = GameObject.Find("Viewer").GetComponent<Holojam.Tools.Viewer>();
+
+		materialSwapper = GetComponent<MaterialSwapper>();
+
 		renderers = GetComponentsInChildren<Renderer> ();
 		scale = this.transform.localScale.x;
 		initScale = scale;
+
 
 		//prep for reporting on actor collisions
 		actorDataSync = GameObject.Find ("ActorSynchronizableManager").GetComponent<ActorDataSync> ();
@@ -44,19 +54,15 @@ public class Bug : Synchronizable{
 			transform.localScale = new Vector3 (synchronizedQuaternion.x, synchronizedQuaternion.y, synchronizedQuaternion.z);
 			active = synchronizedInt;
 		}
+
 		int bugsEaten = actorDataSync.ActorBugsEaten(); 
-		if (bugsEaten>5){
-			Material newMaterial = (Material)Resources.Load ("testScreenShot 3");
-
-			this.renderers [0].material = newMaterial;
+		if (bugsEaten>2){
+			if (materialSwapAllow) {
+				materialSwapper.swapMat ();
+				Debug.Log (this.name + " swapped to material " + renderers [0].material.name);
+				materialSwapAllow = false;
 			}
-		
-//		r.enabled = active==1;
-//		this.renderers
-
-//		Debug.Log (synchronizedString);
-
-
+		}
 
 		ActivateDeactivateRenderer ();
 	}
@@ -75,13 +81,12 @@ public class Bug : Synchronizable{
 		Holojam.Tools.Viewer v =  c.GetComponent<Holojam.Tools.Viewer>();
 		if(a!=null){
 
-//			Debug.Log (c.name + " collided with Bug " + this.name);
-		
 			// add to bugsEaten for the colliding actor!!!!
 			if (Holojam.Utility.IsMasterPC ()) {
-				if (Time.time > 1) {
+				if (Time.time > 1 && collisionAllowed ) {
+					StartCoroutine(CloseCollisionWindow ());
 					if (c.name != null && c.name!="") {
-//						Debug.Log (this.name + " collided with " + c.transform.parent.name + ", " + this.name + " is not active now.");
+						Debug.Log (this.name + " collided with " + c.transform.parent.name + " at " + Time.time);
 						actorDataSync.UpdateActor( c.name,this.name,1);
 					}
 				}
@@ -93,6 +98,13 @@ public class Bug : Synchronizable{
 		}
 	}
 
+	//trying to prevent multiple collisions against the same object. 
+	//Could also try looking at the same objects within a given window.
+	IEnumerator CloseCollisionWindow() { 
+		collisionAllowed = false;
+		yield return new WaitForSeconds (collisionWindow);
+		collisionAllowed = true;
+	}
 
 	IEnumerator DisableThis(){
 		while(!doneScalingDown){

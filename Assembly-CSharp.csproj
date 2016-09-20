@@ -57,6 +57,7 @@
      <Compile Include="Assets\Dev\DL\Scripts\FadeInAudio.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\FeatherFollow.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\GetAverageHeight.cs" />
+     <Compile Include="Assets\Dev\DL\Scripts\MaterialSwapper.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\MommaBirdAnimator.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Poop.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\ScaleToDistance.cs" />
@@ -101,6 +102,7 @@
      <Compile Include="Assets\Dev\ckromero\Scripts\BugManager\BugManager_cs__Single_Synch__.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\BugManager\Bug_cs__Multiple_Synch__.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\BugManager\Bug_cs__Single_Synch__.cs" />
+     <Compile Include="Assets\Dev\ckromero\Scripts\DebugX.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\Environment.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\FlySync.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\IndexedPos.cs" />
