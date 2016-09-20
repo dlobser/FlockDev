@@ -53,6 +53,11 @@ public class Bug : Synchronizable{
 		
 //		r.enabled = active==1;
 //		this.renderers
+
+//		Debug.Log (synchronizedString);
+
+
+
 		ActivateDeactivateRenderer ();
 	}
 

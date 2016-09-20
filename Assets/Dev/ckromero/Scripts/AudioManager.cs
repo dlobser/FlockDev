@@ -21,7 +21,7 @@ using UnityEngine;
 
 		int bugsEaten = actorDataSync.ActorBugsEaten ();
 
-		if (bugsEaten > 5 && !audioChanged) {
+		if (bugsEaten > 20 && !audioChanged) {
 			audioSource.clip = audioClips [1];
 			audioSource.Play ();
 			audioChanged = true;
@@ -29,4 +29,4 @@ using UnityEngine;
 
 	}
 
-	}
+}

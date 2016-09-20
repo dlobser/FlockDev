@@ -16,6 +16,7 @@ public class ActorDataSync : MonoBehaviour
 	private Actor[] actors;
 	string currentActor;
 	private bool canCallFunction = true;
+	public bool resetSync=false;
 
 	// Use this for initialization
 	void Start ()
@@ -40,7 +41,7 @@ public class ActorDataSync : MonoBehaviour
 				Debug.Log ("curentActor is: " + currentActor);
 			}
 		}
-
+		
 //		MoveSpawner (5.0f);
 	}
 
@@ -65,12 +66,17 @@ public class ActorDataSync : MonoBehaviour
 
 	void Update ()
 	{
+		if (resetSync) {
 
+			Debug.Log ("resetSync clicked");
+			actSync.resetSync ();
+			resetSync = false;
+		}
 //		List<IndexedPos> ip = GetActorPositions ();
 
 //		Debug.Log(ip[2].position.ToString());
 //		if (canCallFunction) {
-		MoveSpawner (5.0f);
+//		MoveSpawner (5.0f);
 //		}
 	}
 	//IEnumerator

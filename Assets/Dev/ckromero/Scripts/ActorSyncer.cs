@@ -13,8 +13,16 @@ public class ActorSyncer : MonoBehaviour
 	{
 		synchronizable = GetComponent<Synchronizable> ();
 		synchronizable.label = "ActorSyncer";
+		synchronizable.synchronizedString = "";
 	}
+	public void PrintSyncString(){
+		Debug.Log (synchronizable.synchronizedString);
+			
 
+	}
+	public void resetSync() { 
+		synchronizable.synchronizedString = "";
+	}
 	public void SendSyncStringData (string data)
 	{ 
 		if (data != null && data != "") {  
