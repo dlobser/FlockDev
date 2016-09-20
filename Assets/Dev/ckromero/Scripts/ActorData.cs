@@ -62,6 +62,8 @@ public class ActorData : MonoBehaviour
 		return actSync.checkBugsEaten (currentActor);
 	}
 
+
+
 	void Update ()
 	{
 

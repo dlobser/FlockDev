@@ -7,23 +7,23 @@ using System;
 public class ActorDataSync : MonoBehaviour
 {
 	public GameObject ActorSynchronizableManager;
+	public bool resetSync=false;
+	public float actorLevelCheck=5.0f;
 
 	private List<IndexedPos> indexedPos = new List<IndexedPos> ();
 	private Holobounds hb;
 	private GameObject swarmMaker;
-
 	ActorSyncer actSync;
 	private Actor[] actors;
-	string currentActor;
+
 	private bool canCallFunction = true;
-	public bool resetSync=false;
+	string currentActor;
+
 
 	// Use this for initialization
 	void Start ()
 
 	{
-//		GameObject go = GameObject.Find ("ActorSynchronizableManager");
-//		actSync = (ActorSyncer)go.GetComponent (typeof(ActorSyncer));
 		actSync = GetComponent <ActorSyncer>();
 
 		GameObject am = GameObject.Find ("ActorManager");
@@ -44,8 +44,16 @@ public class ActorDataSync : MonoBehaviour
 		
 //		MoveSpawner (5.0f);
 	}
+	void Update ()
+	{
+		if (resetSync) {
+			Debug.Log ("resetSync clicked");
+			actSync.resetSync ();
+			resetSync = false;
+		}
+//		DebugX.Log(currentActor + " has eaten " +  ActorBugsEatenSince(actorLevelCheck) + " bugs in the last " + actorLevelCheck + " seconds");
+	}
 
-//	public void UpdateActor (Synchronizable synchronizable, string actorName, string interactorName, int updateType)
 	public void UpdateActor ( string actorName, string interactorName, int updateType)
 	{
 		switch (updateType) {
@@ -59,26 +67,15 @@ public class ActorDataSync : MonoBehaviour
 		}
 	}
 
-	public int ActorBugsEaten ()
-	{
+	public int ActorBugsEaten () {
 		return actSync.checkBugsEaten (currentActor);
 	}
 
-	void Update ()
-	{
-		if (resetSync) {
+	public int ActorBugsEatenSince(float time){
 
-			Debug.Log ("resetSync clicked");
-			actSync.resetSync ();
-			resetSync = false;
-		}
-//		List<IndexedPos> ip = GetActorPositions ();
-
-//		Debug.Log(ip[2].position.ToString());
-//		if (canCallFunction) {
-//		MoveSpawner (5.0f);
-//		}
+		return actSync.checkBugsEatenSince (currentActor, time);
 	}
+
 	//IEnumerator
 	public void MoveSpawner (float time)
 	{

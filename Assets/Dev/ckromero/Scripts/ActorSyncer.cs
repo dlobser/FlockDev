@@ -37,6 +37,7 @@ public class ActorSyncer : MonoBehaviour
 				for (int i = 0; i < casjLength; i++) {
 					if (capturedASJ.actors [i].actorIndex == data) {
 						capturedASJ.actors [i].bugsEaten++;	
+						capturedASJ.actors [i].bugTime.Add (Time.time);
 						revisedASJ = capturedASJ;
 						foundExistingActor = true;
 						break;
@@ -48,6 +49,8 @@ public class ActorSyncer : MonoBehaviour
 					ActorJson naj = new ActorJson ();
 					naj.actorIndex = data;
 					naj.bugsEaten = 1;
+					naj.bugTime = new List<float> ();
+					naj.bugTime.Add (Time.time);
 
 					List<ActorJson> ls = new List<ActorJson> ();
 						
@@ -58,17 +61,15 @@ public class ActorSyncer : MonoBehaviour
 						ls.Add (capturedASJ.actors [i]);
 					}
 
-					//sort by key?
-//					capturedASJ.actors[capturedASJ.actors.Length]=ls[0];
-
 					revisedASJ.actors = ls.ToArray ();
-
 				}
 			} else { 
 				//initiate the synchronized string by adding the current actor
 				ActorJson naj = new ActorJson ();
 				naj.actorIndex = data;
 				naj.bugsEaten = 1;
+				naj.bugTime = new List<float> ();
+				naj.bugTime.Add (Time.time);
 				List<ActorJson> ls = new List<ActorJson> ();
 				ls.Add (naj);
 				revisedASJ.actors = ls.ToArray ();
@@ -92,5 +93,38 @@ public class ActorSyncer : MonoBehaviour
 			}
 		}
 		return 0;
+	}
+
+	public int checkBugsEatenSince(string actor, float sinceTime) {
+		//access actor 
+		ActorSetJSON capturedASJ = new ActorSetJSON ();
+		List<float> bugsEatenTime = new List<float> ();
+		bool foundTimeList = false;
+			
+		if (synchronizable.synchronizedString != null && synchronizable.synchronizedString != "") { 
+			capturedASJ = JsonUtility.FromJson<ActorSetJSON> (synchronizable.synchronizedString);
+			int casjLength = capturedASJ.actors.Length;
+			for (int i = 0; i < casjLength; i++) {
+				if (capturedASJ.actors [i].actorIndex == actor) {
+					bugsEatenTime = capturedASJ.actors [i].bugTime;	
+						foundTimeList=true;
+				}
+			}
+		}
+				
+		if (!foundTimeList) {
+			return 0;
+		}
+
+		int bugTimeLength = bugsEatenTime.Count;
+		int bugsEatenSinceTimeCounter=0;
+		float timeWindow = Time.time - sinceTime; 
+
+		for (int i=0; i < bugTimeLength; i++) {
+			if (bugsEatenTime [i] > timeWindow) {
+				bugsEatenSinceTimeCounter++;
+			}
+		}
+		return bugsEatenSinceTimeCounter;
 	}
 }
