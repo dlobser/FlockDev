@@ -108,6 +108,7 @@
      <Compile Include="Assets\Dev\ckromero\Scripts\IndexedPos.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\MoreBugs.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\NiceJson.cs" />
+     <Compile Include="Assets\Dev\ckromero\Scripts\PlayerStateManager.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\Spawner.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\UpdateAndYield.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\ZoneCollider.cs" />
