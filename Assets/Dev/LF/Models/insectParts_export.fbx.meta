@@ -28,6 +28,10 @@ ModelImporter:
     100040: ballG
     100042: ballH
     100044: ballK
+    100046: legFootB
+    100048: legUpB
+    100050: wingE
+    100052: wingG
     400000: abdomenA
     400002: antennaA
     400004: ballA
@@ -51,6 +55,10 @@ ModelImporter:
     400040: ballG
     400042: ballH
     400044: ballK
+    400046: legFootB
+    400048: legUpB
+    400050: wingE
+    400052: wingG
     2300000: abdomenA
     2300002: antennaA
     2300004: ballA
@@ -73,6 +81,10 @@ ModelImporter:
     2300038: ballG
     2300040: ballH
     2300042: ballK
+    2300044: legFootB
+    2300046: legUpB
+    2300048: wingE
+    2300050: wingG
     3300000: abdomenA
     3300002: antennaA
     3300004: ballA
@@ -95,6 +107,10 @@ ModelImporter:
     3300038: ballG
     3300040: ballH
     3300042: ballK
+    3300044: legFootB
+    3300046: legUpB
+    3300048: wingE
+    3300050: wingG
     4300000: abdomenA
     4300002: antennaA
     4300004: ballA_loRes
@@ -117,6 +133,10 @@ ModelImporter:
     4300038: ballG
     4300040: ballH
     4300042: ballK
+    4300044: legFootB
+    4300046: legUpB
+    4300048: wingE
+    4300050: wingG
     9500000: //RootNode
   materials:
     importMaterials: 1
