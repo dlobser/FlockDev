@@ -26,6 +26,12 @@ namespace SpriteMaker{
 		bool gridMade = false;
 		// Use this for initialization
 		void Start () {
+
+			if (this.transform.childCount > 0) {
+				trees = GetComponentsInChildren<MakeTree> ();
+				treeMods = GetComponentsInChildren<TREEModXForm> ();
+				transformer = GetComponentsInChildren<TransformUniversalSetTime> ();
+			}
 			timeCap = 1f / (float)(X * Y);
 			Application.targetFrameRate = 55;
 			RTex = new RenderTexture[X*Y];

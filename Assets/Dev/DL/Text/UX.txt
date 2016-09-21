@@ -1,0 +1,104 @@
+Onboarding:
+
+The users steps through an entry and onto a 1/2” piece of plywood (4’x8’). Wings on armbands will be placed around the player’s arms. The headset is placed on them by a docent. The docent has a tracker on their head which will allow the player to see that docent as an avatar. The docent will give instructions to the player: 
+
+“hold your hands close to your chest and step forward” 
+Then “reach out to touch me” - this will allow the player to relate the size of the bird avatar to the position of the other person. 
+Then “Don’t touch anyone else during the experience” 
+“If the audio or image stops or you need help please stop moving and raise your hand and move your headset to your forehead but do not remove the headset”
+“Try to eat bugs and follow instructions”
+“When you are ready step off the nest and begin flying”
+Headphones will be placed on the head of the participant at this point.
+
+Birth:
+
+The participant will be positioned at the edge of the plywood and they will be able to enter the experience when they are ready. If the player is afraid of heights we may enable a ‘fear of heights’ which will place a visible floor underneath the user.
+
+Style:
+
+At this point the forest world will be fairly dark and monochrome but the bugs and all the birds will be white.
+
+Audio:
+
+Before the player steps out of the nest the audio should be mostly ambient. When the player steps out of the nest Tim’s soaring violins will start and then will play for approximately 30 seconds as the player orients themselves to the space.
+
+If the player does not move or attempt to eat bugs the music will begin to fade and the world will become more boring (how? not sure yet). If the player continues to not eat bugs the bugs will begin to glow very brightly and a prompt will appear on their headset “if you want to stay alive, you must EAT!”. If the player continues to not eat the typical red pulsing of dying in a video game will begin and the player will die early (?).
+
+If the player manages to eat say 5-10 bugs in this early state they will graduate to being:
+
+Grown Up:
+
+This is the meat of the experience. In this state users will level up through different states by eating bugs.
+
+Level 1: 
+
+Violins and flapping sounds.
+White birds and bugs against a dark background.
+
+Level 2-5:
+
+Transition through sets of Julien’s stems (no violins).
+Trees become brighter.
+Insects become more varied and bright.
+
+Level 6:
+
+Julien’s stems come together as one driving piece.
+Insects become strobing ball style insects.
+The environment becomes very bright and begins to strobe.
+
+Level 7:
+
+Strobing overall is very intense.
+Increase doppler shifts in music.
+Sparkles appear in the air (particles) - filling the space with visual clutter.
+
+
+Leveling up:
+
+Every bird will have a bug counter and a level counter.
+
+The level counter will always be counting down. Let’s say after 30 seconds you will have dropped a level, but maybe it will happen more quickly at higher levels and slower at lower levels.
+
+We will need to experiment to see how many bugs will increase the level by how much. If players are eating bugs every 5 seconds It would be good to be able to increase through all the levels in approximately 3 minutes I think. I also wonder if it wouldn’t make sense to make the upper levels more difficult to get through or more quick to fall away from.
+
+Seeing each other
+
+I think there should also be effects for when you make face contact with other birds. Also - the state that a bird is in should be visible to other users (a bird at level 7 should be strobing to all the other birds).
+
+Dying:
+
+After around 5 minutes the speed that the level counter drops will increase. Players will drop back through all the levels over the course of around a minute no matter how much they’re eating. When they get back to level 1 they pass through that into:
+
+level 0:
+
+In level zero the environment is bright and the birds and bugs are dark - the bugs will just be one kind of bug instead of many different kinds. The headset will say:
+
+“You have lived a good life, it is time to die” 
+
+and there will be an arrow pointing at the death nest or some other visual cue about where the user needs to go. 
+
+Tim’s violin will be playing. 
+
+Eating bugs will no longer work. If you try to eat bugs the headset may say:
+
+“Your work is done, please make your way”
+
+If the user doesn’t make their way to the death nest their time will eventually expire and the headset will go completely black and they will see
+
+“please remove your headset”
+
+If, on the other hand, the users follow the directions they will walk over to the death nest
+
+Level -1:
+
+Users will be prompted to:
+
+“Please take a seat”
+
+Docents will be there to help them - we may need chairs
+
+“Please hold very still”
+
+Once the headset is in the correct zone and is not moving around too much the user’s camera will float up over their head so they can see the experience from above and they will float up through the forest and the headset will fade to white as they listen to Tim’s soaring violins.
+

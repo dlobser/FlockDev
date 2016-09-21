@@ -37,6 +37,12 @@ namespace TREESharp{
 			a.transform.localScale = b.transform.localScale;
 		}
 
+		public static void copyTransforms2(GameObject a, GameObject b){
+			a.transform.position = new Vector3 (b.transform.position.x, b.transform.position.y, b.transform.position.z);
+			a.transform.localEulerAngles = new Vector3 (b.transform.localEulerAngles.x, b.transform.localEulerAngles.y, b.transform.localEulerAngles.z);
+			a.transform.localScale = new Vector3 (b.transform.localScale.x, b.transform.localScale.y, b.transform.localScale.z);
+		}
+
 		public static void zeroTransforms(GameObject a){
 			a.transform.localPosition =Vector3.zero;
 			a.transform.rotation = Quaternion.identity;
