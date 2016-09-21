@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class PlayerStateManager : MonoBehaviour
 {
-
 	public FlockLevel[] flockLevels;
 	//	public GameObject materialsCollection;
 	public GameObject player;
@@ -17,6 +16,10 @@ public class PlayerStateManager : MonoBehaviour
 	public Sprite youMustEat;
 	public Sprite timeToDie;
 	public float graceTime = 5.0f;
+	public float warnForSeconds=5.0f;
+//	public float blinkForSeconds=5.0f;
+	public bool resetPlayer=false;
+
 	//is this the best access modifier?
 	public PlayerData playerData;
 
@@ -46,7 +49,13 @@ public class PlayerStateManager : MonoBehaviour
 		//review player state and update levels as needed
 		//this will be the main consumer of the bugsEaten timeline.
 		CheckPlayerLevel ();	
-		CheckHUDState ();
+		CheckExpState ();
+		if (resetPlayer) { 
+			playerData.resetPlayerData ();
+			LoadLevel (0);
+			UpdateHUD("hide");
+			resetPlayer = false;
+		}
 	}
 
 	public void CheckPlayerLevel ()
@@ -62,18 +71,27 @@ public class PlayerStateManager : MonoBehaviour
 			playerData.levelStartTime = Time.time;
 		}
 	}
-
-	public void CheckHUDState ()
+	//TODO: checkExpState really 
+	public void CheckExpState ()
 	{
 
 		if (flockLevels [playerData.level].bugsNeededForTime != null) { 
-			if (playerData.levelStartTime + graceTime < Time.time) {
+			if (playerData.levelStartTime + graceTime < Time.time && playerData.expState!=ExpState.Warn&&playerData.expState!=ExpState.Dying) {
 				if (playerData.bugsEatenSince (Time.time - flockLevels [playerData.level].bugTime) < flockLevels [playerData.level].bugsNeededForTime) {
 					Debug.Log ("not enough bugs!");
 					UpdateHUD ("warn");
+					playerData.expState = ExpState.Warn;
+					playerData.dyingTime = Time.time + warnForSeconds;
 				}
 			}
 		}
+		//&& playerData.dyingTime != null 
+		if (playerData.expState == ExpState.Warn && Time.time> playerData.dyingTime) { 
+			UpdateHUD ("die");
+			playerData.expState = ExpState.Dying;
+//			playerData.dyingTime = Time.time + warnForSeconds;
+		}
+
 	}
 
 	public void UpdateHUD (string HUDState)
@@ -90,12 +108,13 @@ public class PlayerStateManager : MonoBehaviour
 				Image image = canvas.GetComponentsInChildren<Image> () [0];
 				image.sprite = youMustEat;
 				canvas.enabled = true;
-				playerData.expState = ExpState.Warn;
-
 				break;		
 			}
 		case "die":
 			{
+				Image image = canvas.GetComponentsInChildren<Image> () [0];
+				image.sprite = timeToDie;
+				canvas.enabled = true;
 
 				break;
 
@@ -185,6 +204,7 @@ public class PlayerStateManager : MonoBehaviour
 
 		public int level { get; set; }
 		public ExpState expState;
+		public float dyingTime;
 
 		public PlayerData ()
 		{
