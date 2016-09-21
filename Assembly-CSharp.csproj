@@ -106,6 +106,8 @@
      <Compile Include="Assets\Dev\ckromero\Scripts\Environment.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\FlySync.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\IndexedPos.cs" />
+     <Compile Include="Assets\Dev\ckromero\Scripts\LevelTestBug.cs" />
+     <Compile Include="Assets\Dev\ckromero\Scripts\Materials.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\MoreBugs.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\NiceJson.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\PlayerStateManager.cs" />
