@@ -52,9 +52,16 @@
      <Compile Include="Assets\Dev\DL\Scripts\Bug.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\BugManager.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\BurstParticles.cs" />
+     <Compile Include="Assets\Dev\DL\Scripts\ChooseHeadset.cs" />
+     <Compile Include="Assets\Dev\DL\Scripts\ChosenHeadset.cs" />
+     <Compile Include="Assets\Dev\DL\Scripts\ChosenHeadsetAssign.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\DistanceToCamera.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\DistanceToMomma.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\FadeInAudio.cs" />
+     <Compile Include="Assets\Dev\DL\Scripts\Fader.cs" />
+     <Compile Include="Assets\Dev\DL\Scripts\FaderManager.cs" />
+     <Compile Include="Assets\Dev\DL\Scripts\FaderMaterialColor.cs" />
+     <Compile Include="Assets\Dev\DL\Scripts\FaderMaterialRGBMat.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\FeatherFollow.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\GetAverageHeight.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\MaterialSwapper.cs" />
@@ -63,6 +70,7 @@
      <Compile Include="Assets\Dev\DL\Scripts\RandomBug.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\SynchronizableMomma.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\SynchronizablePoop.cs" />
+     <Compile Include="Assets\Dev\DL\Scripts\Texture2DArray.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Utility\DLUtility.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Utility\ScaleToDistance.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Utility\copyPos.cs" />
@@ -195,6 +203,7 @@
      <None Include="Assets\Holojam\Demo\Shaders\AlphaBlendedColorTexture.shader" />
      <None Include="Assets\Standard Assets\Effects\AntiAliasing\FXAA\Resources\FXAA3.cginc" />
      <None Include="Assets\VRPanorama\Shaders\FadeVR.shader" />
+     <None Include="Assets\Dev\DL\Shaders\RGBRemapSimpleTransparentTexArray.shader" />
      <None Include="Assets\Dev\DL\Shaders\lineWarp.shader" />
      <None Include="Assets\Standard Assets\Effects\ScreenSpaceReflection\Resources\ScreenSpaceReflection.shader" />
      <None Include="Assets\Dev\LF\Shaders\shafts.shader" />
