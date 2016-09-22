@@ -18,9 +18,16 @@ public class BirdAvatarLOD : MonoBehaviour {
 	public Vector4 distances;
 	public bool manualSet = false;
 	private float slide = 0;
+//
+//	public float[] LODs;
+//	bool[] trueLODs;
+//	bool[] LODDid;
+
 	// Use this for initialization
 	void Start () {
 		dist = GetComponent<DistanceToCamera> ();
+//		trueLODs = bool[LODs.Length];
+//		LODDid = bool[LODs.Length];
 	}
 	
 	// Update is called once per frame
@@ -28,9 +35,24 @@ public class BirdAvatarLOD : MonoBehaviour {
 		Slide ();
 	}
 
+//	public void checkLOD(){
+//		for (int i = 0; i < LODs-1; i++) {
+//			if (slide > LODs [i] && slide < LODs [i + 1]){
+//				if (trueLODs [i] = false)
+//					LODDid [i] = true;
+//				trueLODs [i] = true;
+//
+//			}
+//			else{
+//				trueLODs [i] = false;
+//			}
+//		}
+//	}
+
 	public void DeactivateWings(){
 		for (int i = 0; i < wings.Length; i++) {
 			wings [i].GetComponent<MeshRenderer> ().enabled = false;
+//			wings [i].transform.GetChild(0).GetComponent<SpriteRenderer> ().enabled = false;
 		}
 		wingsActive = false;
 	}
@@ -41,6 +63,32 @@ public class BirdAvatarLOD : MonoBehaviour {
 		wingsActive = true;
 	}
 
+
+//	public void LowResWings(){
+//		for (int i = 0; i < wings.Length; i++) {
+//			wings [i].GetComponent<MeshRenderer> ().enabled = false;
+//			wings [i].transform.GetChild(0).GetComponent<SpriteRenderer> ().enabled = true;
+//		}
+//		wingsActive = false;
+//	}
+//	public void HighResWings(){
+//		for (int i = 0; i < wings.Length; i++) {
+//			wings [i].GetComponent<MeshRenderer> ().enabled = true;
+//			wings [i].transform.GetChild(0).GetComponent<SpriteRenderer> ().enabled = false;
+//
+//		}
+//		wingsActive = true;
+//	}
+
+	public void LowResBody(){
+
+	}
+
+	public void HighResBody(){
+
+	}
+
+
 	public void Slide(){
 		slide = slider;
 		if (!manualSet) {
@@ -50,10 +98,25 @@ public class BirdAvatarLOD : MonoBehaviour {
 		for (int i = 0; i < skins.Length; i++) {
 			skins [i].SetBlendShapeWeight (0, slide * 100);
 		}
-		if(slide>=1&&wingsActive)
+
+//		if (LODDid [0]) {
+//			HighResWings ();
+//			LODDid [0] = false;
+//		}
+//		else if (LODDid [1]) {
+//			LowResWings ();
+//			LODDid [1] = false;
+//		}
+//		else if (LODDid [2]) {
+//			Deacti ();
+//			LODDid [1] = false;
+//		}
+		if (slide >= 1 && wingsActive) {
 			DeactivateWings ();
-		else if(slide<1&&!wingsActive)
-			ActivateWings();
+		} else if (slide < .5f && !wingsActive) {
+			ActivateWings ();
+		}
+
 
 		if (wingsActive) {
 			float newSlide = Mathf.Clamp (1 - slide, 0, 1);
