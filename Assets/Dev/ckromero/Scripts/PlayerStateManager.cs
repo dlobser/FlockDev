@@ -248,10 +248,4 @@ public class PlayerStateManager : MonoBehaviour
 			return bugsEaten;
 		}
 	}
-
-
-
-
-
-
 }
