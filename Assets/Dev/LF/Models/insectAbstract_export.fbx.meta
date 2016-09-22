@@ -25,6 +25,11 @@ ModelImporter:
     100034: a_jointCalt
     100036: a_jointD_alt
     100038: //RootNode
+    100040: a_wingA
+    100042: a_wingB
+    100044: a_wingC
+    100046: a_wingD
+    100048: a_wingE
     400000: a_ballA
     400002: a_ballA_alt
     400004: a_ballB
@@ -45,6 +50,11 @@ ModelImporter:
     400034: a_jointCalt
     400036: a_jointD_alt
     400038: //RootNode
+    400040: a_wingA
+    400042: a_wingB
+    400044: a_wingC
+    400046: a_wingD
+    400048: a_wingE
     2300000: a_ballA
     2300002: a_ballA_alt
     2300004: a_ballB
@@ -64,6 +74,11 @@ ModelImporter:
     2300032: a_jointC
     2300034: a_jointCalt
     2300036: a_jointD_alt
+    2300038: a_wingA
+    2300040: a_wingB
+    2300042: a_wingC
+    2300044: a_wingD
+    2300046: a_wingE
     3300000: a_ballA
     3300002: a_ballA_alt
     3300004: a_ballB
@@ -83,6 +98,11 @@ ModelImporter:
     3300032: a_jointC
     3300034: a_jointCalt
     3300036: a_jointD_alt
+    3300038: a_wingA
+    3300040: a_wingB
+    3300042: a_wingC
+    3300044: a_wingD
+    3300046: a_wingE
     4300000: a_ballA_alt
     4300002: a_ballB_alt
     4300004: a_ballC_alt
@@ -102,6 +122,11 @@ ModelImporter:
     4300032: a_jointB_alt
     4300034: a_jointCalt
     4300036: a_jointD_alt
+    4300038: a_wingA
+    4300040: a_wingB
+    4300042: a_wingC
+    4300044: a_wingD
+    4300046: a_wingE
   materials:
     importMaterials: 1
     materialName: 0
