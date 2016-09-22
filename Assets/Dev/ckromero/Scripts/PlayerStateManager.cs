@@ -15,6 +15,8 @@ public class PlayerStateManager : MonoBehaviour
 	public Canvas canvas;
 	public Sprite youMustEat;
 	public Sprite timeToDie;
+
+
 	public float graceTime = 5.0f;
 	public float warnForSeconds=5.0f;
 //	public float blinkForSeconds=5.0f;
@@ -22,17 +24,18 @@ public class PlayerStateManager : MonoBehaviour
 
 	//is this the best access modifier?
 	public PlayerData playerData;
-
 	public enum ExpState{Living, Warn, Dying};
+
+	private ActorDataSync actorDataSync;
+
 	// Use this for initialization
 	void Start ()
 	{
 		//initialize the player references 
 		LoadLevel (0);
 		UpdateHUD("hide");
-
-		playerData = new PlayerData ();
-
+		actorDataSync = player.GetComponent<ActorDataSync> ();
+		playerData = new PlayerData (actorDataSync.currentActor);
 	}
 
 	void ResetPlayer ()
@@ -54,14 +57,18 @@ public class PlayerStateManager : MonoBehaviour
 			playerData.resetPlayerData ();
 			LoadLevel (0);
 			UpdateHUD("hide");
+			//TODO: notify actorDataSync to zero out the player. 
+
 			resetPlayer = false;
+
 		}
 	}
 
+	//This looks at how many bugs the current player has eaten as a basis for level, 
 	public void CheckPlayerLevel ()
 	{ 
-		
-		int bugsAte = playerData.bugsAte ();
+		int bugsAte = actorDataSync.ActorBugsEaten ();
+
 		int i = Array.FindLastIndex (flockLevels, w => w.bugsEatenMinimum <= bugsAte);	
 
 		if (i > playerData.level) {
@@ -71,12 +78,15 @@ public class PlayerStateManager : MonoBehaviour
 			playerData.levelStartTime = Time.time;
 		}
 	}
-	//TODO: checkExpState really 
+
+	//This also looks at bugs eaten within a time. 
 	public void CheckExpState ()
 	{
-
+		//Does the current level has a bugs eaten with time requirement
 		if (flockLevels [playerData.level].bugsNeededForTime != null) { 
+			//Allow a grace time at the beginning of the level. and note current player state. 
 			if (playerData.levelStartTime + graceTime < Time.time && playerData.expState!=ExpState.Warn&&playerData.expState!=ExpState.Dying) {
+				//Warn if not enough bugs have been eaten within the time range.
 				if (playerData.bugsEatenSince (Time.time - flockLevels [playerData.level].bugTime) < flockLevels [playerData.level].bugsNeededForTime) {
 					Debug.Log ("not enough bugs!");
 					UpdateHUD ("warn");
@@ -85,7 +95,9 @@ public class PlayerStateManager : MonoBehaviour
 				}
 			}
 		}
-		//&& playerData.dyingTime != null 
+		//A warning before dying in this case
+		//TODO: after a certain amount of time even if no warn (total time since last reset) 
+		//player can die without warning  
 		if (playerData.expState == ExpState.Warn && Time.time> playerData.dyingTime) { 
 			UpdateHUD ("die");
 			playerData.expState = ExpState.Dying;
@@ -96,7 +108,9 @@ public class PlayerStateManager : MonoBehaviour
 
 	public void UpdateHUD (string HUDState)
 	{
-		
+		if (canvas == null) {
+			return;
+		}
 		switch (HUDState) {
 		case "hide":
 			{
@@ -131,9 +145,6 @@ public class PlayerStateManager : MonoBehaviour
 
 	public void LoadLevel (int _level)
 	{
-			
-//		int i = Array.FindIndex (flockLevels, w => w.level == _level);
-//	
 
 		FlockLevel levelToLoad = getFlockLevel (_level);
 
@@ -174,10 +185,6 @@ public class PlayerStateManager : MonoBehaviour
 		public float bugTime;
 		public int bugsNeededForTime;
 
-		//		public float timeBoundaryForBugsEatenForLevelEntry;
-		//		public int bugsEatenInTimeBounds;
-		//		public int bugsEatenInTimeBoundsForLevelRetention;
-
 		//Environment
 		public Material environmentMaterial;
 
@@ -199,18 +206,21 @@ public class PlayerStateManager : MonoBehaviour
 	public class PlayerData
 	{
 			
-		private int bugsEaten = 0;
-		private List<float> bugsEatenLog;
-
-		public int level { get; set; }
 		public ExpState expState;
+		public int level { get; set; }
 		public float dyingTime;
 
-		public PlayerData ()
+		private List<float> bugsEatenLog;
+		private int bugsEaten = 0;
+		private string actorName;
+
+		public PlayerData (string _actorName)
 		{
 			level = 0;
 			bugsEatenLog = new List<float> ();
 			expState=ExpState.Living;
+			actorName=_actorName;
+//			ActorDataSync actorDataSync = player
 		}
 
 		public float levelStartTime=0.0f;

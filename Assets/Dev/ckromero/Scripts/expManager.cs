@@ -17,10 +17,11 @@ public class expManager : MonoBehaviour {
 	private float startVolume;
 	private const float NOVOLUME = -80.0f;
 
-
 	//ZONES
 	public ZoneManager zonemanager;
 
+	//PlayerStateManager
+	public PlayerStateManager playerStateManager;
 
 
 

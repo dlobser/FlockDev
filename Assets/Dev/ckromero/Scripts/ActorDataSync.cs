@@ -9,18 +9,16 @@ public class ActorDataSync : MonoBehaviour
 	public GameObject ActorSynchronizableManager;
 	public bool resetSync=false;
 	public float actorLevelCheck=5.0f;
+	public string currentActor;
 
 	private List<IndexedPos> indexedPos = new List<IndexedPos> ();
 	private Holobounds hb;
 	private GameObject swarmMaker;
-	ActorSyncer actSync;
+	private ActorSyncer actSync;
 	private Actor[] actors;
 
 	private bool canCallFunction = true;
-	string currentActor;
 
-
-	// Use this for initialization
 	void Start ()
 
 	{
@@ -28,9 +26,6 @@ public class ActorDataSync : MonoBehaviour
 
 		GameObject am = GameObject.Find ("ActorManager");
 		ActorManager actorManager = (ActorManager)am.GetComponent (typeof(ActorManager));
-
-//		GameObject hbgo = GameObject.Find ("Holobounds");
-//		hb = (Holobounds)hbgo.GetComponent (typeof(Holobounds));
 
 		swarmMaker = GameObject.Find ("SwarmSpawnPoint");
 
@@ -60,7 +55,7 @@ public class ActorDataSync : MonoBehaviour
 		case 1:
 			//convert to int
 			string actorNum = actorName.Substring (0, actorName.IndexOf ("]") + 1);
-			Debug.Log ("actorNum: " + actorNum);
+			Debug.Log ("Updating actorNum: " + actorNum);
 			actSync.SendSyncStringData (actorNum);
 
 			break;
