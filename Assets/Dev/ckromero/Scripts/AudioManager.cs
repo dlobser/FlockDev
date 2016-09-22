@@ -1,32 +1,45 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Audio;
 
-	public class AudioManager :MonoBehaviour
-	{
-	public AudioClip[] audioClips;
-	public AudioSource audioSource;
+public class AudioManager :MonoBehaviour
+{
+	public AudioMixer audioMixer;
 
-	private ActorDataSync actorDataSync;
+	private  string currentAudioMixerSnapshot;
 
-	bool audioChanged=false;
+	public void TransitionAudio(string amsToName, float timeForTransition, float weight=1.0f) { 
+		AudioMixerSnapshot ams = audioMixer.FindSnapshot (amsToName);
+		AudioMixerSnapshot[] amsArray = new AudioMixerSnapshot[]{ams};
+		float[] weightArray = new float[]{ weight };
 
-	void Start(){
-		audioSource.clip = audioClips [0];
-		audioSource.Play ();
-		actorDataSync = GameObject.Find ("ActorSynchronizableManager").GetComponent<ActorDataSync> ();
-
+		audioMixer.TransitionToSnapshots(amsArray,weightArray,timeForTransition); 
+		currentAudioMixerSnapshot=ams.name;
 	}
-
-	void Update(){
-
-		int bugsEaten = actorDataSync.ActorBugsEaten ();
-
-		if (bugsEaten > 20 && !audioChanged) {
-			audioSource.clip = audioClips [1];
-			audioSource.Play ();
-			audioChanged = true;
+	public string currentSnapshot(){
+		if (currentAudioMixerSnapshot != null) {
+			return currentAudioMixerSnapshot;
+		} else {
+			return "";
 		}
-
 	}
+
+
+
 
 }
+
+
+/* Audio Notes
+ * heartbeat doesn't loop properly
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ */

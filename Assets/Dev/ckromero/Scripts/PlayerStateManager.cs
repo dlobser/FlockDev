@@ -15,7 +15,7 @@ public class PlayerStateManager : MonoBehaviour
 	public Canvas canvas;
 	public Sprite youMustEat;
 	public Sprite timeToDie;
-
+	public GameObject AudioManagerObject;
 
 	public float graceTime = 5.0f;
 	public float warnForSeconds=5.0f;
@@ -27,15 +27,30 @@ public class PlayerStateManager : MonoBehaviour
 	public enum ExpState{Living, Warn, Dying};
 
 	private ActorDataSync actorDataSync;
+	private AudioManager audioManager;
+	private float audioTransitionDefaultTime=2.0f;
+
+
+	void Awake(){
+
+		actorDataSync = player.GetComponent<ActorDataSync> ();
+		playerData = new PlayerData ();
+		audioManager = AudioManagerObject.GetComponent<AudioManager> ();
+
+	}
+
 
 	// Use this for initialization
 	void Start ()
 	{
-		//initialize the player references 
+
+		playerData.actorName=actorDataSync.currentActor;
+
 		LoadLevel (0);
+
 		UpdateHUD("hide");
-		actorDataSync = player.GetComponent<ActorDataSync> ();
-		playerData = new PlayerData (actorDataSync.currentActor);
+
+
 	}
 
 	void ResetPlayer ()
@@ -137,7 +152,7 @@ public class PlayerStateManager : MonoBehaviour
 
 	}
 
-	private FlockLevel getFlockLevel (int lvl)
+	private FlockLevel GetFlockLevel (int lvl)
 	{ 
 		int i = Array.FindIndex (flockLevels, w => w.level == lvl);
 		return flockLevels [i];
@@ -146,7 +161,7 @@ public class PlayerStateManager : MonoBehaviour
 	public void LoadLevel (int _level)
 	{
 
-		FlockLevel levelToLoad = getFlockLevel (_level);
+		FlockLevel levelToLoad = GetFlockLevel (_level);
 
 		if (player != null) {
 			
@@ -162,9 +177,11 @@ public class PlayerStateManager : MonoBehaviour
 			if (levelToLoad.environmentMaterial != null) { 
 				ground.GetComponent<MeshRenderer> ().material = levelToLoad.environmentMaterial;
 			}
+			if (levelToLoad.audioSnapshotName != null && levelToLoad.audioSnapshotName != "") {
+				audioManager.TransitionAudio (levelToLoad.audioSnapshotName,audioTransitionDefaultTime);
+			}
 
-
-		} else {
+				} else {
 			Debug.Log ("no player!");
 		}
 
@@ -192,11 +209,11 @@ public class PlayerStateManager : MonoBehaviour
 		public Material avatarMaterial;
 
 		//Bugs
+//		public float bugFaderValue;
 		public Material bugMaterial;
 
 		//Audio
-
-
+		public string audioSnapshotName;
 
 		//ZONE
 
@@ -209,18 +226,15 @@ public class PlayerStateManager : MonoBehaviour
 		public ExpState expState;
 		public int level { get; set; }
 		public float dyingTime;
-
+		public string actorName="";
 		private List<float> bugsEatenLog;
 		private int bugsEaten = 0;
-		private string actorName;
 
-		public PlayerData (string _actorName)
+		public PlayerData ()
 		{
 			level = 0;
 			bugsEatenLog = new List<float> ();
 			expState=ExpState.Living;
-			actorName=_actorName;
-//			ActorDataSync actorDataSync = player
 		}
 
 		public float levelStartTime=0.0f;
