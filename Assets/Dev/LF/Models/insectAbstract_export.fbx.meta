@@ -30,6 +30,7 @@ ModelImporter:
     100044: a_wingC
     100046: a_wingD
     100048: a_wingE
+    100050: a_wingF
     400000: a_ballA
     400002: a_ballA_alt
     400004: a_ballB
@@ -55,6 +56,7 @@ ModelImporter:
     400044: a_wingC
     400046: a_wingD
     400048: a_wingE
+    400050: a_wingF
     2300000: a_ballA
     2300002: a_ballA_alt
     2300004: a_ballB
@@ -79,6 +81,7 @@ ModelImporter:
     2300042: a_wingC
     2300044: a_wingD
     2300046: a_wingE
+    2300048: a_wingF
     3300000: a_ballA
     3300002: a_ballA_alt
     3300004: a_ballB
@@ -103,6 +106,7 @@ ModelImporter:
     3300042: a_wingC
     3300044: a_wingD
     3300046: a_wingE
+    3300048: a_wingF
     4300000: a_ballA_alt
     4300002: a_ballB_alt
     4300004: a_ballC_alt
@@ -127,6 +131,7 @@ ModelImporter:
     4300042: a_wingC
     4300044: a_wingD
     4300046: a_wingE
+    4300048: a_wingF
   materials:
     importMaterials: 1
     materialName: 0
