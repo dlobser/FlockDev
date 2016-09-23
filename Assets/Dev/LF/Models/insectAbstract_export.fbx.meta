@@ -1,0 +1,193 @@
+fileFormatVersion: 2
+guid: 84a1ef7e1168245dbb6fdb3db8420e7d
+timeCreated: 1474576964
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: a_ballA
+    100002: a_ballA_alt
+    100004: a_ballB
+    100006: a_ballB_alt
+    100008: a_ballC
+    100010: a_ballC_alt
+    100012: a_ballD
+    100014: a_ballD_alt
+    100016: a_ballE
+    100018: a_ballE_alt
+    100020: a_ballF
+    100022: a_ballF_alt
+    100024: a_jointA
+    100026: a_jointA_alt
+    100028: a_jointB
+    100030: a_jointB_alt
+    100032: a_jointC
+    100034: a_jointCalt
+    100036: a_jointD_alt
+    100038: //RootNode
+    100040: a_wingA
+    100042: a_wingB
+    100044: a_wingC
+    100046: a_wingD
+    100048: a_wingE
+    400000: a_ballA
+    400002: a_ballA_alt
+    400004: a_ballB
+    400006: a_ballB_alt
+    400008: a_ballC
+    400010: a_ballC_alt
+    400012: a_ballD
+    400014: a_ballD_alt
+    400016: a_ballE
+    400018: a_ballE_alt
+    400020: a_ballF
+    400022: a_ballF_alt
+    400024: a_jointA
+    400026: a_jointA_alt
+    400028: a_jointB
+    400030: a_jointB_alt
+    400032: a_jointC
+    400034: a_jointCalt
+    400036: a_jointD_alt
+    400038: //RootNode
+    400040: a_wingA
+    400042: a_wingB
+    400044: a_wingC
+    400046: a_wingD
+    400048: a_wingE
+    2300000: a_ballA
+    2300002: a_ballA_alt
+    2300004: a_ballB
+    2300006: a_ballB_alt
+    2300008: a_ballC
+    2300010: a_ballC_alt
+    2300012: a_ballD
+    2300014: a_ballD_alt
+    2300016: a_ballE
+    2300018: a_ballE_alt
+    2300020: a_ballF
+    2300022: a_ballF_alt
+    2300024: a_jointA
+    2300026: a_jointA_alt
+    2300028: a_jointB
+    2300030: a_jointB_alt
+    2300032: a_jointC
+    2300034: a_jointCalt
+    2300036: a_jointD_alt
+    2300038: a_wingA
+    2300040: a_wingB
+    2300042: a_wingC
+    2300044: a_wingD
+    2300046: a_wingE
+    3300000: a_ballA
+    3300002: a_ballA_alt
+    3300004: a_ballB
+    3300006: a_ballB_alt
+    3300008: a_ballC
+    3300010: a_ballC_alt
+    3300012: a_ballD
+    3300014: a_ballD_alt
+    3300016: a_ballE
+    3300018: a_ballE_alt
+    3300020: a_ballF
+    3300022: a_ballF_alt
+    3300024: a_jointA
+    3300026: a_jointA_alt
+    3300028: a_jointB
+    3300030: a_jointB_alt
+    3300032: a_jointC
+    3300034: a_jointCalt
+    3300036: a_jointD_alt
+    3300038: a_wingA
+    3300040: a_wingB
+    3300042: a_wingC
+    3300044: a_wingD
+    3300046: a_wingE
+    4300000: a_ballA_alt
+    4300002: a_ballB_alt
+    4300004: a_ballC_alt
+    4300006: a_ballD_alt
+    4300008: a_ballE_alt
+    4300010: a_ballF_alt
+    4300012: a_ballA
+    4300014: a_ballB
+    4300016: a_ballC
+    4300018: a_ballD
+    4300020: a_ballE
+    4300022: a_ballF
+    4300024: a_jointA
+    4300026: a_jointB
+    4300028: a_jointC
+    4300030: a_jointA_alt
+    4300032: a_jointB_alt
+    4300034: a_jointCalt
+    4300036: a_jointD_alt
+    4300038: a_wingA
+    4300040: a_wingB
+    4300042: a_wingC
+    4300044: a_wingD
+    4300046: a_wingE
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 100
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
