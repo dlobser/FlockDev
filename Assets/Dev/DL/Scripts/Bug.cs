@@ -15,7 +15,7 @@ public class Bug : Synchronizable{
 	BugManager bb;
 	Vector3 scalar = Vector3.one;
 	ActorDataSync actorDataSync;
-	MaterialSwapper materialSwapper;
+	public MaterialSwapperContinuous materialSwapper;
 
 	float scale;
 	float initScale;
@@ -31,7 +31,7 @@ public class Bug : Synchronizable{
 
 		viewer = GameObject.Find("Viewer").GetComponent<Holojam.Tools.Viewer>();
 
-		materialSwapper = GetComponent<MaterialSwapper>();
+//		materialSwapper = GetComponent<MaterialSwapper>();
 
 		renderers = GetComponentsInChildren<Renderer> ();
 		scale = this.transform.localScale.x;
@@ -119,6 +119,7 @@ public class Bug : Synchronizable{
 		active = 0;
 		doneScalingDown = false;
 		yield return new WaitForSeconds(bb.disableTime);
+		materialSwapper.swapMat ();
 		active = 1;
 		while (!doneScalingUp) {
 			if (scale < initScale) {
