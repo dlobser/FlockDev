@@ -70,7 +70,6 @@
      <Compile Include="Assets\Dev\DL\Scripts\RandomBug.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\SynchronizableMomma.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\SynchronizablePoop.cs" />
-     <Compile Include="Assets\Dev\DL\Scripts\Texture2DArray.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Utility\DLUtility.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Utility\ScaleToDistance.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Utility\copyPos.cs" />
