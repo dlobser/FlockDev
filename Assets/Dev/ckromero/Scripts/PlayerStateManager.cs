@@ -53,8 +53,6 @@ public class PlayerStateManager : MonoBehaviour
 
 		UpdateHUD("hide");
 
-
-
 	}
 
 	void ResetPlayer ()
