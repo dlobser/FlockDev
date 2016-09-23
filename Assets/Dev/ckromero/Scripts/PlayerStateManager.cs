@@ -15,7 +15,10 @@ public class PlayerStateManager : MonoBehaviour
 	public Canvas canvas;
 	public Sprite youMustEat;
 	public Sprite timeToDie;
-	public GameObject AudioManagerObject;
+	public GameObject audioManagerObject;
+
+	public GameObject faderManagedObject;
+
 
 	public float graceTime = 5.0f;
 	public float warnForSeconds=5.0f;
@@ -29,14 +32,14 @@ public class PlayerStateManager : MonoBehaviour
 	private ActorDataSync actorDataSync;
 	private AudioManager audioManager;
 	private float audioTransitionDefaultTime=2.0f;
-
+	private FaderManager faderManager;
 
 	void Awake(){
 
 		actorDataSync = player.GetComponent<ActorDataSync> ();
 		playerData = new PlayerData ();
-		audioManager = AudioManagerObject.GetComponent<AudioManager> ();
-
+		audioManager = audioManagerObject.GetComponent<AudioManager> ();
+		faderManager = faderManagedObject.GetComponent<FaderManager> ();
 	}
 
 
@@ -49,6 +52,7 @@ public class PlayerStateManager : MonoBehaviour
 		LoadLevel (0);
 
 		UpdateHUD("hide");
+
 
 
 	}
@@ -181,6 +185,11 @@ public class PlayerStateManager : MonoBehaviour
 				audioManager.TransitionAudio (levelToLoad.audioSnapshotName,audioTransitionDefaultTime);
 			}
 
+			//fader object stand in
+			if (levelToLoad.faderLevel!=null) { 
+				faderManager.level = levelToLoad.faderLevel;
+			}
+
 				} else {
 			Debug.Log ("no player!");
 		}
@@ -214,6 +223,9 @@ public class PlayerStateManager : MonoBehaviour
 
 		//Audio
 		public string audioSnapshotName;
+
+		//Faded Object
+		public float faderLevel;
 
 		//ZONE
 
