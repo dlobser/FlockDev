@@ -40,7 +40,9 @@ public class MaterialSwapperContinuous : MonoBehaviour {
 
 		float from = fader;
 		StartCoroutine (Swap (from,(float)whichTexture));
-		Debug.Log (from+","+ whichTexture);
+		Debug.Log ("Swap: "+from+","+ whichTexture);
+
+
 //		StopCoroutine (Swap ());
 
 	}

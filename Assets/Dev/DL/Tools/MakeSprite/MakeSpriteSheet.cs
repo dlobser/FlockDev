@@ -22,12 +22,19 @@ namespace SpriteMaker{
 		public TransformUniversalSetTime[] transformer;
 		public MakeTree[] trees;
 		public TREEModXForm[] treeMods;
+		public TREEModCtrl[] treeCtrl;
 
+		bool makeBBox = false;
+		public Camera cam;
+		TreeBoundingBox BBox;
+		float BBoxCounter = 0;
 		bool gridMade = false;
+		bool BBoxInit = false;
 		// Use this for initialization
 		void Start () {
-
+			BBox = GetComponent<TreeBoundingBox> ();
 			if (this.transform.childCount > 0) {
+				treeCtrl = GetComponentsInChildren<TREEModCtrl> ();
 				trees = GetComponentsInChildren<MakeTree> ();
 				treeMods = GetComponentsInChildren<TREEModXForm> ();
 				transformer = GetComponentsInChildren<TransformUniversalSetTime> ();
@@ -61,17 +68,13 @@ namespace SpriteMaker{
 		// Update is called once per frame
 		void Update () {
 			
-			if (count < X * Y && gridMade) {
-				
-					RTex [count] = new RenderTexture (InTexture.width, InTexture.height, 24);
-					RTex [count].antiAliasing = InTexture.antiAliasing;
-					Graphics.Blit (InTexture, RTex [count]);
-					materials [count] = Instantiate (InMat);
-					materials [count].SetTexture ("_MainTex", RTex [count]);
-					quads [count].GetComponent<MeshRenderer> ().material = materials [count];
-
-					count++;
-
+			if (Input.GetKeyUp (KeyCode.S)) {
+				for (int i = 0; i < treeMods.Length; i++) {
+					treeMods [i].animate = false;
+				}
+				for (int i = 0; i < transformer.Length; i++) {
+					treeCtrl [i].rebuild = true;
+				}
 				for (int i = 0; i < trees.Length; i++) {
 					trees [i].countSpeed = timeCap;
 					trees [i].Animate ();
@@ -81,13 +84,14 @@ namespace SpriteMaker{
 					treeMods [i].Step ();
 				}
 
-				counter += timeCap;
-			} else if (!snapshotted && gridMade) {
-				snap.takeSnapshot ();
-				snapshotted = true;
 			}
 			if (Input.GetKeyUp (KeyCode.A)) {
 				gridMade = true;
+
+				for (int i = 0; i < transformer.Length; i++) {
+					treeCtrl[i].rebuild = true;
+				}
+
 				for (int i = 0; i < transformer.Length; i++) {
 					transformer[i].currentTime = timeCap;
 				}
@@ -98,6 +102,83 @@ namespace SpriteMaker{
 				for (int i = 0; i < treeMods.Length; i++) {
 					treeMods [i].countSpeed = timeCap;
 				}
+			}
+
+			if (Input.GetKeyUp (KeyCode.B)) {
+				makeBBox = true;
+			}
+
+			if (Input.GetKeyUp (KeyCode.C)) {
+				if (this.transform.childCount > 0) {
+					trees = GetComponentsInChildren<MakeTree> ();
+					treeMods = GetComponentsInChildren<TREEModXForm> ();
+					transformer = GetComponentsInChildren<TransformUniversalSetTime> ();
+				}
+			}
+
+			//cycle through frames and generate bbox for camera
+			if(makeBBox){
+
+
+
+				if (!BBoxInit) {
+					BBox.Init ();
+					BBoxInit = false;
+				}
+				
+				BBoxCounter += timeCap;
+				if (BBoxCounter > 1)
+					makeBBox = false;
+
+				for (int i = 0; i < transformer.Length; i++) {
+					transformer[i].currentTime = timeCap;
+				}
+
+				for (int i = 0; i < trees.Length; i++) {
+					trees [i].countSpeed = timeCap;
+				}
+
+				for (int i = 0; i < treeMods.Length; i++) {
+					treeMods [i].countSpeed = timeCap;
+				}
+
+				BBox.checkBounds ();
+
+				if (!makeBBox) {
+					Vector3 center = Vector3.Lerp (BBox.min, BBox.max, .5f);
+					cam.transform.position = center;
+					cam.transform.Translate (new Vector3 (0, 0, -10));
+					float xVal = BBox.max.x - center.x;
+					float yVal = BBox.max.y - center.y;
+					cam.orthographicSize = xVal > yVal ? xVal : yVal;
+				}
+			}
+
+			if (count < X * Y && gridMade) {
+				for (int i = 0; i < trees.Length; i++) {
+					trees [i].countSpeed = timeCap;
+					trees [i].Animate ();
+				}
+				for (int i = 0; i < treeMods.Length; i++) {
+					treeMods [i].countSpeed = timeCap;
+					treeMods [i].Step ();
+				}
+
+				RTex [count] = new RenderTexture (InTexture.width, InTexture.height, 24);
+				RTex [count].antiAliasing = InTexture.antiAliasing;
+				Graphics.Blit (InTexture, RTex [count]);
+				materials [count] = Instantiate (InMat);
+				materials [count].SetTexture ("_MainTex", RTex [count]);
+				quads [count].GetComponent<MeshRenderer> ().material = materials [count];
+
+				count++;
+
+			
+
+				counter += timeCap;
+			} else if (!snapshotted && gridMade) {
+				snap.takeSnapshot ();
+				snapshotted = true;
 			}
 		}
 	}

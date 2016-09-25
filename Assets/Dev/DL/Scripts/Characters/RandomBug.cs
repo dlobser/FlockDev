@@ -10,6 +10,10 @@ public class RandomBug : MonoBehaviour {
 
 	GameObject tree;
 
+	public bool rebuild;
+	public string name = "Tree";
+	public GameObject defaultJoint;
+
 	public string 
 	joints= "10",
 	rads= "1",
@@ -25,12 +29,13 @@ public class RandomBug : MonoBehaviour {
 	public string[] swapSelector;
 	public GameObject[] swapGeo;
 
-	public bool rebuild;
+
 
 	TREESharp.TREEModBuild build;
 	TREESharp.TREEModXForm xForm;
 	TREESharp.TREEModCtrl ctrl;
 	TREESharp.TREEModSwapGeo swap;
+
 
 //	public bool reScale = false;
 
@@ -60,17 +65,23 @@ public class RandomBug : MonoBehaviour {
 	public void Form(){
 		if (tree == null) {
 			tree = new GameObject ();
+			tree.transform.parent = this.transform.parent;
+			tree.name = name;
 		} else {
 			Destroy (tree);
 			tree = new GameObject ();
-
+			tree.transform.parent = this.transform.parent;
+			tree.name = name;
 		}
-		build = tree.AddComponent<TREESharp.TREEModBuild> ();
-	
-		ctrl =  tree.GetComponent<TREESharp.TREEModCtrl> ();
 
+		build = tree.AddComponent<TREESharp.TREEModBuild> ();
+		ctrl =  tree.GetComponent<TREESharp.TREEModCtrl> ();
 		xForm = tree.AddComponent<TREESharp.TREEModXForm> ();
 		swap =  tree.AddComponent<TREESharp.TREEModSwapGeo> ();
+
+		if (defaultJoint != null) {
+			build.defaultJoint = defaultJoint;
+		}
 
 		ctrl.autoPopulate = false;
 		ctrl.mods = new TREESharp.TREEMod[3];
