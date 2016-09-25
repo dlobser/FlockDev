@@ -15,7 +15,7 @@ public class ActorData : MonoBehaviour
 	ActorSyncer actSync;
 	private Actor[] actors;
 	string currentActor;
-	private bool canCallFunction = true;
+//	private bool canCallFunction = true;
 
 	// Use this for initialization
 	void Start ()

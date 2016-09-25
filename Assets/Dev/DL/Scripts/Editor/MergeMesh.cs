@@ -13,13 +13,17 @@ public class MergeMesh : MonoBehaviour {
 		while (i < meshFilters.Length) {
 			combine[i].mesh = meshFilters[i].sharedMesh;
 			combine[i].transform = meshFilters[i].transform.localToWorldMatrix;
-			meshFilters[i].gameObject.active = false;
+			//Compiler warns this is obsolete and recoomends the fllowing statement.
+//			meshFilters[i].gameObject.active = false;
+			meshFilters[i].gameObject.SetActive(false);
 			i++;
 		}
 		transform.GetComponent<MeshFilter>().mesh = new Mesh();
 		transform.GetComponent<MeshFilter>().mesh.CombineMeshes(combine);
 		AssetDatabase.CreateAsset( transform.GetComponent<MeshFilter>().mesh, outputPath);
 		AssetDatabase.SaveAssets();
-		transform.gameObject.active = true;
+		//Compiler finds this statement obsolete, substitute follows.
+//		transform.gameObject.active = true;
+		transform.gameObject.SetActive(true);
 	}
 }

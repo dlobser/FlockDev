@@ -13,11 +13,11 @@ public class ActorDataSync : MonoBehaviour
 
 	private List<IndexedPos> indexedPos = new List<IndexedPos> ();
 	private Holobounds hb;
-	private GameObject swarmMaker;
+//	private GameObject swarmMaker;
 	private ActorSyncer actSync;
 	private Actor[] actors;
 
-	private bool canCallFunction = true;
+//	private bool canCallFunction = true;
 
 	void Start ()
 
@@ -27,7 +27,7 @@ public class ActorDataSync : MonoBehaviour
 		GameObject am = GameObject.Find ("ActorManager");
 		ActorManager actorManager = (ActorManager)am.GetComponent (typeof(ActorManager));
 
-		swarmMaker = GameObject.Find ("SwarmSpawnPoint");
+//		swarmMaker = GameObject.Find ("SwarmSpawnPoint");
 
 		actors = actorManager.actors;
 		foreach (Actor a in actors) {

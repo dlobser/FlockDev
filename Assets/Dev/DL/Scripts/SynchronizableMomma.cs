@@ -11,10 +11,10 @@ namespace Holojam.Tools{
 //		public bool useMasterPC = false;
 //		public bool sending = true;
 
-		Vector3 newHeight = Vector3.zero;
+//		Vector3 newHeight = Vector3.zero;
 		public TransformUniversal cpXform;
 		public MommaBirdAnimator momma;
-		float height = 0;
+//		float height = 0;
 
 		bool activated = true;
 

@@ -1,66 +1,50 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using Holojam.Tools;
 
 public class PlayerStateManager : MonoBehaviour
 {
 	public FlockLevel[] flockLevels;
-	//	public GameObject materialsCollection;
 	public GameObject player;
 	public GameObject bug;
 	public GameObject ground;
+	public GameObject audioManagerObject;
+	public GameObject faderManagedObject;
+
 	public Canvas canvas;
 	public Sprite youMustEat;
 	public Sprite timeToDie;
-	public GameObject audioManagerObject;
-
-	public GameObject faderManagedObject;
-
 
 	public float graceTime = 5.0f;
-	public float warnForSeconds=5.0f;
-//	public float blinkForSeconds=5.0f;
-	public bool resetPlayer=false;
+	public float warnForSeconds = 5.0f;
+	public bool resetPlayer = false;
 
-	//is this the best access modifier?
+	//TODO: make private?
 	public PlayerData playerData;
-	public enum ExpState{Living, Warn, Dying};
-
 	private ActorDataSync actorDataSync;
 	private AudioManager audioManager;
-	private float audioTransitionDefaultTime=2.0f;
 	private FaderManager faderManager;
+	private HUDManager hudManager;
 
-	void Awake(){
+	private float audioTransitionDefaultTime = 2.0f;
 
+	void Awake ()
+	{
 		actorDataSync = player.GetComponent<ActorDataSync> ();
 		playerData = new PlayerData ();
 		audioManager = audioManagerObject.GetComponent<AudioManager> ();
 		faderManager = faderManagedObject.GetComponent<FaderManager> ();
+		hudManager = GetComponentInParent<HUDManager> ();
 	}
 
-
-	// Use this for initialization
 	void Start ()
 	{
-
-		playerData.actorName=actorDataSync.currentActor;
-
+		playerData.actorName = actorDataSync.currentActor;
 		LoadLevel (0);
-
-		UpdateHUD("hide");
-
-	}
-
-	void ResetPlayer ()
-	{
-		//reset all player variables
-		playerData.resetPlayerData ();
-		LoadLevel (0);
-		UpdateHUD("hide");
+		hudManager.UpdateHUD ("hide");
 	}
 
 	// Update is called once per frame
@@ -70,24 +54,19 @@ public class PlayerStateManager : MonoBehaviour
 		//this will be the main consumer of the bugsEaten timeline.
 		CheckPlayerLevel ();	
 		CheckExpState ();
+		//currently resetPlayer is a checkbox in the Editor UI for testing, needs to be triggered by zones.
+		//TODO: master sync will reset the player IRL based on zones. 
 		if (resetPlayer) { 
-			playerData.resetPlayerData ();
-			LoadLevel (0);
-			UpdateHUD("hide");
-			//TODO: notify actorDataSync to zero out the player. 
-
+			ResetPlayer ();
 			resetPlayer = false;
-
 		}
 	}
 
-	//This looks at how many bugs the current player has eaten as a basis for level, 
+	//This looks at how many bugs the current player has eaten as a basis for level loading and playerState.
 	public void CheckPlayerLevel ()
 	{ 
 		int bugsAte = actorDataSync.ActorBugsEaten ();
-
 		int i = Array.FindLastIndex (flockLevels, w => w.bugsEatenMinimum <= bugsAte);	
-
 		if (i > playerData.level) {
 			Debug.Log ("Current level is " + playerData.level + " level should be " + i + " so changing level");
 			LoadLevel (i);
@@ -96,17 +75,17 @@ public class PlayerStateManager : MonoBehaviour
 		}
 	}
 
-	//This also looks at bugs eaten within a time. 
+	//This also looks at bugs eaten within a time.
 	public void CheckExpState ()
 	{
-		//Does the current level has a bugs eaten with time requirement
-		if (flockLevels [playerData.level].bugsNeededForTime != null) { 
+		//Does the current level have a bugs eaten with time requirement
+		if (flockLevels [playerData.level].bugsNeededForTime != 0) { 
 			//Allow a grace time at the beginning of the level. and note current player state. 
-			if (playerData.levelStartTime + graceTime < Time.time && playerData.expState!=ExpState.Warn&&playerData.expState!=ExpState.Dying) {
+			if (playerData.levelStartTime + graceTime < Time.time && playerData.expState != ExpState.Warn && playerData.expState != ExpState.Dying) {
 				//Warn if not enough bugs have been eaten within the time range.
 				if (playerData.bugsEatenSince (Time.time - flockLevels [playerData.level].bugTime) < flockLevels [playerData.level].bugsNeededForTime) {
 					Debug.Log ("not enough bugs!");
-					UpdateHUD ("warn");
+					hudManager.UpdateHUD ("warn");
 					playerData.expState = ExpState.Warn;
 					playerData.dyingTime = Time.time + warnForSeconds;
 				}
@@ -115,43 +94,18 @@ public class PlayerStateManager : MonoBehaviour
 		//A warning before dying in this case
 		//TODO: after a certain amount of time even if no warn (total time since last reset) 
 		//player can die without warning  
-		if (playerData.expState == ExpState.Warn && Time.time> playerData.dyingTime) { 
-			UpdateHUD ("die");
+		if (playerData.expState == ExpState.Warn && Time.time > playerData.dyingTime) { 
+			hudManager.UpdateHUD ("die");
 			playerData.expState = ExpState.Dying;
-//			playerData.dyingTime = Time.time + warnForSeconds;
 		}
-
 	}
 
-	public void UpdateHUD (string HUDState)
+	void ResetPlayer ()
 	{
-		if (canvas == null) {
-			return;
-		}
-		switch (HUDState) {
-		case "hide":
-			{
-				canvas.enabled = false;
-				break;
-			}
-		case "warn":
-			{
-				Image image = canvas.GetComponentsInChildren<Image> () [0];
-				image.sprite = youMustEat;
-				canvas.enabled = true;
-				break;		
-			}
-		case "die":
-			{
-				Image image = canvas.GetComponentsInChildren<Image> () [0];
-				image.sprite = timeToDie;
-				canvas.enabled = true;
-
-				break;
-
-			}
-		}
-
+		//reset all player variables
+		playerData.resetPlayerData ();
+		LoadLevel (0);
+		hudManager.UpdateHUD ("hide");
 	}
 
 	private FlockLevel GetFlockLevel (int lvl)
@@ -162,7 +116,6 @@ public class PlayerStateManager : MonoBehaviour
 
 	public void LoadLevel (int _level)
 	{
-
 		FlockLevel levelToLoad = GetFlockLevel (_level);
 
 		if (player != null) {
@@ -171,115 +124,23 @@ public class PlayerStateManager : MonoBehaviour
 			if (levelToLoad.avatarMaterial != null) { 
 				player.GetComponent<MeshRenderer> ().material = levelToLoad.avatarMaterial;
 			}
-
+			//TODO: should swapmaterial go here? 
 			if (levelToLoad.bugMaterial != null) { 
 				bug.GetComponent<MeshRenderer> ().material = levelToLoad.bugMaterial;
 			}
-
 			if (levelToLoad.environmentMaterial != null) { 
 				ground.GetComponent<MeshRenderer> ().material = levelToLoad.environmentMaterial;
 			}
 			if (levelToLoad.audioSnapshotName != null && levelToLoad.audioSnapshotName != "") {
-				audioManager.TransitionAudio (levelToLoad.audioSnapshotName,audioTransitionDefaultTime);
+				audioManager.TransitionAudio (levelToLoad.audioSnapshotName, audioTransitionDefaultTime);
 			}
-
 			//fader object stand in
-			if (levelToLoad.faderLevel!=null) { 
+			if (levelToLoad.faderLevel != 0.0f) { 
 				faderManager.level = levelToLoad.faderLevel;
 			}
-
-				} else {
+		} else {
 			Debug.Log ("no player!");
 		}
-
 		Debug.Log ("Loaded FlockLevel " + _level);
-//		Debug.Log (i.ToString());
-
-	}
-
-
-	[Serializable]
-	public class FlockLevel
-	{
-
-		public int level;
-		public int bugsEatenMinimum;
-
-		//time management
-		public float bugTime;
-		public int bugsNeededForTime;
-
-		//Environment
-		public Material environmentMaterial;
-
-		//Avatar
-		public Material avatarMaterial;
-
-		//Bugs
-//		public float bugFaderValue;
-		public Material bugMaterial;
-
-		//Audio
-		public string audioSnapshotName;
-
-		//Faded Object
-		public float faderLevel;
-
-		//ZONE
-
-		//special actions
-	}
-
-	public class PlayerData
-	{
-			
-		public ExpState expState;
-		public int level { get; set; }
-		public float dyingTime;
-		public string actorName="";
-		private List<float> bugsEatenLog;
-		private int bugsEaten = 0;
-
-		public PlayerData ()
-		{
-			level = 0;
-			bugsEatenLog = new List<float> ();
-			expState=ExpState.Living;
-		}
-
-		public float levelStartTime=0.0f;
-
-		public void resetPlayerData ()
-		{ 
-			level = 0;
-			bugsEaten = 0;
-			bugsEatenLog = new List<float> ();
-			expState = ExpState.Living;
-		}
-
-		public void addBugEaten ()
-		{
-			bugsEaten++;
-			bugsEatenLog.Add (Time.time);
-			if (expState == ExpState.Warn) { 
-				expState = ExpState.Living;
-			}
-		}
-
-		public int bugsEatenSince (float since)
-		{
-			float whichSince = since;
-//			float whichSince = Time.time - since;
-			if (bugsEatenLog != null) {
-				return bugsEatenLog.FindAll (b => b > whichSince).Count;
-			} else {
-				return 0;
-			}
-		}
-
-		public int bugsAte ()
-		{ 
-			return bugsEaten;
-		}
 	}
 }

@@ -112,12 +112,16 @@
      <Compile Include="Assets\Dev\ckromero\Scripts\BugManager\Bug_cs__Single_Synch__.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\DebugX.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\Environment.cs" />
+     <Compile Include="Assets\Dev\ckromero\Scripts\ExpState.cs" />
+     <Compile Include="Assets\Dev\ckromero\Scripts\FlockLevel.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\FlySync.cs" />
+     <Compile Include="Assets\Dev\ckromero\Scripts\HUDManager.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\IndexedPos.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\LevelTestBug.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\Materials.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\MoreBugs.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\NiceJson.cs" />
+     <Compile Include="Assets\Dev\ckromero\Scripts\PlayerData.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\PlayerStateManager.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\Spawner.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\UpdateAndYield.cs" />

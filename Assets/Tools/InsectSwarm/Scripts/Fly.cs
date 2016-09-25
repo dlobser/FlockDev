@@ -16,7 +16,7 @@ public class Fly : MonoBehaviour {
 	public bool active = false;
 	public float deadForHowLong;
 
-	ActorData actorData;
+//	ActorData actorData;
 	private Vector3 prevPosition;
 	Quaternion prev = Quaternion.identity;
 	MeshRenderer meshRend;
@@ -30,7 +30,7 @@ public class Fly : MonoBehaviour {
 	void Start(){
 
 		synchronizable = GetComponent<Synchronizable> ();
-		actorData = GetComponent<ActorData> (); 
+//		actorData = GetComponent<ActorData> (); 
 
 
 //		if (!Holojam.Utility.IsMasterPC ()) { 

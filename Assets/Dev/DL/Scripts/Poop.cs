@@ -10,7 +10,7 @@ public class Poop : MonoBehaviour {
 	Vector3 scalar = Vector3.zero;
 	AudioSource aud;
 	Material swapMaterial;
-	bool enabled = false;
+	new bool enabled = false;
 	bool killed = false;
 
 	// Use this for initialization

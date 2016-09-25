@@ -5,7 +5,7 @@ public class SpriteAimer: MonoBehaviour {
 
 	public int X;
 	public int Y;
-	int amount;
+//	int amount;
 	int frame;
 	float angle;
 	Mesh mesh;
@@ -41,7 +41,7 @@ public class SpriteAimer: MonoBehaviour {
 
 		angle = 0.5f;
 		ID = Random.value;
-		amount = X * Y;
+//		amount = X * Y;
 		mesh = GetComponent<MeshFilter>().mesh;
 		initUV = new Vector2[mesh.uv.Length];
 

@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+﻿#pragma warning disable
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
 namespace TREESharp{
 	public class TREE : MonoBehaviour {
 

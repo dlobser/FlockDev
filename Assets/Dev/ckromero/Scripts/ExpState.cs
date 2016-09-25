@@ -1,0 +1,1 @@
+﻿public enum ExpState{Living, Warn, Dying};

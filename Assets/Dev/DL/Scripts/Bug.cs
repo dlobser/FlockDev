@@ -28,8 +28,8 @@ public class Bug : Synchronizable{
 	void Awake(){
 		//Okay to do in Awake
 		bb = GameObject.Find("BugManager").GetComponent<BugManager>();
-
-		viewer = GameObject.Find("Viewer").GetComponent<Holojam.Tools.Viewer>();
+//TODO: does this need to be invoked. commented out due to Warning.
+//		viewer = GameObject.Find("Viewer").GetComponent<Holojam.Tools.Viewer>();
 
 		materialSwapper = GetComponent<MaterialSwapper>();
 
@@ -78,7 +78,7 @@ public class Bug : Synchronizable{
 		
 		if(!sending || active!=1)return;
 		Holojam.Tools.Actor a = c.GetComponent<Holojam.Tools.Actor>();
-		Holojam.Tools.Viewer v =  c.GetComponent<Holojam.Tools.Viewer>();
+//		Holojam.Tools.Viewer v =  c.GetComponent<Holojam.Tools.Viewer>();
 		if(a!=null){
 
 			// add to bugsEaten for the colliding actor!!!!
