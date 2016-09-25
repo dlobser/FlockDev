@@ -33,5 +33,15 @@ namespace Holojam.Tools{
 				Debug.Log (s);
 			}
 		}
+		public static void clearConsole() { 
+			instance.clearConsole ();
+		}
+		public static void enableDisplay(){
+			instance.enableDisplay();
+		}
+		public static void disableDisplay() { 
+			instance.disableDisplay ();
+		}
+
 	}
 }

@@ -39,11 +39,18 @@ namespace Holojam.Tools{
 			privateCache += freshStrings;
 			freshStrings = "";
 		}
-
+		//TODO: This on a mouse click debug information (headset name!) should be displayed!
 		private void toggleDisplay() {
 			if (Input.GetKeyDown (KeyCode.Mouse0)) {
 				getConsole ().GetComponent<Renderer> ().enabled = !getConsole ().GetComponent<Renderer> ().enabled;
 			}
+		}
+
+		public void enableDisplay() { 
+			getConsole ().GetComponent<Renderer> ().enabled = true;
+		}
+		public void disableDisplay() { 
+			getConsole ().GetComponent<Renderer> ().enabled = false;
 		}
 
 		private TextMesh getConsole() {
@@ -57,8 +64,8 @@ namespace Holojam.Tools{
 		private void setText(string s) {
 			getConsole ().text = s;
 		}
-
-		void clearConsole () {
+		//HACK: made this public!
+		public void clearConsole () {
 			setText ("");
 		}
 

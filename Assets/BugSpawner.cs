@@ -4,8 +4,8 @@ using System.Collections;
 public class BugSpawner : MonoBehaviour {
 	public GameObject actorSynchronizable;
 
-	private ActorDataSync actorDataSync = new ActorDataSync ();
-	private Vector3 moveTo = new Vector3 ();
+	private ActorDataSync actorDataSync;
+	private Vector3 moveTo;
 
 	// Use this for initialization
 	void Start () {
