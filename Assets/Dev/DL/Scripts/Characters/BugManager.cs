@@ -35,6 +35,8 @@ public class BugManager : MonoBehaviour {
 
 	public bool rebuild = false;
 
+	GameObject spawnPoint;
+
 
 	void Awake(){
 		Build ();
@@ -48,6 +50,10 @@ public class BugManager : MonoBehaviour {
 			for (int i = 0; i < amount; i++) {
 				Destroy (bugs [i].gameObject);
 			}
+		}
+
+		if (spawnPoint == null) {
+			spawnPoint = GameObject.Find ("BugSpawnPoint");
 		}
 
 		amount = gridWidth * gridWidth;
@@ -140,12 +146,10 @@ public class BugManager : MonoBehaviour {
 		if (!init)
 			return;
 		else {
+			Vector3 rand = Random.insideUnitSphere;
+			b.origin = spawnPoint.transform.position + new Vector3(rand.x,b.transform.position.y,rand.z) * scale * (gridWidth * .5f);
 			ParticleSystem p = Instantiate (part, b.transform.position, Quaternion.identity) as ParticleSystem;
 			p.Emit (10);
-//			Debug.Log (c.name + " collided with Bug " + b.name);
-
 		}
-		//do something about state here
-		//eg increment 'bugs eaten' var
 	}
 }
