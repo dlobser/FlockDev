@@ -24,4 +24,25 @@ public static class DLUtility {
 		a.transform.localScale = b.transform.localScale;
 		a.transform.eulerAngles = b.transform.eulerAngles;
 	}
+
+	public static Transform GetClosestGameObject (Transform GO, Transform[] GOS)
+	{
+		Transform bestTarget = null;
+		float closestDistanceSqr = Mathf.Infinity;
+		Vector3 currentPosition = GO.transform.position;
+		foreach(Transform potentialTarget in GOS)
+		{
+			Vector3 directionToTarget = potentialTarget.position - currentPosition;
+			float dSqrToTarget = directionToTarget.sqrMagnitude;
+			if(dSqrToTarget < closestDistanceSqr && dSqrToTarget>.0001f)
+			{
+				closestDistanceSqr = dSqrToTarget;
+				bestTarget = potentialTarget;
+			}
+		}
+
+		return bestTarget;
+	}
+
+
 }

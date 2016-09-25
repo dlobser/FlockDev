@@ -1,5 +1,6 @@
-
 using UnityEngine;
+using System.Collections;
+
 
 public class BugManager : MonoBehaviour {
 //	public Bug bug;
@@ -14,7 +15,13 @@ public class BugManager : MonoBehaviour {
 	int amount;
 
 	public Bug[] bugs;
+	Transform[] nearestActors;
+	Vector3[] nearestBugOriginOffset;
+	Vector3[] nearestBugLerp;
 	Vector3[] targets;
+	Transform[] actors;
+
+	Vector3[] noiseVecs;
 
 	float noiseCounter = 0;
 	public float noiseSpeed = 1f;
@@ -26,13 +33,38 @@ public class BugManager : MonoBehaviour {
 	ImageTools.Core.PerlinNoise PNoise;
 	public ParticleSystem part;
 
+	public bool rebuild = false;
+
 
 	void Awake(){
+		Build ();
+	
+	}
+
+	void Build(){
 		if(!Application.isPlaying)return;
+
+		if (rebuild) {
+			for (int i = 0; i < amount; i++) {
+				Destroy (bugs [i].gameObject);
+			}
+		}
 
 		amount = gridWidth * gridWidth;
 		bugs = new Bug[amount];
+		nearestActors = new Transform[amount];
 		targets = new Vector3[amount];
+		nearestBugOriginOffset = new Vector3[amount];
+		nearestBugLerp = new Vector3[amount];
+		noiseVecs = new Vector3[amount];
+
+		Transform actorManager = GameObject.Find ("ActorManager").transform;
+		actors = new Transform[actorManager.childCount];
+
+		for (int i = 0; i < actors.Length; i++) {
+			actors [i] = actorManager.GetChild (i);
+		}
+
 
 		PNoise = new ImageTools.Core.PerlinNoise (1);
 
@@ -50,18 +82,25 @@ public class BugManager : MonoBehaviour {
 				bugs [x + gridWidth * y] = myBug.GetComponent<Bug> ();
 				bugs [x + gridWidth * y].label = label;
 				bugs [x + gridWidth * y].origin = pos;
+				nearestBugLerp [x + gridWidth * y] = pos;
 			}
 		}
 
+		StartCoroutine (FindNearestBugs ());
 		init = true;
+
 	}
 
 	void Update(){
 		if(init)
 			UpdateBugPosition ();
-
-
+		if (rebuild) {
+			Build ();
+			rebuild = false;
+		}
 	}
+
+
 
 	void UpdateBugPosition(){
 		for (int i = 0; i < amount; i++) {
@@ -69,20 +108,29 @@ public class BugManager : MonoBehaviour {
 			float scale = noiseScale*.01f;
 			float wScale = noiseWorldScale;
 			noiseCounter += noiseSpeed * Time.deltaTime;
+			if(nearestActors[i]!=null)
+				nearestBugLerp[i] = Vector3.Lerp (nearestBugLerp[i], nearestActors [i].transform.position, .05f);
+			nearestBugOriginOffset [i].Set (bugs [i].origin.x, nearestBugLerp [i].y, bugs [i].origin.z);
 			Vector3 newPos = bugs [i].origin;
-			newPos = newPos + new Vector3 (
+			newPos = nearestBugOriginOffset[i] + new Vector3 (
 				scale * (float)PNoise.Noise (wScale * newPos.x + noiseCounter + off, noiseCounter + newPos.y * wScale, noiseCounter + wScale * newPos.z),
 				scale * (float)PNoise.Noise (wScale * newPos.x + noiseCounter, wScale * newPos.y + noiseCounter + off, noiseCounter + wScale * newPos.z),
 				scale * (float)PNoise.Noise (wScale * newPos.x + noiseCounter, wScale * newPos.y + noiseCounter, noiseCounter + wScale * newPos.z + off));
 			bugs [i].transform.position = newPos;
-
-
 		} 
 
 	}
+
+	IEnumerator FindNearestBugs(){
+		while (true) { 
+			for (int i = 0; i < amount; i++) {
+				nearestActors [i] = DLUtility.GetClosestGameObject (bugs [i].transform, actors);
+				yield return new WaitForSeconds (0);
+			}
+		}
+	}
+
 	void UpdateBugAppearance(Bug b){
-
-
 //		b.renderers[0].material=
 		Debug.Log (b);
 	}
