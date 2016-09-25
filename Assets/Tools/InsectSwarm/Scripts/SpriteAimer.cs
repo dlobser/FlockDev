@@ -70,7 +70,7 @@ public class SpriteAimer: MonoBehaviour {
 		offsetCounter += speed * Time.deltaTime;
 		float angle = offsetCounter + ID*IDOffset;
 		SetFrame (angle);
-		SetAngle (angle);
+//		SetAngle (angle);
 		Aim ();
 	}
 

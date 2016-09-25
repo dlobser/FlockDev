@@ -62,12 +62,17 @@
      <Compile Include="Assets\Dev\DL\Scripts\FaderManager.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\FaderMaterialColor.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\FaderMaterialRGBMat.cs" />
+     <Compile Include="Assets\Dev\DL\Scripts\FaderMaterialTexSwitcher.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\FeatherFollow.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\GetAverageHeight.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\MaterialSwapper.cs" />
+     <Compile Include="Assets\Dev\DL\Scripts\MaterialSwapperContinuous.cs" />
+     <Compile Include="Assets\Dev\DL\Scripts\MaterialSwapperPingPong.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\MommaBirdAnimator.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Poop.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\RandomBug.cs" />
+     <Compile Include="Assets\Dev\DL\Scripts\SetMeshAttributes.cs" />
+     <Compile Include="Assets\Dev\DL\Scripts\SetTextureArray.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\SynchronizableMomma.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\SynchronizablePoop.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Utility\DLUtility.cs" />
@@ -213,6 +218,7 @@
      <None Include="Assets\Dev\DL\Shaders\RGBRemapSimpleTransparent.shader" />
      <None Include="Assets\Dev\DL\Shaders\noiseSimplex.cginc" />
      <None Include="Assets\Tools\InsectSwarm\MatShadTex\SpriteShader.shader" />
+     <None Include="Assets\Dev\DL\Shaders\RGBRemapSimpleTransparentMultiTex.shader" />
      <None Include="Assets\VRPanorama\Shaders\FadeVRtd.shader" />
      <None Include="Assets\Dev\DL\Shaders\UnlitVertexColorsTester.shader" />
      <None Include="Assets\VRPanorama\Shaders\VRCube.shader" />
@@ -233,6 +239,7 @@
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderYUV.shader" />
      <None Include="Assets\Dev\DL\Shaders\lineWarper.shader" />
      <None Include="Assets\Standard Assets\Effects\AntiAliasing\SMAA\Resources\SMAA.cginc" />
+     <None Include="Assets\Dev\DL\Shaders\RGBRemapSimpleTransparentFade.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseAndGrainDX11.shader" />
      <None Include="Assets\VRPanorama\Shaders\unwrapShader.shader" />
      <None Include="Assets\Standard Assets\Effects\TonemappingColorGrading\Resources\TonemappingColorGrading.shader" />
