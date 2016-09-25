@@ -28,6 +28,8 @@ public class ActorDataSync : MonoBehaviour
 		ActorManager actorManager = (ActorManager)am.GetComponent (typeof(ActorManager));
 
 //		swarmMaker = GameObject.Find ("SwarmSpawnPoint");
+		GameObject hbgo = GameObject.Find ("Holobounds");
+		hb = (Holobounds)hbgo.GetComponent (typeof(Holobounds));
 
 		actors = actorManager.actors;
 		foreach (Actor a in actors) {
@@ -109,7 +111,7 @@ public class ActorDataSync : MonoBehaviour
 
 	//TODO: this could really use a unit test to ensure sane boundaries.
 	//returns a reasonably uncrowded spot in the holobounds
-	private Vector3 GetGoodSpawnPoint ()
+	public Vector3 GetGoodSpawnPoint ()
 	{
 //		Vector3 result = new Vector3 ();
 
