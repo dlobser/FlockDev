@@ -20,6 +20,8 @@ namespace Holojam.Tools{
       Motive.Tag cachedBuildTag;
       bool cachedPreviewMode = false;
 
+		public bool reindex = false;
+
       //Get the current build actor (re-index if necessary)
       [HideInInspector] public Actor ba;
       public Actor buildActor{get{
@@ -32,6 +34,11 @@ namespace Holojam.Tools{
          //Force index in case prefabs are updated (will increase logging!)
          if(!Application.isPlaying || runtimeIndexing)
             Index(Application.isEditor && !Application.isPlaying);
+
+			if (reindex) {
+				Index (true);
+				reindex = false;
+			}
       }
 
       enum Result{INDEXED,PASSED,EMPTY,NOBUILD,NOVIEW};
