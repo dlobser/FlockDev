@@ -8,12 +8,23 @@ public class ActorSyncer : MonoBehaviour
 {
 	public Synchronizable synchronizable;
 
+	private ActorSetJSON capturedASJ;
+	private ActorSetJSON revisedASJ;
+	private ActorJson naj;
+	private List<ActorJson> ls;
+	private List<int> bugsEatenTime;
 	// Use this for initialization
 	void Start ()
 	{
 		synchronizable = GetComponent<Synchronizable> ();
 		synchronizable.label = "ActorSyncer";
+
 		synchronizable.synchronizedString = "";
+		capturedASJ = new ActorSetJSON ();
+		revisedASJ = new ActorSetJSON ();
+		naj = new ActorJson ();
+		ls = new List<ActorJson> ();
+		bugsEatenTime = new List<int> ();
 
 	}
 	public void PrintSyncString(){
@@ -27,8 +38,6 @@ public class ActorSyncer : MonoBehaviour
 	public void SendSyncStringData (string data)
 	{ 
 		if (data != null && data != "") {  
-			ActorSetJSON capturedASJ = new ActorSetJSON ();
-			ActorSetJSON revisedASJ = new ActorSetJSON ();
 
 			//search the current synchronized string and see if any data is associated with the current actor (data).
 			if (synchronizable.synchronizedString != null && synchronizable.synchronizedString != "") { 
@@ -38,7 +47,7 @@ public class ActorSyncer : MonoBehaviour
 				for (int i = 0; i < casjLength; i++) {
 					if (capturedASJ.actors [i].actorIndex == data) {
 						capturedASJ.actors [i].bugsEaten++;	
-						capturedASJ.actors [i].bugTime.Add (Time.time);
+						capturedASJ.actors [i].bugTime.Add ((int)Time.time);
 						revisedASJ = capturedASJ;
 						foundExistingActor = true;
 						break;
@@ -47,13 +56,14 @@ public class ActorSyncer : MonoBehaviour
 
 				//data is already stored for other actors but not for this one yet. 
 				if (!foundExistingActor) {
-					ActorJson naj = new ActorJson ();
+//					naj = default(ActorJson);
+
 					naj.actorIndex = data;
 					naj.bugsEaten = 1;
-					naj.bugTime = new List<float> ();
-					naj.bugTime.Add (Time.time);
+					naj.bugTime = new List<int> ();
+					naj.bugTime.Add ((int)Time.time);
 
-					List<ActorJson> ls = new List<ActorJson> ();
+//					List<ActorJson> ls = new List<ActorJson> ();
 						
 					ls.Add (naj);
 					int ct = capturedASJ.actors.Length;
@@ -66,12 +76,13 @@ public class ActorSyncer : MonoBehaviour
 				}
 			} else { 
 				//initiate the synchronized string by adding the current actor
-				ActorJson naj = new ActorJson ();
+//				ActorJson naj = new ActorJson ();
+//				naj = default(ActorJson);
 				naj.actorIndex = data;
 				naj.bugsEaten = 1;
-				naj.bugTime = new List<float> ();
-				naj.bugTime.Add (Time.time);
-				List<ActorJson> ls = new List<ActorJson> ();
+				naj.bugTime = new List<int> ();
+				naj.bugTime.Add ((int)Time.time);
+
 				ls.Add (naj);
 				revisedASJ.actors = ls.ToArray ();
 			}
@@ -82,7 +93,7 @@ public class ActorSyncer : MonoBehaviour
 	}
 
 	public int checkBugsEaten(string actor) { 
-		ActorSetJSON capturedASJ = new ActorSetJSON ();	
+		capturedASJ = default (ActorSetJSON);	
 		if (synchronizable.synchronizedString != null && synchronizable.synchronizedString != "") { 
 			capturedASJ = JsonUtility.FromJson<ActorSetJSON> (synchronizable.synchronizedString);
 			int casjLength = capturedASJ.actors.Length;
@@ -98,8 +109,8 @@ public class ActorSyncer : MonoBehaviour
 
 	public int checkBugsEatenSince(string actor, float sinceTime) {
 		//access actor 
-		ActorSetJSON capturedASJ = new ActorSetJSON ();
-		List<float> bugsEatenTime = new List<float> ();
+		capturedASJ = default( ActorSetJSON );
+		bugsEatenTime = default (List<int>);
 		bool foundTimeList = false;
 			
 		if (synchronizable.synchronizedString != null && synchronizable.synchronizedString != "") { 

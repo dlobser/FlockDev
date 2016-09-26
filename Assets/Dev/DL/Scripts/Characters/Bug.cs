@@ -86,7 +86,7 @@ public class Bug : Synchronizable{
 				if (Time.time > 1 && collisionAllowed ) {
 					StartCoroutine(CloseCollisionWindow ());
 					if (c.name != null && c.name!="") {
-						Debug.Log (this.name + " collided with " + c.transform.parent.name + " at " + Time.time);
+//						Debug.Log (this.name + " collided with " + c.transform.parent.name + " at " + Time.time);
 						actorDataSync.UpdateActor( c.name,this.name,1);
 					}
 				}

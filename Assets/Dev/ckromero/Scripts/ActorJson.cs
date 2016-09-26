@@ -9,6 +9,6 @@ public class ActorJson
 	public string actorIndex;
 	public float sessionTime;
 	public int bugsEaten;
-	public List<float> bugTime;
+	public List<int> bugTime;
 
 }
