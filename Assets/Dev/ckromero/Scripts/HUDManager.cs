@@ -5,6 +5,9 @@ using Holojam.Tools;
 
 class HUDManager : MonoBehaviour
 {
+
+	public string hudState="hide";
+
 //	public Canvas canvas;
 //	public Sprite youMustEat = new Sprite ();
 //	public Sprite timeToDie = new Sprite ();
@@ -19,8 +22,8 @@ class HUDManager : MonoBehaviour
 			{
 				VRDebug.disableDisplay ();
 				VRDebug.clearConsole ();
-				
-//				canvas.enabled = false;
+				hudState = "hide";
+				//				canvas.enabled = false;
 				break;
 			}
 		case "warn":
@@ -29,6 +32,7 @@ class HUDManager : MonoBehaviour
 				VRDebug.print ("you must eat in order to live");
 				VRDebug.enableDisplay ();
 
+				hudState = "warn";
 //				Image image = canvas.GetComponentsInChildren<Image> () [0];
 //				if (youMustEat != null) {
 //					image.sprite = youMustEat;
@@ -42,6 +46,8 @@ class HUDManager : MonoBehaviour
 				VRDebug.clearConsole ();
 				VRDebug.enableDisplay ();
 				VRDebug.print ("you are dying now");
+				hudState = "dying";
+
 //				Image image = canvas.GetComponentsInChildren<Image> () [0];
 //				image.sprite = timeToDie;
 //				canvas.enabled = true;
@@ -52,6 +58,8 @@ class HUDManager : MonoBehaviour
 				VRDebug.clearConsole ();
 				VRDebug.enableDisplay ();
 				VRDebug.print ("please remove your headset");
+				hudState = "sessionComplete";
+
 				break;
 			}
 		}

@@ -13,7 +13,7 @@ public class PlayerStateManager : MonoBehaviour
 
 	public GameObject audioManagerObject;
 	public GameObject faderManagerObject;
-	public GameObject speedManagerObject; 
+	public GameObject speedManagerObject;
 
 	public Canvas canvas;
 	public Sprite youMustEat;
@@ -22,8 +22,8 @@ public class PlayerStateManager : MonoBehaviour
 	public float graceTime = 5.0f;
 	public float warnForSeconds = 5.0f;
 	public bool resetPlayer = false;
-	public float allowedSessionTime=30.0f;
-	public float timeLeftToDie=5.0f;
+	public float allowedSessionTime = 30.0f;
+	public float timeLeftToDie = 5.0f;
 
 	//TODO: make private?
 	public PlayerData playerData;
@@ -76,29 +76,24 @@ public class PlayerStateManager : MonoBehaviour
 	{	
 		//This is a player that is ready to be born
 		//TODO: consider zone here as well
-		if (playerData.expState == ExpState.ReadyToLive && playerData.zone.name=="readyZone") {
-
+		if (playerData.expState == ExpState.ReadyToLive && playerData.zone.name == "readyZone") {
 			resetPlayer = true;
 		} else {
 
 			//This is a player that is about to die
 			if (playerData.level == 9) { 
 				//if time left to die > time int level ELSE session complete
-				float t = Time.time;
-				if (Time.time - playerData.sessionStartTime + graceTime > allowedSessionTime) { 
+				if (Time.time - playerData.sessionStartTime + graceTime > allowedSessionTime && !isDead) { 
+					hudManager.UpdateHUD ("sessionComplete");
+					playerData.expState = ExpState.ReadyToLive;
 					isDead = true;
 				}
 				//if player is in the dead zone
 				//and player is holding still (transformation < .1m)
 				//begin death animation
 				//if complete fade to black, instruct to remove headset
-				if (isDead) {
-					hudManager.UpdateHUD ("sessionComplete");
-					playerData.expState = ExpState.ReadyToLive;
-					isDead = false;
-				}
 			} else {
-
+				//review current level
 				bugsAte = actorDataSync.ActorBugsEaten ();
 				int i = Array.FindLastIndex (flockLevels, w => w.bugsEatenMinimum <= bugsAte);	
 				if (i > playerData.level) {
