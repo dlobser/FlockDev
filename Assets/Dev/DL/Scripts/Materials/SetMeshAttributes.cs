@@ -18,9 +18,9 @@ public class SetMeshAttributes : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		Set ();
-	}
+//	void Update () {
+//		Set ();
+//	}
 
 	public void Set(){
 

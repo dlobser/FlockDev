@@ -58,7 +58,7 @@ public class ChooseHeadset : MonoBehaviour {
 			taps++;
 			tapCounter = .5f;
 			if (taps == 2) {
-				GameObject.Find ("ChosenHeadset").GetComponent<ChosenHeadset> ().whichHeadset = chosen;
+				GameObject.Find ("ChosenHeadset").GetComponent<ChosenHeadset> ().setHeadset (chosen);
 				SceneManager.LoadScene (1);
 			}
 		}

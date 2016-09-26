@@ -123,6 +123,7 @@ public class BugManager : MonoBehaviour {
 				scale * (float)PNoise.Noise (wScale * newPos.x + noiseCounter, wScale * newPos.y + noiseCounter + off, noiseCounter + wScale * newPos.z),
 				scale * (float)PNoise.Noise (wScale * newPos.x + noiseCounter, wScale * newPos.y + noiseCounter, noiseCounter + wScale * newPos.z + off));
 			bugs [i].transform.position = newPos;
+			bugs [i].transform.GetChild (0).GetComponent<SetMeshAttributes> ().Set ();
 		} 
 
 	}
@@ -146,10 +147,29 @@ public class BugManager : MonoBehaviour {
 		if (!init)
 			return;
 		else {
-			Vector3 rand = Random.insideUnitSphere;
-			b.origin = spawnPoint.transform.position + new Vector3(rand.x,b.transform.position.y,rand.z) * scale * (gridWidth * .5f);
 			ParticleSystem p = Instantiate (part, b.transform.position, Quaternion.identity) as ParticleSystem;
 			p.Emit (10);
+
+		}
+	}
+
+
+	public void SwapTexture(Bug b){
+		if (!init)
+			return;
+		else {
+			b.transform.GetChild(0).gameObject.GetComponent<MaterialSwapperContinuous> ().swapMat ();
+
+		}
+	}
+
+	public void ResetPosition(Bug b){
+		if (!init)
+			return;
+		else {
+			Vector3 rand = Random.insideUnitSphere;
+			b.origin = spawnPoint.transform.position + new Vector3(rand.x,b.transform.position.y,rand.z) * scale * (gridWidth * .5f);
+
 		}
 	}
 }

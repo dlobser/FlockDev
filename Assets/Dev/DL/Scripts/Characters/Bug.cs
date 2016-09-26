@@ -25,6 +25,9 @@ public class Bug : Synchronizable{
 	bool collisionAllowed = true;
 	bool materialSwapAllow = false;
 
+	int prevEmit = -1;
+	int emit = 0;
+
 	void Awake(){
 		//Okay to do in Awake
 		bb = GameObject.Find("BugManager").GetComponent<BugManager>();
@@ -44,25 +47,38 @@ public class Bug : Synchronizable{
 	}
 
 	protected override void Sync(){
+		
+
 		if(sending){
 			synchronizedVector3=transform.position;
-			synchronizedQuaternion = new Quaternion (transform.localScale.x, transform.localScale.y, transform.localScale.z, 1);
+//			synchronizedQuaternion = new Quaternion (transform.localScale.x, transform.localScale.y, transform.localScale.z, 1);
 			synchronizedInt = active;
+			synchronizedString = emit.ToString ()+","+ transform.localScale.x.ToString()+","+ transform.localScale.y.ToString()+","+ transform.localScale.z.ToString();
 		}
 		else{
 			transform.position=synchronizedVector3;
-			transform.localScale = new Vector3 (synchronizedQuaternion.x, synchronizedQuaternion.y, synchronizedQuaternion.z);
+			string[] arr = synchronizedString.Split(new string[]{","},System.StringSplitOptions.None);
+			transform.localScale = new Vector3 (float.Parse(arr[1]), float.Parse(arr[2]),float.Parse(arr[3]));
 			active = synchronizedInt;
+			emit = int.Parse (arr[0]);
 		}
 
-		int bugsEaten = actorDataSync.ActorBugsEaten(); 
-		if (bugsEaten>2){
-			if (materialSwapAllow) {
-				materialSwapper.swapMat ();
-				Debug.Log (this.name + " swapped to material " + renderers [0].material.name);
-				materialSwapAllow = false;
-			}
+		if (prevEmit == 0 && emit == 1) {
+			bb.SendMessage("ProcessCollision", this); //Callback
+			bb.SendMessage("SwapTexture", this); //Callback
+
 		}
+
+		prevEmit = emit;
+
+		int bugsEaten = actorDataSync.ActorBugsEaten(); 
+//		if (bugsEaten>2){
+//			if (materialSwapAllow) {
+//				materialSwapper.swapMat ();
+//				Debug.Log (this.name + " swapped to material " + renderers [0].material.name);
+//				materialSwapAllow = false;
+//			}
+//		}
 
 		ActivateDeactivateRenderer ();
 	}
@@ -91,7 +107,7 @@ public class Bug : Synchronizable{
 					}
 				}
 			} 
-
+			emit = 1;
 			//This handles particle placement
 			bb.SendMessage("ProcessCollision", this); //Callback
 			StartCoroutine(DisableThis());
@@ -119,8 +135,10 @@ public class Bug : Synchronizable{
 		active = 0;
 		doneScalingDown = false;
 		yield return new WaitForSeconds(bb.disableTime);
+		bb.SendMessage ("ResetPosition", this);
 		materialSwapper.swapMat ();
 		active = 1;
+		emit = 0;
 		while (!doneScalingUp) {
 			if (scale < initScale) {
 				scale = Mathf.MoveTowards (scale, initScale, scaleSpeed);
