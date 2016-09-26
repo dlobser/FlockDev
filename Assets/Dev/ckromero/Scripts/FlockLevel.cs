@@ -16,9 +16,6 @@ public class FlockLevel
 	//fader for shaders
 	public float globalFadeLevel;
 
-	//fader for speeds
-	public float speedFaderLevel;
-
 	//Audio
 	public string audioSnapshotName;
 

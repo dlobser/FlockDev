@@ -15,7 +15,7 @@ public class PlayerData
 	private List<float> bugsEatenLog;
 	private int bugsEaten = 0;
 	public float sessionStartTime;
-	public Zone zone;
+	public string zoneName;
 
 	public PlayerData ()
 	{
@@ -23,8 +23,7 @@ public class PlayerData
 		bugsEatenLog = new List<float> ();
 		expState = ExpState.Living;
 		sessionStartTime = Time.time;
-		zone = new Zone ();
-		zone.name = "nowhere";
+		zoneName = "nowhere";
 	}
 
 
