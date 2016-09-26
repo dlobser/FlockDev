@@ -1,1 +1,1 @@
-﻿public enum ExpState{Living, Warn, Dying};
+﻿public enum ExpState{ReadyToLive,Living, Warn, Dying};

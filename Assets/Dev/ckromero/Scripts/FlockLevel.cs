@@ -13,19 +13,14 @@ public class FlockLevel
 	public float bugTime;
 	public int bugsNeededForTime;
 
-	//Environment
-	public Material environmentMaterial;
+	//fader for shaders
+	public float globalFadeLevel;
 
-	//Avatar
-	public Material avatarMaterial;
-
-	//Bugs
-	public Material bugMaterial;
+	//fader for speeds
+	public float speedFaderLevel;
 
 	//Audio
 	public string audioSnapshotName;
 
-	//Faded Object
-	public float faderLevel;
 }
 

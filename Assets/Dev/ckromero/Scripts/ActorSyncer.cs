@@ -13,6 +13,8 @@ public class ActorSyncer : MonoBehaviour
 	private ActorJson naj;
 	private List<ActorJson> ls;
 	private List<int> bugsEatenTime;
+	private string cachedSync="";
+	private int cachedBugsEaten=0;
 	// Use this for initialization
 	void Start ()
 	{
@@ -29,8 +31,6 @@ public class ActorSyncer : MonoBehaviour
 	}
 	public void PrintSyncString(){
 		Debug.Log (synchronizable.synchronizedString);
-			
-
 	}
 	public void resetSync() { 
 		synchronizable.synchronizedString = "";
@@ -93,18 +93,21 @@ public class ActorSyncer : MonoBehaviour
 	}
 
 	public int checkBugsEaten(string actor) { 
-		capturedASJ = default (ActorSetJSON);	
-		if (synchronizable.synchronizedString != null && synchronizable.synchronizedString != "") { 
-			capturedASJ = JsonUtility.FromJson<ActorSetJSON> (synchronizable.synchronizedString);
-			int casjLength = capturedASJ.actors.Length;
-			for (int i = 0; i < casjLength; i++) {
-				if (capturedASJ.actors [i].actorIndex == actor) {
-//					Debug.Log("actor " + actor + " bugs eaten " +capturedASJ.actors [i].bugsEaten); 
-					return capturedASJ.actors [i].bugsEaten;	
+		if (synchronizable.synchronizedString != cachedSync) {
+			capturedASJ = default (ActorSetJSON);	
+			if (synchronizable.synchronizedString != null && synchronizable.synchronizedString != "") { 
+				capturedASJ = JsonUtility.FromJson<ActorSetJSON> (synchronizable.synchronizedString);
+				int casjLength = capturedASJ.actors.Length;
+				for (int i = 0; i < casjLength; i++) {
+					if (capturedASJ.actors [i].actorIndex == actor) {
+						cachedBugsEaten=capturedASJ.actors [i].bugsEaten;	
+					}
 				}
 			}
-		}
-		return 0;
+			cachedSync = synchronizable.synchronizedString;
+		} 
+
+		return cachedBugsEaten;
 	}
 
 	public int checkBugsEatenSince(string actor, float sinceTime) {

@@ -26,7 +26,7 @@ class HUDManager : MonoBehaviour
 		case "warn":
 			{
 				VRDebug.clearConsole ();
-				VRDebug.print ("warning to vrconsole");
+				VRDebug.print ("you must eat in order to live");
 				VRDebug.enableDisplay ();
 
 //				Image image = canvas.GetComponentsInChildren<Image> () [0];
@@ -36,15 +36,22 @@ class HUDManager : MonoBehaviour
 //				canvas.enabled = true;
 				break;		
 			}
-		case "die":
+		case "dying":
 			{
 
-				VRDebug.enableDisplay ();
 				VRDebug.clearConsole ();
-				VRDebug.print ("dying to vrconsole");
+				VRDebug.enableDisplay ();
+				VRDebug.print ("you are dying now");
 //				Image image = canvas.GetComponentsInChildren<Image> () [0];
 //				image.sprite = timeToDie;
 //				canvas.enabled = true;
+				break;
+			}
+		case "sessionComplete":
+			{
+				VRDebug.clearConsole ();
+				VRDebug.enableDisplay ();
+				VRDebug.print ("please remove your headset");
 				break;
 			}
 		}

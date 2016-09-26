@@ -10,10 +10,10 @@ public class PlayerStateManager : MonoBehaviour
 {
 	public FlockLevel[] flockLevels;
 	public GameObject player;
-	public GameObject bug;
-	public GameObject ground;
+
 	public GameObject audioManagerObject;
-	public GameObject faderManagedObject;
+	public GameObject faderManagerObject;
+	public GameObject speedManagerObject; 
 
 	public Canvas canvas;
 	public Sprite youMustEat;
@@ -22,23 +22,31 @@ public class PlayerStateManager : MonoBehaviour
 	public float graceTime = 5.0f;
 	public float warnForSeconds = 5.0f;
 	public bool resetPlayer = false;
+	public float allowedSessionTime=30.0f;
+	public float timeLeftToDie=5.0f;
 
 	//TODO: make private?
 	public PlayerData playerData;
 	private ActorDataSync actorDataSync;
 	private AudioManager audioManager;
 	private FaderManager faderManager;
+	private FaderManager speedManager;
+
 	private HUDManager hudManager;
+	private int bugsAte;
 
 	private float audioTransitionDefaultTime = 2.0f;
+	private bool isDead = false;
 
 	void Awake ()
 	{
 		actorDataSync = player.GetComponent<ActorDataSync> ();
 		playerData = new PlayerData ();
 		audioManager = audioManagerObject.GetComponent<AudioManager> ();
-		faderManager = faderManagedObject.GetComponent<FaderManager> ();
+		faderManager = faderManagerObject.GetComponent<FaderManager> ();
+		speedManager = speedManagerObject.GetComponent<FaderManager> (); 
 		hudManager = GetComponentInParent<HUDManager> ();
+
 	}
 
 	void Start ()
@@ -65,14 +73,41 @@ public class PlayerStateManager : MonoBehaviour
 
 	//This looks at how many bugs the current player has eaten as a basis for level loading and playerState.
 	public void CheckPlayerLevel ()
-	{ 
-		int bugsAte = actorDataSync.ActorBugsEaten ();
-		int i = Array.FindLastIndex (flockLevels, w => w.bugsEatenMinimum <= bugsAte);	
-		if (i > playerData.level) {
-			Debug.Log ("Current level is " + playerData.level + " level should be " + i + " so changing level");
-			LoadLevel (i);
-			playerData.level = i;
-			playerData.levelStartTime = Time.time;
+	{	
+		//This is a player that is ready to be born
+		//TODO: consider zone here as well
+		if (playerData.expState == ExpState.ReadyToLive && playerData.zone.name=="readyZone") {
+
+			resetPlayer = true;
+		} else {
+
+			//This is a player that is about to die
+			if (playerData.level == 9) { 
+				//if time left to die > time int level ELSE session complete
+				float t = Time.time;
+				if (Time.time - playerData.sessionStartTime + graceTime > allowedSessionTime) { 
+					isDead = true;
+				}
+				//if player is in the dead zone
+				//and player is holding still (transformation < .1m)
+				//begin death animation
+				//if complete fade to black, instruct to remove headset
+				if (isDead) {
+					hudManager.UpdateHUD ("sessionComplete");
+					playerData.expState = ExpState.ReadyToLive;
+					isDead = false;
+				}
+			} else {
+
+				bugsAte = actorDataSync.ActorBugsEaten ();
+				int i = Array.FindLastIndex (flockLevels, w => w.bugsEatenMinimum <= bugsAte);	
+				if (i > playerData.level) {
+					Debug.Log ("Current level is " + playerData.level + " level should be " + i + " so changing level");
+					LoadLevel (i);
+					playerData.level = i;
+					playerData.levelStartTime = Time.time;
+				}
+			}
 		}
 	}
 
@@ -95,8 +130,10 @@ public class PlayerStateManager : MonoBehaviour
 		//A warning before dying in this case
 		//TODO: after a certain amount of time even if no warn (total time since last reset) 
 		//player can die without warning  
-		if (playerData.expState == ExpState.Warn && Time.time > playerData.dyingTime) { 
-			hudManager.UpdateHUD ("die");
+		if (playerData.expState == ExpState.Warn && Time.time > playerData.dyingTime || playerData.sessionStartTime > allowedSessionTime) { 
+			LoadLevel (9);
+			playerData.level = 9;
+			hudManager.UpdateHUD ("dying");
 			playerData.expState = ExpState.Dying;
 		}
 	}
@@ -121,24 +158,19 @@ public class PlayerStateManager : MonoBehaviour
 
 		if (player != null) {
 			
-			//Avatar Material
-			if (levelToLoad.avatarMaterial != null) { 
-				player.GetComponent<MeshRenderer> ().material = levelToLoad.avatarMaterial;
-			}
 			//TODO: should swapmaterial go here? 
-			if (levelToLoad.bugMaterial != null) { 
-				bug.GetComponent<MeshRenderer> ().material = levelToLoad.bugMaterial;
-			}
-			if (levelToLoad.environmentMaterial != null) { 
-				ground.GetComponent<MeshRenderer> ().material = levelToLoad.environmentMaterial;
-			}
 			if (levelToLoad.audioSnapshotName != null && levelToLoad.audioSnapshotName != "") {
 				audioManager.TransitionAudio (levelToLoad.audioSnapshotName, audioTransitionDefaultTime);
 			}
-			//fader object stand in
-			if (levelToLoad.faderLevel != 0.0f) { 
-				faderManager.level = levelToLoad.faderLevel;
+			//Fader Manager
+			if (levelToLoad.globalFadeLevel != 0.0f) { 
+				faderManager.level = levelToLoad.globalFadeLevel;
 			}
+			//Speed Manager
+			if (levelToLoad.speedFaderLevel != 0.0f) { 
+				speedManager.level = levelToLoad.speedFaderLevel;
+			}
+
 		} else {
 			Debug.Log ("no player!");
 		}

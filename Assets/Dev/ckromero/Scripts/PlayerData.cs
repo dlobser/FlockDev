@@ -7,20 +7,28 @@ public class PlayerData
 {
 
 	public ExpState expState;
+
 	public int level { get; set; }
+
 	public float dyingTime;
-	public string actorName="";
+	public string actorName = "";
 	private List<float> bugsEatenLog;
 	private int bugsEaten = 0;
+	public float sessionStartTime;
+	public Zone zone;
 
 	public PlayerData ()
 	{
 		level = 0;
 		bugsEatenLog = new List<float> ();
-		expState=ExpState.Living;
+		expState = ExpState.Living;
+		sessionStartTime = Time.time;
+		zone = new Zone ();
+		zone.name = "nowhere";
 	}
 
-	public float levelStartTime=0.0f;
+
+	public float levelStartTime = 0.0f;
 
 	public void resetPlayerData ()
 	{ 
@@ -28,6 +36,7 @@ public class PlayerData
 		bugsEaten = 0;
 		bugsEatenLog = new List<float> ();
 		expState = ExpState.Living;
+		sessionStartTime = Time.time;
 	}
 
 	public void addBugEaten ()
