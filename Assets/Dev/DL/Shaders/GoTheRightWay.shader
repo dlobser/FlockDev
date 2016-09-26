@@ -60,7 +60,7 @@
 				col2*=_Color;
 				float ramp = max(0.0,min(1.0,((i.uv.y-_Data.y)*_Data.z)));
 				col2.a = col.r * _Data.w;
-				col2.a *= ramp;
+				col2.a *= ramp*_Color.a;
 				// apply fog
 				UNITY_APPLY_FOG(i.fogCoord, col);
 				return col2;
