@@ -26,6 +26,7 @@ public class PlayerStateManager : MonoBehaviour
 	public float allowedSessionTime = 30.0f;
 	public float timeLeftToDie = 5.0f;
 	public float maxSpeedToSitStill = 2.0f;
+	public float currentFaderLevel; 
 
 	//TODO: make private?
 	public PlayerData playerData;
@@ -69,6 +70,7 @@ public class PlayerStateManager : MonoBehaviour
 		//this will be the main consumer of the bugsEaten timeline.
 		CheckPlayerLevel ();	
 		CheckExpState ();
+
 		//currently resetPlayer is a checkbox in the Editor UI for testing, needs to be triggered by zones.
 		if (resetPlayer) { 
 			ResetPlayer ();
@@ -112,7 +114,11 @@ public class PlayerStateManager : MonoBehaviour
 			} else {
 				//regular level review
 				bugsAte = actorDataSync.ActorBugsEaten ();
+
 				int i = Array.FindLastIndex (flockLevels, w => w.bugsEatenMinimum <= bugsAte);	
+			
+				faderManager.level = (flockLevels [i + 1].bugsEatenMinimum - flockLevels [i].bugsEatenMinimum) / bugsAte; 
+
 				if (i > playerData.level) {
 					Debug.Log ("Current level is " + playerData.level + " level should be " + i + " so changing level");
 					LoadLevel (i);
