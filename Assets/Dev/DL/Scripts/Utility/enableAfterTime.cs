@@ -14,11 +14,18 @@ public class enableAfterTime : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (!sphere.enabled) {
-			counter += Time.deltaTime;
-			if (counter > time) {
-				sphere.enabled = true;
-				counter = 0;
-			}
+			StartCoroutine (timeUp ());
+		} else if (sphere.enabled) {
+			StopCoroutine (timeUp ());
 		}
+	}
+
+	IEnumerator timeUp(){
+		counter += Time.deltaTime;
+		if (counter > time) {
+			sphere.enabled = true;
+			counter = 0;
+		}
+		yield return new WaitForSeconds (Time.deltaTime);
 	}
 }

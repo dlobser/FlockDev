@@ -116,8 +116,10 @@ public class PlayerStateManager : MonoBehaviour
 				bugsAte = actorDataSync.ActorBugsEaten ();
 
 				int i = Array.FindLastIndex (flockLevels, w => w.bugsEatenMinimum <= bugsAte);	
-			
-				faderManager.level = (flockLevels [i + 1].bugsEatenMinimum - flockLevels [i].bugsEatenMinimum) / bugsAte; 
+
+				if(bugsAte>0)
+					faderManager.level = (flockLevels [i + 1].bugsEatenMinimum - flockLevels [i].bugsEatenMinimum) / bugsAte; 
+				faderManager.level = 0;
 
 				if (i > playerData.level) {
 					Debug.Log ("Current level is " + playerData.level + " level should be " + i + " so changing level");
