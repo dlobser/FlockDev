@@ -24,7 +24,7 @@ public class GetSpeed : MonoBehaviour {
 			averageSpeedOverThirty += instantaneousSpeed;
 			averageSpeedOverThirty /= 31f;
 			averageSpeedOverThousand += (averageSpeedOverThousand*100f)+instantaneousSpeed;
-			averageSpeedOverThousand /= 102f;
+			averageSpeedOverThousand /= 103f;
 			previous = ObjectToTrack.transform.position;
 //			Debug.Log (averageSpeedOverThousand);
 			yield return new WaitForSeconds (Time.deltaTime);

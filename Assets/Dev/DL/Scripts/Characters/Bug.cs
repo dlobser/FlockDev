@@ -96,7 +96,9 @@ public class Bug : Synchronizable{
 		Holojam.Tools.Actor a = c.GetComponent<Holojam.Tools.Actor>();
 		Holojam.Tools.Viewer v =  c.GetComponent<Holojam.Tools.Viewer>();
 		if(a!=null){
-
+			SphereCollider sphere = a.GetComponent<SphereCollider> ();
+			sphere.enabled = false;
+			Debug.Log (sphere);
 			// add to bugsEaten for the colliding actor!!!!
 			if (Holojam.Utility.IsMasterPC ()) {
 				if (Time.time > 1 && collisionAllowed ) {
