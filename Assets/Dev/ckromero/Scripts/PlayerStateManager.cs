@@ -32,7 +32,7 @@ public class PlayerStateManager : MonoBehaviour
 	private ActorDataSync actorDataSync;
 	private AudioManager audioManager;
 	private FaderManager faderManager;
-	private FaderManager speedManager;
+	//	private FaderManager speedManager;
 	private ZoneManager zoneManager;
 	private HUDManager hudManager;
 	private GetSpeed speedObject;
@@ -49,7 +49,7 @@ public class PlayerStateManager : MonoBehaviour
 		playerData = new PlayerData ();
 		audioManager = audioManagerObject.GetComponent<AudioManager> ();
 		faderManager = faderManagerObject.GetComponent<FaderManager> ();
-		speedManager = speedManagerObject.GetComponent<FaderManager> (); 
+//		speedManager = speedManagerObject.GetComponent<FaderManager> (); 
 		hudManager = GetComponentInParent<HUDManager> ();
 		zoneManager = ZoneManagerObject.GetComponent<ZoneManager> ();
 		speedObject = speedManagerObject.GetComponent<GetSpeed> ();
@@ -69,12 +69,9 @@ public class PlayerStateManager : MonoBehaviour
 		//this will be the main consumer of the bugsEaten timeline.
 		CheckPlayerLevel ();	
 		CheckExpState ();
-
 		//currently resetPlayer is a checkbox in the Editor UI for testing, needs to be triggered by zones.
-		//TODO: master sync will reset the player IRL based on zones. 
 		if (resetPlayer) { 
 			ResetPlayer ();
-			resetPlayer = false;
 		}
 	}
 
@@ -85,41 +82,38 @@ public class PlayerStateManager : MonoBehaviour
 		UpdatePlayerZone ();
 		//This is a player that is ready to be born
 		//TODO: consider zone here as well
-		if (playerData.expState == ExpState.ReadyToLive && playerData.zoneName == "readyZone") {
-			resetPlayer = true;
+		if (playerData.expState == ExpState.ReadyToLive){
+			if (playerData.zoneName == "readyZone") {
+				ResetPlayer ();
+				playerData.expState = ExpState.Living;
+			} else {
+				Debug.Log ("standing by for reset");
+			}
 		} else {
 
 			//This is a player that is about to die
 			if (playerData.level == 9) { 
-				
-				//if player is in the dead zone
-				//and player is holding still (transformation < .1m)
-				if (playerData.zoneName == "dyingZone") {
-					if (speedObject.speed < maxSpeedToSitStill && !isAscendTriggered) { 
-						//and player is holding still (transformation < .1m)
-						//begin death animation
-						Debug.Log ("wake up, time to die");
-						isAscendTriggered = true;
-						Ascend ();
+				if (Time.time - playerData.levelStartTime > timeLeftToDie) {
+					Debug.Log ("waiting for player to enter dyingZone");
+					//if player is in the dead zone
+					//and player is holding still (transformation < .1m)
+					if (playerData.zoneName == "dyingZone") {
+						if (speedObject.speed < maxSpeedToSitStill && !isAscendTriggered) { 
+							//and player is holding still (transformation < .1m)
+							//begin death animation
+//							Debug.Log ("wake up, time to die");
+							isAscendTriggered = true;
+							StartCoroutine(Ascend ());
+
+						}					
+					} else {
 						hudManager.UpdateHUD ("sessionComplete");
 						playerData.expState = ExpState.ReadyToLive;
-						isDead = true;
-					}					
-				} else {
-
-					//if complete fade to black, instruct to remove headset
-					//if time left to die > time int level ELSE session complete
-					if (Time.time - playerData.sessionStartTime + graceTime > allowedSessionTime && !isDead) { 
-						hudManager.UpdateHUD ("sessionComplete");
-						playerData.expState = ExpState.ReadyToLive;
-						isDead = true;
-						//if complete fade to black, instruct to remove headset
-
+						Debug.Log("you're done");
 					}
-				}
-
+				} 
 			} else {
-				//review current level
+				//regular level review
 				bugsAte = actorDataSync.ActorBugsEaten ();
 				int i = Array.FindLastIndex (flockLevels, w => w.bugsEatenMinimum <= bugsAte);	
 				if (i > playerData.level) {
@@ -134,9 +128,14 @@ public class PlayerStateManager : MonoBehaviour
 	//begin death animation
 	private IEnumerator Ascend ()
 	{
-		Debug.Log ("Acending");
+		Debug.Log ("Ascending");
+
 		yield return new WaitForSeconds (3);
+
 		Debug.Log ("Ascended");
+		hudManager.UpdateHUD ("sessionComplete");
+		playerData.expState = ExpState.ReadyToLive;
+		Debug.Log("you're done");
 	}
 	//This also looks at bugs eaten within a time.
 	public void CheckExpState ()
@@ -157,10 +156,11 @@ public class PlayerStateManager : MonoBehaviour
 		//A warning before dying in this case
 		//TODO: after a certain amount of time even if no warn (total time since last reset) 
 		//player can die without warning  
-		if (playerData.expState == ExpState.Warn && Time.time > playerData.dyingTime || playerData.sessionStartTime > allowedSessionTime) { 
+		if ((playerData.expState == ExpState.Warn && Time.time > playerData.dyingTime) || playerData.sessionStartTime > allowedSessionTime) { 
 			LoadLevel (9);
 			playerData.level = 9;
-			hudManager.UpdateHUD ("dying");
+			playerData.levelStartTime = Time.time;
+			hudManager.UpdateHUD ("ascensionNest");
 			playerData.expState = ExpState.Dying;
 		}
 	}
@@ -176,6 +176,7 @@ public class PlayerStateManager : MonoBehaviour
 		playerData.resetPlayerData ();
 		LoadLevel (0);
 		hudManager.UpdateHUD ("hide");
+		Debug.Log ("player has been reset");
 	}
 
 	private FlockLevel GetFlockLevel (int lvl)
@@ -198,10 +199,10 @@ public class PlayerStateManager : MonoBehaviour
 			if (levelToLoad.globalFadeLevel != 0.0f) { 
 				faderManager.level = levelToLoad.globalFadeLevel;
 			}
-			//Speed Manager
-			if (levelToLoad.speedFaderLevel != 0.0f) { 
-				speedManager.level = levelToLoad.speedFaderLevel;
-			}
+//			//Speed Manager
+//			if (levelToLoad.speedFaderLevel != 0.0f) { 
+//				speedManager.level = levelToLoad.speedFaderLevel;
+//			}
 
 		} else {
 			Debug.Log ("no player!");

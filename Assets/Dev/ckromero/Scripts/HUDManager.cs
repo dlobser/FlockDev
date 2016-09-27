@@ -18,6 +18,7 @@ class HUDManager : MonoBehaviour
 //			return;
 //		}
 		switch (HUDState) {
+		//TODO: an enumeration would be better here
 		case "hide":
 			{
 				VRDebug.disableDisplay ();
@@ -51,6 +52,14 @@ class HUDManager : MonoBehaviour
 //				Image image = canvas.GetComponentsInChildren<Image> () [0];
 //				image.sprite = timeToDie;
 //				canvas.enabled = true;
+				break;
+			}
+		case "ascensionNest":
+			{
+				VRDebug.clearConsole ();
+				VRDebug.enableDisplay ();
+				VRDebug.print ("Please go to the Ascension Nest");
+				hudState = "ascensionNest";
 				break;
 			}
 		case "sessionComplete":

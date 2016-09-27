@@ -39,7 +39,6 @@ public class ActorDataSync : MonoBehaviour
 			}
 		}
 		
-//		MoveSpawner (5.0f);
 	}
 	void Update ()
 	{
@@ -48,7 +47,6 @@ public class ActorDataSync : MonoBehaviour
 			actSync.resetSync ();
 			resetSync = false;
 		}
-//		DebugX.Log(currentActor + " has eaten " +  ActorBugsEatenSince(actorLevelCheck) + " bugs in the last " + actorLevelCheck + " seconds");
 	}
 
 	public void UpdateActor ( string actorName, string interactorName, int updateType)
@@ -63,7 +61,9 @@ public class ActorDataSync : MonoBehaviour
 			break;
 		}
 	}
-
+	public void ResetActor() { 
+		actSync.ResetActor (currentActor);
+	}
 	public int ActorBugsEaten () {
 		return actSync.checkBugsEaten (currentActor);
 	}

@@ -15,7 +15,10 @@ public class ZoneManager : MonoBehaviour {
 
 	public void UpdateCurrentPlayerZone(string name)  { 
 		currentActorZone = name;
+		if (name == "dyingZone") {
+			Debug.Log ("in " + name);
+		}
 		lastUpdate = Time.time;
-
+		
 	}
 }

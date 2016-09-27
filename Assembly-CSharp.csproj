@@ -70,6 +70,7 @@
      <Compile Include="Assets\Dev\DL\Scripts\Fader\FaderMaterialRGBMat.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Fader\FaderMaterialTexSwitcher.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Fader\FaderSpeedToLevel.cs" />
+     <Compile Include="Assets\Dev\DL\Scripts\Fader\FaderText.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\FeatherFollow.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\GetAverageHeight.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Materials\MaterialSwapper.cs" />
@@ -216,6 +217,7 @@
      <None Include="Assets\Holojam\Demo\Shaders\AlphaBlendedColorTexture.shader" />
      <None Include="Assets\Standard Assets\Effects\AntiAliasing\FXAA\Resources\FXAA3.cginc" />
      <None Include="Assets\VRPanorama\Shaders\FadeVR.shader" />
+     <None Include="Assets\Dev\DL\Shaders\Tint.shader" />
      <None Include="Assets\Dev\DL\Shaders\RGBRemapSimpleTransparentTexArray.shader" />
      <None Include="Assets\Dev\DL\Shaders\lineWarp.shader" />
      <None Include="Assets\Standard Assets\Effects\ScreenSpaceReflection\Resources\ScreenSpaceReflection.shader" />
