@@ -86,10 +86,12 @@
      <Compile Include="Assets\Dev\DL\Scripts\Utility\copyTransformsSetHeight.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Utility\copyTransformsSimple.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Utility\deactivate.cs" />
+     <Compile Include="Assets\Dev\DL\Scripts\Utility\enableAfterTime.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Utility\killAfterTime.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Utility\lookAtCam.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Utility\lookAtTarget.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Utility\offsetUV.cs" />
+     <Compile Include="Assets\Dev\DL\Scripts\Utility\scaleBackUp.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\directionHintOpacity.cs" />
      <Compile Include="Assets\Dev\DL\Tools\MakeSprite\MakeSpriteSheet.cs" />
      <Compile Include="Assets\Dev\DL\Tools\MakeSprite\TransformUniversalSetTime.cs" />
@@ -243,6 +245,7 @@
      <None Include="Assets\VRPanorama\Shaders\VRAA.shader" />
      <None Include="Assets\Dev\DL\Shaders\GoTheRightWay.shader" />
      <None Include="Assets\Standard Assets\Effects\AntiAliasing\SMAA\Resources\SMAA.shader" />
+     <None Include="Assets\Dev\LF\Shaders\textureTest.shader" />
      <None Include="Assets\Standard Assets\Effects\Bloom\Resources\Bloom.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderYUV.shader" />
      <None Include="Assets\Dev\DL\Shaders\lineWarper.shader" />
