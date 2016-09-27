@@ -82,7 +82,7 @@ public class PlayerStateManager : MonoBehaviour
 		UpdatePlayerZone ();
 		//This is a player that is ready to be born
 		//TODO: consider zone here as well
-		if (playerData.expState == ExpState.ReadyToLive){
+		if (playerData.expState == ExpState.ReadyToLive) {
 			if (playerData.zoneName == "readyZone") {
 				ResetPlayer ();
 				playerData.expState = ExpState.Living;
@@ -103,13 +103,10 @@ public class PlayerStateManager : MonoBehaviour
 							//begin death animation
 //							Debug.Log ("wake up, time to die");
 							isAscendTriggered = true;
-							StartCoroutine(Ascend ());
-
+							StartCoroutine (Ascend ());
 						}					
 					} else {
-						hudManager.UpdateHUD ("sessionComplete");
-						playerData.expState = ExpState.ReadyToLive;
-						Debug.Log("you're done");
+						LetPlayerDie ();
 					}
 				} 
 			} else {
@@ -130,12 +127,22 @@ public class PlayerStateManager : MonoBehaviour
 	{
 		Debug.Log ("Ascending");
 
+		actorDataSync.SwapActor ();
+
 		yield return new WaitForSeconds (3);
 
 		Debug.Log ("Ascended");
+
+		LetPlayerDie ();
+	}
+
+	private void LetPlayerDie ()
+	{
+
 		hudManager.UpdateHUD ("sessionComplete");
 		playerData.expState = ExpState.ReadyToLive;
-		Debug.Log("you're done");
+		Debug.Log ("you're done");
+
 	}
 	//This also looks at bugs eaten within a time.
 	public void CheckExpState ()

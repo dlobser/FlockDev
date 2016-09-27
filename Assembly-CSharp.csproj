@@ -115,6 +115,7 @@
      <Compile Include="Assets\Dev\ckromero\Scripts\ActorJson.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\ActorSetJSON.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\ActorSyncer.cs" />
+     <Compile Include="Assets\Dev\ckromero\Scripts\AscendingActor.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\AudioManager.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\BugManager\BugManager_cs__Multiple_Synch__.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\BugManager\BugManager_cs__Single_Synch__.cs" />

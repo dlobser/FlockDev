@@ -7,25 +7,25 @@ using System;
 public class ActorDataSync : MonoBehaviour
 {
 	public GameObject ActorSynchronizableManager;
-	public bool resetSync=false;
-	public float actorLevelCheck=5.0f;
+	public bool resetSync = false;
+	public float actorLevelCheck = 5.0f;
 	public string currentActor;
 
 	private List<IndexedPos> indexedPos = new List<IndexedPos> ();
 	private Holobounds hb;
-//	private GameObject swarmMaker;
+	//	private GameObject swarmMaker;
 	private ActorSyncer actSync;
 	private Actor[] actors;
+	private ActorManager actorManager;
 
-//	private bool canCallFunction = true;
+	//	private bool canCallFunction = true;
 
 	void Start ()
-
 	{
-		actSync = GetComponent <ActorSyncer>();
+		actSync = GetComponent <ActorSyncer> ();
 
 		GameObject am = GameObject.Find ("ActorManager");
-		ActorManager actorManager = (ActorManager)am.GetComponent (typeof(ActorManager));
+		actorManager = (ActorManager)am.GetComponent (typeof(ActorManager));
 
 //		swarmMaker = GameObject.Find ("SwarmSpawnPoint");
 		GameObject hbgo = GameObject.Find ("Holobounds");
@@ -40,6 +40,7 @@ public class ActorDataSync : MonoBehaviour
 		}
 		
 	}
+
 	void Update ()
 	{
 		if (resetSync) {
@@ -49,7 +50,7 @@ public class ActorDataSync : MonoBehaviour
 		}
 	}
 
-	public void UpdateActor ( string actorName, string interactorName, int updateType)
+	public void UpdateActor (string actorName, string interactorName, int updateType)
 	{
 		switch (updateType) {
 		case 1:
@@ -61,17 +62,40 @@ public class ActorDataSync : MonoBehaviour
 			break;
 		}
 	}
-	public void ResetActor() { 
+
+	public void ResetActor ()
+	{ 
 		actSync.ResetActor (currentActor);
 	}
-	public int ActorBugsEaten () {
+
+	public int ActorBugsEaten ()
+	{
 		return actSync.checkBugsEaten (currentActor);
 	}
 
-	public int ActorBugsEatenSince(float time){
+	public int ActorBugsEatenSince (float time)
+	{
 
 		return actSync.checkBugsEatenSince (currentActor, time);
 	}
+
+	public void SwapActor ()
+	{
+		actors = actorManager.actors;
+		Actor currentActorComponent;
+
+		foreach (Actor a in actors) {
+			if (a.name.Contains ("Build")) {
+				currentActorComponent = a.GetComponent<Actor> ();
+				break;
+			}
+		}
+
+//		currentActorComponent.eyes.y;
+
+		Debug.Log ("actor swapped");
+	}
+
 
 	//IEnumerator
 	public void MoveSpawner (float time)
@@ -104,9 +128,10 @@ public class ActorDataSync : MonoBehaviour
 		return indexedPos;
 	}
 
-	class QuadWithCount{
+	class QuadWithCount
+	{
 		public Vector3[] quad;
-		public int count=0;
+		public int count = 0;
 	}
 
 	//TODO: this could really use a unit test to ensure sane boundaries.
@@ -141,18 +166,18 @@ public class ActorDataSync : MonoBehaviour
 		//Containers for areas that hold actors 
 		QuadWithCount qb0 = new QuadWithCount ();
 		qb0.quad = new [] { new Vector3 (x0, 0.0f, z0),
-							new Vector3 (x0 + xR / 2.0f, 0.0f, z0),
-							new Vector3 (x0 + xR / 2.0f, 0.0f, z0 + zR / 2.0f),
-							new Vector3 (x0, 0.0f, z0 + zR / 2.0f)
-						}; 
+			new Vector3 (x0 + xR / 2.0f, 0.0f, z0),
+			new Vector3 (x0 + xR / 2.0f, 0.0f, z0 + zR / 2.0f),
+			new Vector3 (x0, 0.0f, z0 + zR / 2.0f)
+		}; 
 
 		QuadWithCount qb1 = new QuadWithCount (); 
 		qb1.quad = new [] { 
-							new Vector3 (x0 + xR / 2.0f, 0.0f, z0),
-							new Vector3 (x0 + xR, 0.0f, z0),
-							new Vector3 (x0 + xR, 0.0f, z0 + zR / 2.0f),
-							new Vector3 (x0 + xR / 2.0f, 0.0f, z0 + zR / 2.0f)
-						};
+			new Vector3 (x0 + xR / 2.0f, 0.0f, z0),
+			new Vector3 (x0 + xR, 0.0f, z0),
+			new Vector3 (x0 + xR, 0.0f, z0 + zR / 2.0f),
+			new Vector3 (x0 + xR / 2.0f, 0.0f, z0 + zR / 2.0f)
+		};
 
 		QuadWithCount qb2 = new QuadWithCount (); 
 		qb2.quad = new [] { 
@@ -197,7 +222,7 @@ public class ActorDataSync : MonoBehaviour
 		allqb.Add (qb1);
 		allqb.Add (qb2);
 		allqb.Add (qb3);
-		allqb.Sort((x,y)=>(x.count.CompareTo(y.count)));
+		allqb.Sort ((x, y) => (x.count.CompareTo (y.count)));
 
 		QuadWithCount leastPopulatedQuad = allqb [0];
 
