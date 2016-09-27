@@ -119,7 +119,10 @@ public class PlayerStateManager : MonoBehaviour
 
 				if(bugsAte>0)
 					faderManager.level = (flockLevels [i + 1].bugsEatenMinimum - flockLevels [i].bugsEatenMinimum) / bugsAte; 
-				faderManager.level = 0;
+				else
+					faderManager.level = 0;
+
+				faderManager.level = bugsAte / 20;
 
 				if (i > playerData.level) {
 					Debug.Log ("Current level is " + playerData.level + " level should be " + i + " so changing level");

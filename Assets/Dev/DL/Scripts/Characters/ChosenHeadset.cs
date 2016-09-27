@@ -5,12 +5,14 @@ using System.Collections;
 public class ChosenHeadset : MonoBehaviour {
 
 	public Holojam.Network.Motive.Tag whichHeadset;
+	public int headsetInt;
 
 	void Awake() {
 		DontDestroyOnLoad(transform.gameObject);
 	}
 
 	public void setHeadset(int which){
+		headsetInt = which;
 		if (which == 1)
 			whichHeadset = Holojam.Network.Motive.Tag.HEADSET1;
 		else if (which == 2)
