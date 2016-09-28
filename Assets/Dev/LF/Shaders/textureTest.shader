@@ -8,6 +8,8 @@ Properties {
 	_MainTex ("Main", 2D) = "white" {}
 	_AOTex ("AO", 2D) = "white" {}
 	_Color ("Color",Color)= (1,1,1,1)
+	_Channel ("Channel",Color)= (1,1,1,1)
+	_Strobe("Strobe",Vector) = (1,1,1,1)
 
 }
 
@@ -43,7 +45,8 @@ SubShader {
 			sampler2D _AOTex;
 			float4 _AOTex_ST;
 			float4 _Color;
-
+			float4 _Channel;
+			float4 _Strobe;
 			
 			v2f vert (appdata_t v)
 			{
@@ -62,12 +65,13 @@ SubShader {
 				fixed4 col = tex2D(_MainTex, i.uv);
 //				fixed4 shad = tex2D(_AOTex, i.texcoord);
 				fixed4 shad = tex2D(_AOTex, i.uv2);
-				fixed4 col2 = col*_Color;
+				fixed4 col2 = col*_Channel;
 				fixed4 colR = fixed4(col2.r,col2.r,col2.r,1.0);
 				fixed4 colG = fixed4(col2.g,col2.g,col2.g,1.0);
 				fixed4 colB = fixed4(col2.b,col2.b,col2.b,1.0);
-				fixed4 col3 = (colR+colG+colB)*shad;
-				UNITY_APPLY_FOG(i.fogCoord, col);
+				float strober = max(0.0,min(1.0,sin(i.uv.x*_Strobe.x+_Time.y*_Strobe.y)*_Strobe.z+_Strobe.w));
+				fixed4 col3 = (colR+colG+colB)*shad*shad*_Color*strober;
+//				UNITY_APPLY_FOG(i.fogCoord, col);
 				UNITY_APPLY_FOG(i.fogCoord, col3);
 				UNITY_OPAQUE_ALPHA(col.a);
 				return col3;
