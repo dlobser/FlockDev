@@ -5,8 +5,8 @@
 
 Shader "Unlit/TextureTest" {
 Properties {
-	_MainTex ("Base (RGB)", 2D) = "white" {}
-	_AOTex ("Base (RGB)", 2D) = "white" {}
+	_MainTex ("Main", 2D) = "white" {}
+	_AOTex ("AO", 2D) = "white" {}
 	_Color ("Color",Color)= (1,1,1,1)
 
 }
