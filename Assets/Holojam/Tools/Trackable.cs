@@ -36,7 +36,7 @@ namespace Holojam.Tools{
       //Override these in derived classes
       protected virtual void Update(){
          UpdateView(); //Mandatory initialization call
-
+//			Debug.Log(view.IsTracked);
          //Optional check--you probably don't want to run this code in edit mode
          if(!Application.isPlaying)return;
 

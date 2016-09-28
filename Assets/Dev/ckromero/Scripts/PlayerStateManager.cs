@@ -44,6 +44,8 @@ public class PlayerStateManager : MonoBehaviour
 	private bool isDead = false;
 	private bool isAscendTriggered = false;
 
+	public TextMesh txt;
+
 	void Awake ()
 	{
 		actorDataSync = player.GetComponent<ActorDataSync> ();
@@ -66,6 +68,7 @@ public class PlayerStateManager : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+		Debug.Log ("hi");
 		//review player state and update levels as needed
 		//this will be the main consumer of the bugsEaten timeline.
 		CheckPlayerLevel ();	
@@ -75,6 +78,8 @@ public class PlayerStateManager : MonoBehaviour
 		if (resetPlayer) { 
 			ResetPlayer ();
 		}
+
+		txt.text = "level:" + playerData.level.ToString();
 	}
 
 	//This looks at how many bugs the current player has eaten as a basis for level loading and playerState.
@@ -115,11 +120,11 @@ public class PlayerStateManager : MonoBehaviour
 				bugsAte = actorDataSync.ActorBugsEaten ();
 
 				int i = Array.FindLastIndex (flockLevels, w => w.bugsEatenMinimum <= bugsAte);	
-
-				if(bugsAte>0)
-					faderManager.level = (flockLevels [i + 1].bugsEatenMinimum - flockLevels [i].bugsEatenMinimum) / bugsAte; 
-				else
-					faderManager.level = 0;
+//
+//				if(bugsAte>0)
+//					faderManager.level = (flockLevels [i + 1].bugsEatenMinimum - flockLevels [i].bugsEatenMinimum) / bugsAte; 
+//				else
+//					faderManager.level = 0;
 
 //				faderManager.level = bugsAte / 20;
 

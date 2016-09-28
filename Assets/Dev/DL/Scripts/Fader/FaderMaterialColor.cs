@@ -12,6 +12,6 @@ public class FaderMaterialColor : Fader {
 		Color thisColor = _Color [(int)Mathf.Clamp(Mathf.Floor (currentLevel),0,_Color.Length-1)];
 		Color nextColor = _Color [(int)Mathf.Clamp(Mathf.Ceil (currentLevel),0,_Color.Length-1)];
 		Color matColor = Color.Lerp (thisColor, nextColor, currentLevel - Mathf.Floor (currentLevel));
-		mat.SetColor ("colorName", matColor);
+		mat.SetColor (colorName, matColor);
 	}
 }
