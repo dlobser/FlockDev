@@ -32,7 +32,7 @@ public class ActorSyncer : MonoBehaviour
 
 	public void PrintSyncString ()
 	{
-		Debug.Log (synchronizable.synchronizedString);
+		DebugX.Log (synchronizable.synchronizedString);
 	}
 
 	public void resetSync ()
@@ -93,26 +93,29 @@ public class ActorSyncer : MonoBehaviour
 			}
 
 			synchronizable.synchronizedString = JsonUtility.ToJson (revisedASJ);
-			Debug.Log ("synchronizable.synchronizedString is: " + synchronizable.synchronizedString);
+			PrintSyncString ();
 		}
 	}
 
 	public void ResetActor (string currentActor)
 	{ 
+		ActorSetJSON newASJ =  new ActorSetJSON ();
 		//remove the actor from the syncstring, all instances just in case!
 		if (synchronizable.synchronizedString != null && synchronizable.synchronizedString != "") { 
 			capturedASJ = JsonUtility.FromJson<ActorSetJSON> (synchronizable.synchronizedString);
+//			revisedASJ=default(revisedASJ);
 			int casjLength = capturedASJ.actors.Length;
+
 			int j=0;
 			for (int i = 0; i < casjLength; i++) {
 				if (capturedASJ.actors [i].actorIndex != currentActor) {
-					revisedASJ.actors [j] = capturedASJ.actors [i];
+					newASJ.actors [j] = capturedASJ.actors [i];
 					j++;
 				}
 			}	
 		}
-		synchronizable.synchronizedString = JsonUtility.ToJson (revisedASJ);
-		Debug.Log ("synchronizable.synchronizedString is: " + synchronizable.synchronizedString);
+		synchronizable.synchronizedString = JsonUtility.ToJson (newASJ);
+		PrintSyncString ();
 	}
 
 	public int checkBugsEaten (string actor)

@@ -185,6 +185,8 @@ public class PlayerStateManager : MonoBehaviour
 	{
 		//reset all player variables
 		playerData.resetPlayerData ();
+		actorDataSync.ResetActor ();
+
 		LoadLevel (0);
 		hudManager.UpdateHUD ("hide");
 		Debug.Log ("player has been reset");
@@ -223,7 +225,7 @@ public class PlayerStateManager : MonoBehaviour
 	private string message="";
 	void cachedDebugMessage(string _message) {
 		if (_message!=message) {
-			Debug.Log("headset chosen "  + _message);
+			Debug.Log(_message);
 			message = _message;
 		}
 	}

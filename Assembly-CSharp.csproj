@@ -65,10 +65,14 @@
      <Compile Include="Assets\Dev\DL\Scripts\DistanceToMomma.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Fader\FadeInAudio.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Fader\Fader.cs" />
+     <Compile Include="Assets\Dev\DL\Scripts\Fader\FaderIndicatorColor.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Fader\FaderManager.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Fader\FaderMaterialColor.cs" />
+     <Compile Include="Assets\Dev\DL\Scripts\Fader\FaderMaterialFloat.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Fader\FaderMaterialRGBMat.cs" />
+     <Compile Include="Assets\Dev\DL\Scripts\Fader\FaderMaterialSwapper.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Fader\FaderMaterialTexSwitcher.cs" />
+     <Compile Include="Assets\Dev\DL\Scripts\Fader\FaderMaterialVector.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Fader\FaderSpeedToLevel.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Fader\FaderText.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\FeatherFollow.cs" />
