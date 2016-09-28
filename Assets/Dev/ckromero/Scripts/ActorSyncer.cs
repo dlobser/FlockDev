@@ -103,8 +103,13 @@ public class ActorSyncer : MonoBehaviour
 		//remove the actor from the syncstring, all instances just in case!
 		if (synchronizable.synchronizedString != null && synchronizable.synchronizedString != "") { 
 			capturedASJ = JsonUtility.FromJson<ActorSetJSON> (synchronizable.synchronizedString);
+//			newASJ = capturedASJ;
+//			newASJ.actors.Initialize();
 //			revisedASJ=default(revisedASJ);
 			int casjLength = capturedASJ.actors.Length;
+
+			//TODO: ActorJSON value array needs thought
+			newASJ.actors = new ActorJson[casjLength-1];
 
 			int j=0;
 			for (int i = 0; i < casjLength; i++) {
