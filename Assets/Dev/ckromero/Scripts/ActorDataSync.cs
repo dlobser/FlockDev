@@ -31,13 +31,17 @@ public class ActorDataSync : MonoBehaviour
 		GameObject hbgo = GameObject.Find ("Holobounds");
 		hb = (Holobounds)hbgo.GetComponent (typeof(Holobounds));
 
-		actors = actorManager.actors;
-		foreach (Actor a in actors) {
-			if (a.name.Contains ("Build")) {
-				currentActor = a.name.Substring (0, a.name.IndexOf ("]") + 1);			
-				Debug.Log ("curentActor is: " + currentActor);
-			}
-		}
+		GameObject headsetGO = GameObject.Find ("ChosenHeadset");
+		currentActor = headsetGO.GetComponent<ChosenHeadset> ().whichHeadset.ToString();
+
+
+//		actors = actorManager.actors;
+//		foreach (Actor a in actors) {
+//			if (a.name.Contains ("Build")) {
+//				currentActor = a.name.Substring (0, a.name.IndexOf ("]") + 1);			
+//				Debug.Log ("curentActor is: " + currentActor);
+//			}
+//		}
 		
 	}
 
@@ -124,7 +128,7 @@ public class ActorDataSync : MonoBehaviour
 			IndexedPos ip = new IndexedPos (actorNum, a.transform.position);
 			indexedPos.Add (ip);
 		}
-
+	
 		return indexedPos;
 	}
 

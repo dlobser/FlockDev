@@ -92,6 +92,7 @@
      <Compile Include="Assets\Dev\DL\Scripts\Utility\lookAtTarget.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Utility\offsetUV.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Utility\scaleBackUp.cs" />
+     <Compile Include="Assets\Dev\DL\Scripts\Utility\setActorDataSyncHeadsetFix.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\directionHintOpacity.cs" />
      <Compile Include="Assets\Dev\DL\Tools\MakeSprite\MakeSpriteSheet.cs" />
      <Compile Include="Assets\Dev\DL\Tools\MakeSprite\TransformUniversalSetTime.cs" />
