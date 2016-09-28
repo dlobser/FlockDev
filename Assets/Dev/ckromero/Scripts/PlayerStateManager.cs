@@ -83,13 +83,13 @@ public class PlayerStateManager : MonoBehaviour
 		//This isn't very defensive right now, it makes assumptions about the current user!
 		UpdatePlayerZone ();
 		//This is a player that is ready to be born
-		//TODO: consider zone here as well
 		if (playerData.expState == ExpState.ReadyToLive) {
 			if (playerData.zoneName == "readyZone") {
 				ResetPlayer ();
 				playerData.expState = ExpState.Living;
 			} else {
-				Debug.Log ("standing by for reset");
+				cachedDebugMessage (playerData.actorName + " is standing by for reset");
+//				Debug.Log (playerData.actorName + " is standing by for reset");
 			}
 		} else {
 
@@ -103,7 +103,6 @@ public class PlayerStateManager : MonoBehaviour
 						if (speedObject.speed < maxSpeedToSitStill && !isAscendTriggered) { 
 							//and player is holding still (transformation < .1m)
 							//begin death animation
-//							Debug.Log ("wake up, time to die");
 							isAscendTriggered = true;
 							StartCoroutine (Ascend ());
 						}					
@@ -122,7 +121,7 @@ public class PlayerStateManager : MonoBehaviour
 				else
 					faderManager.level = 0;
 
-				faderManager.level = bugsAte / 20;
+//				faderManager.level = bugsAte / 20;
 
 				if (i > playerData.level) {
 					Debug.Log ("Current level is " + playerData.level + " level should be " + i + " so changing level");
@@ -137,23 +136,17 @@ public class PlayerStateManager : MonoBehaviour
 	private IEnumerator Ascend ()
 	{
 		Debug.Log ("Ascending");
-
 		actorDataSync.SwapActor ();
-
 		yield return new WaitForSeconds (3);
-
 		Debug.Log ("Ascended");
-
 		LetPlayerDie ();
 	}
 
 	private void LetPlayerDie ()
 	{
-
 		hudManager.UpdateHUD ("sessionComplete");
 		playerData.expState = ExpState.ReadyToLive;
 		Debug.Log ("you're done");
-
 	}
 	//This also looks at bugs eaten within a time.
 	public void CheckExpState ()
@@ -226,5 +219,12 @@ public class PlayerStateManager : MonoBehaviour
 			Debug.Log ("no player!");
 		}
 		Debug.Log ("Loaded FlockLevel " + _level);
+	}
+	private string message="";
+	void cachedDebugMessage(string _message) {
+		if (_message!=message) {
+			Debug.Log("headset chosen "  + _message);
+			message = _message;
+		}
 	}
 }

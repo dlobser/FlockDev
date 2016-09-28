@@ -99,7 +99,7 @@ public class Bug : Synchronizable{
 		if(a!=null){
 			if( c.GetComponent<SphereCollider> ()!=null);
 				c.GetComponent<SphereCollider> ().enabled = false;
-			Debug.Log ("Poof");
+//			Debug.Log ("Poof");
 			
 			// add to bugsEaten for the colliding actor!!!!
 			if (Holojam.Utility.IsMasterPC ()) {

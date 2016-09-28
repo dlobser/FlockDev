@@ -26,23 +26,25 @@ public class ActorDataSync : MonoBehaviour
 
 		GameObject am = GameObject.Find ("ActorManager");
 		actorManager = (ActorManager)am.GetComponent (typeof(ActorManager));
+		actors = actorManager.actors;
 
 //		swarmMaker = GameObject.Find ("SwarmSpawnPoint");
 		GameObject hbgo = GameObject.Find ("Holobounds");
+
 		hb = (Holobounds)hbgo.GetComponent (typeof(Holobounds));
 
-		GameObject headsetGO = GameObject.Find ("ChosenHeadset");
-		currentActor = headsetGO.GetComponent<ChosenHeadset> ().whichHeadset.ToString();
-
-
-//		actors = actorManager.actors;
-//		foreach (Actor a in actors) {
-//			if (a.name.Contains ("Build")) {
-//				currentActor = a.name.Substring (0, a.name.IndexOf ("]") + 1);			
-//				Debug.Log ("curentActor is: " + currentActor);
-//			}
-//		}
-		
+//		if (GameObject.Find ("ChosenHeadset")) {
+//			GameObject headsetGO = GameObject.Find ("ChosenHeadset");
+//			currentActor = headsetGO.GetComponent<ChosenHeadset> ().whichHeadset.ToString ();
+//		} else {
+//			//NORMALIZE HERE
+////			actorManager.buildTag
+		foreach (Actor a in actors) {
+			if (a.trackingTag == actorManager.buildTag) {
+				currentActor = a.name.Substring (0, a.name.IndexOf ("]") + 1);			
+				Debug.Log ("curentActor is: " + currentActor);
+			}
+		}
 	}
 
 	void Update ()

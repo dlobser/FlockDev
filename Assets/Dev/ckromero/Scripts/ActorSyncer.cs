@@ -69,7 +69,7 @@ public class ActorSyncer : MonoBehaviour
 					naj.bugTime.Add ((int)Time.time);
 
 //					List<ActorJson> ls = new List<ActorJson> ();
-						
+					ls.Clear();	
 					ls.Add (naj);
 					int ct = capturedASJ.actors.Length;
 
@@ -89,7 +89,7 @@ public class ActorSyncer : MonoBehaviour
 				naj.bugTime.Add ((int)Time.time);
 
 				ls.Add (naj);
-				revisedASJ.actors = ls.ToArray ();
+			revisedASJ.actors = ls.ToArray ();
 			}
 
 			synchronizable.synchronizedString = JsonUtility.ToJson (revisedASJ);

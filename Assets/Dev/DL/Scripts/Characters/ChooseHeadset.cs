@@ -46,7 +46,7 @@ public class ChooseHeadset : MonoBehaviour {
 		if (Physics.Raycast (transform.position, fwd*10000, out hit, 1000)) {
 			reticleText.GetComponent<Text> ().text = hit.transform.gameObject.GetComponent<Text> ().text;
 			chosen = int.Parse( hit.transform.gameObject.GetComponent<Text> ().text);
-			print (chosen);
+			cachedDebugMessage (chosen.ToString());
 		}
 		tapCounter -= Time.deltaTime;
 		if (tapCounter <= 0) {
@@ -61,6 +61,13 @@ public class ChooseHeadset : MonoBehaviour {
 				GameObject.Find ("ChosenHeadset").GetComponent<ChosenHeadset> ().setHeadset (chosen);
 				SceneManager.LoadScene (1);
 			}
+		}
+	}
+	private string message="";
+	void cachedDebugMessage(string _message) {
+		if (_message!=message) {
+			Debug.Log("headset chosen "  + _message);
+			message = _message;
 		}
 	}
 }
