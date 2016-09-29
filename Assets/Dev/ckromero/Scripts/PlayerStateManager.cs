@@ -12,14 +12,14 @@ public class PlayerStateManager : MonoBehaviour
 	public FlockLevel[] flockLevels;
 	public GameObject player;
 
-	public GameObject audioManagerObject;
+//	public GameObject audioManagerObject;
 	public GameObject faderManagerObject;
-	public GameObject speedManagerObject;
+//	public GameObject speedManagerObject;
 	public GameObject ZoneManagerObject;
 
-	public Canvas canvas;
-	public Sprite youMustEat;
-	public Sprite timeToDie;
+//	public Canvas canvas;
+//	public Sprite youMustEat;
+//	public Sprite timeToDie;
 
 	public float graceTime = 5.0f;
 	public float warnForSeconds = 10.0f;
@@ -32,7 +32,7 @@ public class PlayerStateManager : MonoBehaviour
 	//TODO: make private?
 	public PlayerData playerData;
 	private ActorDataSync actorDataSync;
-	private AudioManager audioManager;
+//	private AudioManager audioManager;
 	private FaderManager faderManager;
 	//	private FaderManager speedManager;
 	private ZoneManager zoneManager;
@@ -51,12 +51,12 @@ public class PlayerStateManager : MonoBehaviour
 	{
 		actorDataSync = player.GetComponent<ActorDataSync> ();
 		playerData = new PlayerData ();
-		audioManager = audioManagerObject.GetComponent<AudioManager> ();
+//		audioManager = audioManagerObject.GetComponent<AudioManager> ();
 		faderManager = faderManagerObject.GetComponent<FaderManager> ();
 //		speedManager = speedManagerObject.GetComponent<FaderManager> (); 
 		hudManager = GetComponentInParent<HUDManager> ();
 		zoneManager = ZoneManagerObject.GetComponent<ZoneManager> ();
-		speedObject = speedManagerObject.GetComponent<GetSpeed> ();
+//		speedObject = speedManagerObject.GetComponent<GetSpeed> ();
 	}
 
 	void Start ()
@@ -212,11 +212,11 @@ public class PlayerStateManager : MonoBehaviour
 		FlockLevel levelToLoad = GetFlockLevel (_level);
 
 		if (player != null) {
-			
-			//TODO: should swapmaterial go here? 
-			if (levelToLoad.audioSnapshotName != null && levelToLoad.audioSnapshotName != "") {
-				audioManager.TransitionAudio (levelToLoad.audioSnapshotName, audioTransitionDefaultTime);
-			}
+//			
+//			//TODO: should swapmaterial go here? 
+//			if (levelToLoad.audioSnapshotName != null && levelToLoad.audioSnapshotName != "") {
+//				audioManager.TransitionAudio (levelToLoad.audioSnapshotName, audioTransitionDefaultTime);
+//			}
 			//Fader Manager
 			if (levelToLoad.globalFadeLevel != 0.0f) { 
 				faderManager.level = levelToLoad.globalFadeLevel;

@@ -17,7 +17,7 @@ public class FlockLevel
 	public float globalFadeLevel;
 
 	//Audio
-	public string audioSnapshotName;
+//	public string audioSnapshotName;
 
 }
 
