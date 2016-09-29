@@ -4,13 +4,13 @@ using System.Collections;
 public class FaderMaterialSwapper : Fader {
 
 	public Material[] materials;
-	public GameObject obj;
+	public GameObject[] obj;
 	int which = 0;
-	MeshRenderer rend;
+//	MeshRenderer rend;
 	Vector2 range = Vector2.zero;
 
 	void Start(){
-		rend = obj.GetComponent<MeshRenderer> ();
+//		rend = obj.GetComponent<MeshRenderer> ();
 		setRange (level);
 	}
 
@@ -24,7 +24,9 @@ public class FaderMaterialSwapper : Fader {
 			setRange (level);
 			float currentLevel = (Mathf.Clamp (level, min, max) / levels) * materials.Length;
 			Material thisMat = materials [(int)Mathf.Clamp (Mathf.Floor (currentLevel), 0, materials.Length - 1)];
-			rend.material = thisMat;
+			for (int i = 0; i < obj.Length; i++) {
+				obj[i].GetComponent<MeshRenderer>().material = thisMat;
+			}
 		}
 	}
 }

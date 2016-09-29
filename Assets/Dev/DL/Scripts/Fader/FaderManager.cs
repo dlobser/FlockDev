@@ -7,6 +7,8 @@ public class FaderManager : MonoBehaviour {
 	public float level;
 	public float minLevel;
 	public float maxLevel;
+
+	float prevLevel;
 	// Use this for initialization
 	void Start () {
 		faders = GetComponentsInChildren<Fader> ();
@@ -19,9 +21,12 @@ public class FaderManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		for (int i = 0; i < faders.Length; i++) {
-			faders [i].level = level;
-			faders [i].Fade ();
+		if (prevLevel != level) {
+			for (int i = 0; i < faders.Length; i++) {
+				faders [i].level = level;
+				faders [i].Fade ();
+			}
 		}
+		prevLevel = level;
 	}
 }
