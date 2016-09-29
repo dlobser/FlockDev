@@ -31,7 +31,7 @@ public class ChooseHeadset : MonoBehaviour {
 			j++;
 			GameObject go = Instantiate (textBox, new Vector3 ((width * j)-offset, (height * -k)+(offset*.5f), textBox.transform.position.z), Quaternion.identity) as GameObject;
 			go.transform.SetParent (textBox.transform.parent);
-			go.GetComponent<Text> ().text = i.ToString();
+			go.GetComponent<Text> ().text = (i+1).ToString();
 
 		}
 	}

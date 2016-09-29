@@ -4,7 +4,7 @@ using System.Collections;
 public class enableAfterTime : MonoBehaviour {
 
 	public float time;
-	public SphereCollider sphere;
+	public BoxCollider sphere;
 	float counter = 0;
 	// Use this for initialization
 	void Start () {

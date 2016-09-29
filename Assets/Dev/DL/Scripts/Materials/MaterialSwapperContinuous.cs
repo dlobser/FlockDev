@@ -47,6 +47,15 @@ public class MaterialSwapperContinuous : MonoBehaviour {
 
 	}
 
+	public void swapMat(int which){
+		int w = which;
+		if (which > 9)
+			w = 1;
+		fader = w - 1;
+		float from = fader;
+		StartCoroutine (Swap (from,(float)w));
+	}
+
 	IEnumerator Swap(float moveTo, float moveFrom){
 
 		while(swapCounter<1){

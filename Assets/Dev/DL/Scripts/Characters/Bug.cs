@@ -97,8 +97,10 @@ public class Bug : Synchronizable{
 		Holojam.Tools.Viewer v =  c.GetComponent<Holojam.Tools.Viewer>();
 
 		if(a!=null){
-			if( c.GetComponent<SphereCollider> ()!=null);
-				c.GetComponent<SphereCollider> ().enabled = false;
+//			if( c.GetComponent<SphereCollider> ()!=null);
+//				c.GetComponent<SphereCollider> ().enabled = false;
+			if( c.GetComponent<BoxCollider> ()!=null);
+				c.GetComponent<BoxCollider> ().enabled = false;
 //			Debug.Log ("Poof");
 			
 			// add to bugsEaten for the colliding actor!!!!
