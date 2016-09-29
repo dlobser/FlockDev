@@ -4,32 +4,39 @@ using Holojam.Tools;
 
 public class GlobalSettings : MonoBehaviour {
 
+//	public bool resetPlayer = false;
 
-	public float graceTime = 5.0f;
-	public float warnForSeconds = 5.0f;
-	public bool resetPlayer = false;
-	public float allowedSessionTime = 30.0f;
-	public float timeLeftToDie = 5.0f;
+
+	//handled by quaternion
+	public float graceTime = 10.0f;
+	public float warnForSeconds = 10.0f;
+	public float allowedSessionTime = 420.0f;
+	public float timeLeftToDie = 20.0f;
+
+	//handled by vector
 	public float maxSpeedToSitStill = 2.0f;
+	//open vector slots
 
 
 	private Synchronizable synchronizable;
+	private Quaternion quat;
+	private Vector3 vec;
 
-
-
-
-	// Use this for initialization
 	void Start () {
-	
-
-//		synchronizable.synchronizedVector3
-
-
+		synchronizable = GetComponent<Synchronizable> ();	
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		quat.w = graceTime;
+		quat.x = warnForSeconds;
+		quat.y = allowedSessionTime;
+		quat.z = timeLeftToDie;
+		synchronizable.synchronizedQuaternion = quat;
+
+		vec.x = maxSpeedToSitStill;
+		synchronizable.synchronizedVector3 = vec;
+
 	}
 }
