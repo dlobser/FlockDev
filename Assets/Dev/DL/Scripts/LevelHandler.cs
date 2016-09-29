@@ -54,8 +54,13 @@ public class LevelHandler : MonoBehaviour {
 		bugsEaten++;
 		level++;
 		hungerTimer = 0;
-		if (level > maxLevel)
+		if (timer > timeMax) {
+			timer = 0;
+			bugsEaten = 0;
+			lerpLevel = 0;
+			hungerTimer = 0;
 			level = 0;
+		}
 	}
 
 	void Debugger(){

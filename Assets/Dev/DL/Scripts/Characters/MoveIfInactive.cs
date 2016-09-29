@@ -3,7 +3,7 @@ using System.Collections;
 
 public class MoveIfInactive : MonoBehaviour {
 
-	Vector3 maximum = new Vector3(10000,10000,0);
+	Vector3 maximum = new Vector3(-10000,10000,0);
 	float[] counters;
 	public float missingTrackingTime = 2;
 	// Use this for initialization
