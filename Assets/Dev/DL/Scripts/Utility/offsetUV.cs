@@ -8,7 +8,7 @@ public class offsetUV : MonoBehaviour {
 	Material mat;
 	// Use this for initialization
 	void Start () {
-		mat = GetComponent<Renderer> ().material;
+		mat = GetComponent<Renderer> ().sharedMaterial;
 	}
 	
 	// Update is called once per frame

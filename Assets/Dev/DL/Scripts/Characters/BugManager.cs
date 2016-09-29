@@ -37,10 +37,11 @@ public class BugManager : MonoBehaviour {
 
 	GameObject spawnPoint;
 
+	FaderManager fader;
 
 	void Awake(){
 		Build ();
-	
+		fader =  GameObject.Find ("LevelFader").gameObject.GetComponent<FaderManager>();
 	}
 
 	void Build(){
@@ -151,6 +152,13 @@ public class BugManager : MonoBehaviour {
 			p.Emit (10);
 
 		}
+	}
+
+	public void LevelUp(Bug b){
+		if (!init)
+			return;
+		else
+			fader.level += 1;
 	}
 
 

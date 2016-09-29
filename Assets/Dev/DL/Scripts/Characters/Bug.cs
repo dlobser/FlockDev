@@ -66,7 +66,7 @@ public class Bug : Synchronizable{
 		if (prevEmit == 0 && emit == 1) {
 			bb.SendMessage("ProcessCollision", this); //Callback
 			bb.SendMessage("SwapTexture", this); //Callback
-
+			bb.SendMessage("LevelUp", this);
 		}
 
 		prevEmit = emit;
