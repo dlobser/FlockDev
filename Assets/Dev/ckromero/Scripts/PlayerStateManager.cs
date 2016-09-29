@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 //using UnityEditor;
 using Holojam.Tools;
 
@@ -21,12 +22,12 @@ public class PlayerStateManager : MonoBehaviour
 	public Sprite timeToDie;
 
 	public float graceTime = 5.0f;
-	public float warnForSeconds = 5.0f;
+	public float warnForSeconds = 10.0f;
 	public bool resetPlayer = false;
-	public float allowedSessionTime = 30.0f;
-	public float timeLeftToDie = 5.0f;
+	public float allowedSessionTime = 420.0f;
+	public float timeLeftToDie = 10.0f;
 	public float maxSpeedToSitStill = 2.0f;
-	public float currentFaderLevel; 
+	public float currentFaderLevel;
 
 	//TODO: make private?
 	public PlayerData playerData;
@@ -68,18 +69,18 @@ public class PlayerStateManager : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		Debug.Log ("hi");
+//		Debug.Log ("hi");
 		//review player state and update levels as needed
 		//this will be the main consumer of the bugsEaten timeline.
 		CheckPlayerLevel ();	
-		CheckExpState ();
+//		CheckExpState ();
 
 		//currently resetPlayer is a checkbox in the Editor UI for testing, needs to be triggered by zones.
 		if (resetPlayer) { 
 			ResetPlayer ();
 		}
 
-		txt.text = "level:" + playerData.level.ToString();
+//		txt.text = "level:" + playerData.level.ToString();
 	}
 
 	//This looks at how many bugs the current player has eaten as a basis for level loading and playerState.
@@ -121,14 +122,14 @@ public class PlayerStateManager : MonoBehaviour
 
 				int i = Array.FindLastIndex (flockLevels, w => w.bugsEatenMinimum <= bugsAte);	
 
-				//FADED LEVEL CALCULATIONS
-				//Don't have to worry about level 9 see above.
-				int bugsInRange = flockLevels [i + 1].bugsEatenMinimum - flockLevels [i].bugsEatenMinimum;
-				float timeRangeForBugsEatenCheck = Time.time - playerData.levelStartTime; 
-				int bugsInTime = actorDataSync.ActorBugsEatenSince (timeRangeForBugsEatenCheck);
-				float fadedLevel =  bugsInTime / (float)bugsInRange;
-				faderManager.level = fadedLevel;
-
+				if (i != 9) {
+					//FADED LEVEL CALCULATIONS
+					int bugsInRange = flockLevels [i + 1].bugsEatenMinimum - flockLevels [i].bugsEatenMinimum;
+					float timeRangeForBugsEatenCheck = Time.time - playerData.levelStartTime; 
+					int bugsInTime = actorDataSync.ActorBugsEatenSince (timeRangeForBugsEatenCheck);
+					float fadedLevel = bugsInTime / (float)bugsInRange;
+					faderManager.level = flockLevels [i].globalFadeLevel + fadedLevel;
+				}	
 				if (i > playerData.level) {
 					Debug.Log ("Current level is " + playerData.level + " level should be " + i + " so changing level");
 					LoadLevel (i);
@@ -138,6 +139,7 @@ public class PlayerStateManager : MonoBehaviour
 			}
 		}
 	}
+
 	//begin death animation
 	private IEnumerator Ascend ()
 	{
@@ -162,7 +164,8 @@ public class PlayerStateManager : MonoBehaviour
 			//Allow a grace time at the beginning of the level. and note current player state. 
 			if (playerData.levelStartTime + graceTime < Time.time && playerData.expState != ExpState.Warn && playerData.expState != ExpState.Dying) {
 				//Warn if not enough bugs have been eaten within the time range.
-				if (playerData.bugsEatenSince (Time.time - flockLevels [playerData.level].bugTime) < flockLevels [playerData.level].bugsNeededForTime) {
+				// currentTime bugs eaten since levelStartTime + allowedTime   
+				if ((playerData.bugsEatenSince (Time.time - flockLevels [playerData.level].bugTime)) < flockLevels [playerData.level].bugsNeededForTime) {
 					Debug.Log ("not enough bugs!");
 					hudManager.UpdateHUD ("warn");
 					playerData.expState = ExpState.Warn;
@@ -228,10 +231,13 @@ public class PlayerStateManager : MonoBehaviour
 		}
 		Debug.Log ("Loaded FlockLevel " + _level);
 	}
-	private string message="";
-	void cachedDebugMessage(string _message) {
-		if (_message!=message) {
-			Debug.Log(_message);
+
+	private string message = "";
+
+	void cachedDebugMessage (string _message)
+	{
+		if (_message != message) {
+			Debug.Log (_message);
 			message = _message;
 		}
 	}
