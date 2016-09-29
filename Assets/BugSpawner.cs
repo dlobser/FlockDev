@@ -14,8 +14,8 @@ public class BugSpawner : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-//		moveTo = actorDataSync.GetGoodSpawnPoint ();
-		moveTo=Vector3.zero;
+		moveTo = actorDataSync.GetGoodSpawnPoint ();
+//		moveTo=Vector3.zero;
 
 		this.transform.position = moveTo;
 	}
