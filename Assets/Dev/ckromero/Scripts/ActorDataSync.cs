@@ -127,8 +127,11 @@ public class ActorDataSync : MonoBehaviour
 
 		foreach (Actor a in actors) {
 			int actorNum = int.Parse (a.name.Substring (1, a.name.IndexOf ("]") - 1));
-			IndexedPos ip = new IndexedPos (actorNum, a.transform.position);
-			indexedPos.Add (ip);
+			if (!(a.transform.position.y > 10.0f)) {
+				IndexedPos ip = new IndexedPos (actorNum, a.transform.position);
+				indexedPos.Add (ip);
+			}
+
 		}
 	
 		return indexedPos;

@@ -21,16 +21,27 @@ public class PlayerStateManager : MonoBehaviour
 //	public Sprite youMustEat;
 //	public Sprite timeToDie;
 
-	public float graceTime = 5.0f;
-	public float warnForSeconds = 10.0f;
 	public bool resetPlayer = false;
-	public float allowedSessionTime = 420.0f;
-	public float timeLeftToDie = 10.0f;
-	public float maxSpeedToSitStill = 2.0f;
+
+	//now handled by Global Settings!
+//	public float graceTime = 5.0f;
+//	public float warnForSeconds = 10.0f;
+//	public float allowedSessionTime = 420.0f;
+//	public float timeLeftToDie = 10.0f;
+//	public float maxSpeedToSitStill = 2.0f;
+
 	public float currentFaderLevel;
+
 
 	//TODO: make private?
 	public PlayerData playerData;
+
+	public GameObject levelHandler2GO;
+	private LevelHandler2 levelHandler2;
+
+	public GameObject settingsObject;
+	private GlobalSettings globalSettings;
+
 	private ActorDataSync actorDataSync;
 //	private AudioManager audioManager;
 	private FaderManager faderManager;
@@ -56,7 +67,12 @@ public class PlayerStateManager : MonoBehaviour
 //		speedManager = speedManagerObject.GetComponent<FaderManager> (); 
 		hudManager = GetComponentInParent<HUDManager> ();
 		zoneManager = ZoneManagerObject.GetComponent<ZoneManager> ();
+		levelHandler2 = levelHandler2GO.GetComponent<LevelHandler2> ();
+
 //		speedObject = speedManagerObject.GetComponent<GetSpeed> ();
+
+		globalSettings = settingsObject.GetComponent<GlobalSettings> ();
+	
 	}
 
 	void Start ()
@@ -101,12 +117,12 @@ public class PlayerStateManager : MonoBehaviour
 
 			//This is a player that is about to die
 			if (playerData.level == 9) { 
-				if (Time.time - playerData.levelStartTime > timeLeftToDie) {
+				if (Time.time - playerData.levelStartTime > globalSettings.timeLeftToDie) {
 					Debug.Log ("waiting for player to enter dyingZone");
 					//if player is in the dead zone
 					//and player is holding still (transformation < .1m)
 					if (playerData.zoneName == "dyingZone") {
-						if (speedObject.speed < maxSpeedToSitStill && !isAscendTriggered) { 
+						if (speedObject.speed < globalSettings.maxSpeedToSitStill && !isAscendTriggered) { 
 							//and player is holding still (transformation < .1m)
 							//begin death animation
 							isAscendTriggered = true;
@@ -129,6 +145,12 @@ public class PlayerStateManager : MonoBehaviour
 					int bugsInTime = actorDataSync.ActorBugsEatenSince (timeRangeForBugsEatenCheck);
 					float fadedLevel = bugsInTime / (float)bugsInRange;
 					faderManager.level = flockLevels [i].globalFadeLevel + fadedLevel;
+					levelHandler2.bugsEaten = bugsAte;
+					levelHandler2.percentInCurrentLevel = fadedLevel;
+					//checking level 8 (which equals array index 9) for bugs needed
+					//we should state top level of array instead of hardcoding numerics here
+					levelHandler2.percentOfTotal = bugsAte / (float) flockLevels [8].bugsEatenMinimum;
+					levelHandler2.level = playerData.level;
 				}	
 				if (i > playerData.level) {
 					Debug.Log ("Current level is " + playerData.level + " level should be " + i + " so changing level");
@@ -162,21 +184,21 @@ public class PlayerStateManager : MonoBehaviour
 		//Does the current level have a bugs eaten with time requirement
 		if (flockLevels [playerData.level].bugsNeededForTime != 0) { 
 			//Allow a grace time at the beginning of the level. and note current player state. 
-			if (playerData.levelStartTime + graceTime < Time.time && playerData.expState != ExpState.Warn && playerData.expState != ExpState.Dying) {
+			if (playerData.levelStartTime + globalSettings.graceTime < Time.time && playerData.expState != ExpState.Warn && playerData.expState != ExpState.Dying) {
 				//Warn if not enough bugs have been eaten within the time range.
 				// currentTime bugs eaten since levelStartTime + allowedTime   
 				if ((playerData.bugsEatenSince (Time.time - flockLevels [playerData.level].bugTime)) < flockLevels [playerData.level].bugsNeededForTime) {
 					Debug.Log ("not enough bugs!");
 					hudManager.UpdateHUD ("warn");
 					playerData.expState = ExpState.Warn;
-					playerData.dyingTime = Time.time + warnForSeconds;
+					playerData.dyingTime = Time.time + globalSettings.warnForSeconds;
 				}
 			}
 		}
 		//A warning before dying in this case
 		//TODO: after a certain amount of time even if no warn (total time since last reset) 
 		//player can die without warning  
-		if ((playerData.expState == ExpState.Warn && Time.time > playerData.dyingTime) || playerData.sessionStartTime > allowedSessionTime) { 
+		if ((playerData.expState == ExpState.Warn && Time.time > playerData.dyingTime) || playerData.sessionStartTime >globalSettings.allowedSessionTime) { 
 			LoadLevel (9);
 			playerData.level = 9;
 			playerData.levelStartTime = Time.time;
