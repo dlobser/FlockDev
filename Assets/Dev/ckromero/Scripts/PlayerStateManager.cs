@@ -40,7 +40,8 @@ public class PlayerStateManager : MonoBehaviour
 	private LevelHandler2 levelHandler2;
 
 	public GameObject settingsObject;
-	private GlobalSettings globalSettings;
+//	private SettingsManager globalSettings;
+	private SettingsJSON settingsJSON;
 
 	private ActorDataSync actorDataSync;
 //	private AudioManager audioManager;
@@ -71,7 +72,7 @@ public class PlayerStateManager : MonoBehaviour
 
 //		speedObject = speedManagerObject.GetComponent<GetSpeed> ();
 
-		globalSettings = settingsObject.GetComponent<GlobalSettings> ();
+		settingsJSON = settingsObject.GetComponent<SettingsManager> ().settingsJSON;
 	
 	}
 
@@ -117,12 +118,12 @@ public class PlayerStateManager : MonoBehaviour
 
 			//This is a player that is about to die
 			if (playerData.level == 9) { 
-				if (Time.time - playerData.levelStartTime > globalSettings.timeLeftToDie) {
+				if (Time.time - playerData.levelStartTime > settingsJSON.timeLeftToDie) {
 					Debug.Log ("waiting for player to enter dyingZone");
 					//if player is in the dead zone
 					//and player is holding still (transformation < .1m)
 					if (playerData.zoneName == "dyingZone") {
-						if (speedObject.speed < globalSettings.maxSpeedToSitStill && !isAscendTriggered) { 
+						if (speedObject.speed < settingsJSON.maxSpeedToSitStill && !isAscendTriggered) { 
 							//and player is holding still (transformation < .1m)
 							//begin death animation
 							isAscendTriggered = true;
@@ -184,21 +185,21 @@ public class PlayerStateManager : MonoBehaviour
 		//Does the current level have a bugs eaten with time requirement
 		if (flockLevels [playerData.level].bugsNeededForTime != 0) { 
 			//Allow a grace time at the beginning of the level. and note current player state. 
-			if (playerData.levelStartTime + globalSettings.graceTime < Time.time && playerData.expState != ExpState.Warn && playerData.expState != ExpState.Dying) {
+			if (playerData.levelStartTime + settingsJSON.graceTime < Time.time && playerData.expState != ExpState.Warn && playerData.expState != ExpState.Dying) {
 				//Warn if not enough bugs have been eaten within the time range.
 				// currentTime bugs eaten since levelStartTime + allowedTime   
 				if ((playerData.bugsEatenSince (Time.time - flockLevels [playerData.level].bugTime)) < flockLevels [playerData.level].bugsNeededForTime) {
 					Debug.Log ("not enough bugs!");
 					hudManager.UpdateHUD ("warn");
 					playerData.expState = ExpState.Warn;
-					playerData.dyingTime = Time.time + globalSettings.warnForSeconds;
+					playerData.dyingTime = Time.time + settingsJSON.warnForSeconds;
 				}
 			}
 		}
 		//A warning before dying in this case
 		//TODO: after a certain amount of time even if no warn (total time since last reset) 
 		//player can die without warning  
-		if ((playerData.expState == ExpState.Warn && Time.time > playerData.dyingTime) || playerData.sessionStartTime >globalSettings.allowedSessionTime) { 
+		if ((playerData.expState == ExpState.Warn && Time.time > playerData.dyingTime) || playerData.sessionStartTime > settingsJSON.allowedSessionTime) { 
 			LoadLevel (9);
 			playerData.level = 9;
 			playerData.levelStartTime = Time.time;
