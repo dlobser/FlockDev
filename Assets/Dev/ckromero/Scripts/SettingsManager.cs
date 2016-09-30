@@ -2,7 +2,7 @@
 using System.Collections;
 using Holojam.Tools;
 
-public class SettingsManager : MonoBehaviour {
+public class SettingsManager :  Synchronizable {
 
 	public SettingsJSON settingsJSON;
 	private Synchronizable synchronizable;
@@ -14,9 +14,11 @@ public class SettingsManager : MonoBehaviour {
 	}
 
 	private void UpdateSettings() { 
-
-		synchronizable.synchronizedString = JsonUtility.ToJson (settingsJSON);
-
+		if (sending) {
+			synchronizable.synchronizedString = JsonUtility.ToJson (settingsJSON);
+		} else {
+			settingsJSON = JsonUtility.FromJson<SettingsJSON> (synchronizable.synchronizedString);
+		}
 	}
 
 	void Update() { 
