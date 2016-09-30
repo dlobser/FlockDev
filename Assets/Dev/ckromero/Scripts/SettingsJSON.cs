@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using UnityEngine;
 
 [Serializable]
 public class SettingsJSON 
@@ -26,7 +27,8 @@ public class SettingsJSON
 	public float maxSpeedToSitStill;
 
 	public string slowMessage;
-
+	public Vector4 shadowColor;
+	public float shadowSize;
 	public string timeToDieMessage;
 	public float timeLeftToDie;
 

@@ -269,6 +269,7 @@
      <None Include="Assets\Dev\DL\Shaders\lineWarper.shader" />
      <None Include="Assets\Standard Assets\Effects\AntiAliasing\SMAA\Resources\SMAA.cginc" />
      <None Include="Assets\Dev\DL\Shaders\RGBRemapSimpleTransparentFade.shader" />
+     <None Include="Assets\Dev\LF\Shaders\textureTestSprite.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseAndGrainDX11.shader" />
      <None Include="Assets\VRPanorama\Shaders\unwrapShader.shader" />
      <None Include="Assets\Standard Assets\Effects\TonemappingColorGrading\Resources\TonemappingColorGrading.shader" />
