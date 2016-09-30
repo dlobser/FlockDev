@@ -29,6 +29,7 @@ public class SettingsJSON
 	public string slowMessage;
 	public Vector4 shadowColor;
 	public float shadowSize;
+
 	public string timeToDieMessage;
 	public float timeLeftToDie;
 
