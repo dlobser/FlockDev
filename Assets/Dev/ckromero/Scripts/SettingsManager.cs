@@ -10,20 +10,14 @@ public class SettingsManager :  Synchronizable {
 	void Start () {
 		synchronizable = GetComponent<Synchronizable> ();	
 //		settingsJSON = new SettingsJSON ();
-		UpdateSettings ();
 	}
 
-	private void UpdateSettings() { 
+	protected override void Sync() { 
 		if (sending) {
 			synchronizable.synchronizedString = JsonUtility.ToJson (settingsJSON);
 		} else {
 			settingsJSON = JsonUtility.FromJson<SettingsJSON> (synchronizable.synchronizedString);
 		}
 	}
-
-	void Update() { 
-
-		UpdateSettings ();
-		Debug.Log (synchronizable.synchronizedString);
-	}
+		
 }
