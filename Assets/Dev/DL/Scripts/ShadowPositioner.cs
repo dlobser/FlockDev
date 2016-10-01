@@ -4,28 +4,39 @@ using System.Collections;
 public class ShadowPositioner : MonoBehaviour {
 
 	public float height;
-	public Transform target;
 	Vector3 pos;
-	SettingsManager settings;
+//	SettingsManager settings;
 	Color col;
 	Vector3 scale;
+	SpriteRenderer rend;
+	public float shadowSize;
+	public Color shadowColor;
 
 	void Start(){
-		settings = GameObject.Find ("SettingsManager").GetComponent<SettingsManager> ();
+//		settings = GameObject.Find ("SettingsManager").GetComponent<SettingsManager> ();
+		rend = this.GetComponent<SpriteRenderer> ();
 	}
-	void Update(){
-		SetPosition ();
-
-	}
+//	void Update(){
+//		SetPosition ();
+//	}
 	// Update is called once per frame
-	void SetPosition () {
-		pos.Set (target.position.x, height, target.position.z);
-		this.transform.position = pos;
-		float size = settings.settingsJSON.shadowSize;
-		scale.Set (size, size, size);
-		this.transform.localScale = scale;
-		Vector4 colVec = settings.settingsJSON.shadowColor;
-		col = new Color (colVec.x, colVec.y, colVec.z, colVec.w);
-		this.GetComponent<SpriteRenderer> ().color = col;
+	public void SetPosition (Vector3 vec) {
+//		Debug.Log (shadowSize + " , " + shadowColor.a);
+		if (shadowSize <= 0 || shadowColor.a <= 0 && rend.enabled) {
+			rend.enabled = false;
+		} else if (shadowSize >= 0 || shadowColor.a >= 0 && !rend.enabled)
+			rend.enabled = true;
+		if (shadowSize >= 0 && shadowColor.a >= 0) {
+			pos.Set (vec.x, height, vec.z);
+			this.transform.position = pos;
+//			Debug.Log (this.transform.position);
+			float size = shadowSize;
+			scale.Set (size, size, size);
+			this.transform.localScale = scale;
+			rend.color = shadowColor;
+		}
 	}
 }
+//
+//Vector4 colVec = settings.settingsJSON.shadowColor;
+//col = new Color (colVec.x, colVec.y, colVec.z, colVec.w);

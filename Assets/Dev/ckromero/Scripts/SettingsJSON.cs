@@ -9,10 +9,15 @@ public class SettingsJSON
 
 	public float birdColliderSize;
 	public float birdMaxHeadSize;
+	public float birdMinHeadSize;
+	public float birdNearDistance;
+	public float birdFarDistance;
+
 
 	public float bugColliderSize;
 	public float bugDeathTime;
 	public float bugMaxSize;
+	public float bugMinSize;
 
 	public bool emitFromHead;
 	public bool emitFromFarthestQuadrant;

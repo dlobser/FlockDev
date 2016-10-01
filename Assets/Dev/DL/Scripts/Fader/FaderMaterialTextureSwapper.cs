@@ -23,7 +23,7 @@ public class FaderMaterialTextureSwapper : Fader {
 	public override void Fade(){
 		if (level > range.y || level < range.x) {
 			setRange (level);
-			float currentLevel = (Mathf.Clamp (level, min, max) / levels) * textures.Length;
+			float currentLevel = ((Mathf.Clamp (level, min, max)-min) / levels) * textures.Length;
 			Texture thisTex = textures [(int)Mathf.Clamp (Mathf.Floor (currentLevel), 0, textures.Length - 1)];
 			mat.SetTexture (textureName, thisTex);
 		}

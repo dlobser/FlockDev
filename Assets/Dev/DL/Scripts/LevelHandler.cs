@@ -28,6 +28,7 @@ public class LevelHandler : MonoBehaviour {
 	float deathCount;
 	float lerpLevel = 0;
 	float hungerTimer;
+	float reduceLevelCounter = 0;
 
 	// Update is called once per frame
 
@@ -36,8 +37,9 @@ public class LevelHandler : MonoBehaviour {
 		if (hungerTimer > hungryTime) {
 			ReduceLevel ();
 		}
-		lerpLevel = Mathf.MoveTowards (lerpLevel, level, .01f);
 		levelDelta = level - lerpLevel;
+		lerpLevel = Mathf.MoveTowards (lerpLevel, level, .1f);
+
 		timer += Time.deltaTime;
 		if (timer > timeMax) {
 			level = 0;
@@ -48,12 +50,19 @@ public class LevelHandler : MonoBehaviour {
 			deathClock += Time.deltaTime;
 			deathCount = deathClock / (timeMax - timeStartDeathClock);
 		}
+//		Debug.Log (level+" , "+levelDelta+" , " + lerpLevel);
 		UpdateFaders ();
 	}
 
 	void ReduceLevel(){
-		if(level>0)
-			level -= Time.deltaTime;
+		if (level > 0) {
+			reduceLevelCounter += Time.deltaTime;
+			if (reduceLevelCounter >= 1) {
+				reduceLevelCounter = 0;
+				level -= 1;
+			}
+
+		}
 	}
 
 	public void EatBug(){

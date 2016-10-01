@@ -20,7 +20,7 @@ public class FaderMaterialSwapper : Fader {
 	public override void Fade(){
 		if (level > range.y || level < range.x) {
 			setRange (level);
-			float currentLevel = (Mathf.Clamp (level, min, max) / levels) * materials.Length;
+			float currentLevel = ((Mathf.Clamp (level, min, max)-min) / levels) * materials.Length;
 			Material thisMat = materials [(int)Mathf.Clamp (Mathf.Floor (currentLevel), 0, materials.Length - 1)];
 			for (int i = 0; i < obj.Length; i++) {
 				obj[i].GetComponent<MeshRenderer>().material = thisMat;

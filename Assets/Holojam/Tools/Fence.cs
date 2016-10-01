@@ -27,7 +27,17 @@ namespace Holojam.Tools{
 
          if(actorManager!=null && actorManager.buildActor!=null){
             //Modulate transparency
-            newColor.a = maxAlpha * (1-holobounds.Distance(actorManager.buildActor.eyes)/minRange);
+			float dist = holobounds.Distance(actorManager.buildActor.eyes)/minRange;
+				if ((1-dist) <= 0) {
+					r.enabled = false;
+				}
+				else if ((1-dist) > 0 && !r.enabled) {
+					r.enabled = true;
+				}
+				else if ((1-dist) > 0 && r.enabled) {
+					newColor.a = maxAlpha * (1-dist);
+				}
+           
          }
          else newColor.a=maxAlpha;
 
