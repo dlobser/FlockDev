@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FaderEnableObjects : Fader {
+public class FaderEnableObjectsIndividual : Fader {
 
 	public GameObject[] obj;
 	int which = 0;
@@ -9,11 +9,10 @@ public class FaderEnableObjects : Fader {
 	public override void Fade(){
 		float currentLevel = ((Mathf.Clamp (level, min, max)-min) / levels) * obj.Length;
 		int which = (int)Mathf.Clamp (Mathf.Floor (currentLevel), 0, obj.Length - 1);
-		Debug.Log (which);
 		for (int i = 0; i < obj.Length; i++) {
-			if (i <= which && !obj[i].activeInHierarchy)
+			if (i == which && !obj[i].activeInHierarchy )
 				obj [i].SetActive (true);
-			else
+			else if(i!=which)
 				obj [i].SetActive (false);
 		}
 	}

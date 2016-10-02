@@ -14,11 +14,16 @@ public class SettingsToValues : MonoBehaviour {
 	Holojam.Tools.Actor[] actors;
 	SettingsManager settings;
 	SettingsJSON prev;
+	Holojam.Tools.Holobounds holobounds;
+
+	FaderManager fader;
 
 
 
 	// Use this for initialization
 	void Start () {
+		fader = GameObject.Find ("LevelFader").GetComponent<FaderManager> ();
+		holobounds = GameObject.Find ("Holobounds").GetComponent<Holojam.Tools.Holobounds>();
 		settings = GameObject.Find ("SettingsManager").GetComponent<SettingsManager> ();
 		bugs = bugManager.GetComponentsInChildren<Bug> ();
 		bugManagement = bugManager.GetComponent<BugManager> ();
@@ -44,8 +49,18 @@ public class SettingsToValues : MonoBehaviour {
 			prev.birdFarDistance!=settings.settingsJSON.birdFarDistance) {
 			UpdateBird ();
 		}
+		if (prev.Holobound1 != settings.settingsJSON.Holobound1||
+			prev.Holobound2 != settings.settingsJSON.Holobound2||
+			prev.Holobound3 != settings.settingsJSON.Holobound3||
+			prev.Holobound4 != settings.settingsJSON.Holobound4){
+			UpdateHolobound ();
+		}
+		if (prev.faderLevelsMax != settings.settingsJSON.faderLevelsMax) {
+			UpdateFaderManager ();
+		}
 		if (prev.experienceLengthSeconds != settings.settingsJSON.experienceLengthSeconds||
-			prev.graceTime != settings.settingsJSON.graceTime) {
+			prev.graceTime != settings.settingsJSON.graceTime ||
+			prev.deathLengthSeconds != settings.settingsJSON.deathLengthSeconds) {
 			UpdateLevelHandler ();
 		}
 		if (prev.globalHeadsetUIMessage != settings.settingsJSON.globalHeadsetUIMessage) {
@@ -57,6 +72,7 @@ public class SettingsToValues : MonoBehaviour {
 	public void UpdateLevelHandler(){
 		levelHandler.timeMax = settings.settingsJSON.experienceLengthSeconds;
 		levelHandler.hungryTime = settings.settingsJSON.graceTime;
+		levelHandler.timeStartDeathClock = levelHandler.timeMax - settings.settingsJSON.deathLengthSeconds;
 
 	}
 
@@ -79,6 +95,10 @@ public class SettingsToValues : MonoBehaviour {
 		}
 	}
 
+	public void UpdateFaderManager(){
+		fader.maxLevel = settings.settingsJSON.faderLevelsMax;
+	}
+
 	public void UpdateBugManager(){
 		bugManagement.disableTime = settings.settingsJSON.bugDeathTime;
 	}
@@ -90,9 +110,20 @@ public class SettingsToValues : MonoBehaviour {
 		else if(text.GetComponent<MeshRenderer> ().enabled && text.text.Length ==0)
 			text.GetComponent<MeshRenderer> ().enabled = false;
 	}
+	public void UpdateHolobound(){
+		holobounds.bounds [0] = settings.settingsJSON.Holobound1;
+		holobounds.bounds [1] = settings.settingsJSON.Holobound2;
+		holobounds.bounds [2] = settings.settingsJSON.Holobound3;
+		holobounds.bounds [3] = settings.settingsJSON.Holobound4;
+	}
 
 	void propertyCopy(SettingsJSON From, SettingsJSON To){
-		To.allowedSessionTime = From.allowedSessionTime;
+		To.deathLengthSeconds = From.deathLengthSeconds;
+//		To.allowedSessionTime = From.allowedSessionTime;
+		To.Holobound1 = From.Holobound1;
+		To.Holobound2 = From.Holobound2;
+		To.Holobound3 = From.Holobound3;
+		To.Holobound4 = From.Holobound4;
 		To.birdColliderSize = From.birdColliderSize;
 		To.birdMaxHeadSize = From.birdMaxHeadSize;
 		To.birdMinHeadSize = From.birdMaxHeadSize;

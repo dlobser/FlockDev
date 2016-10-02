@@ -5,7 +5,7 @@ using UnityEngine;
 [Serializable]
 public class SettingsJSON 
 {
-	public float allowedSessionTime;
+//	public float allowedSessionTime;
 
 	public float birdColliderSize;
 	public float birdMaxHeadSize;
@@ -13,6 +13,10 @@ public class SettingsJSON
 	public float birdNearDistance;
 	public float birdFarDistance;
 
+	public Vector2 Holobound1;
+	public Vector2 Holobound2;
+	public Vector2 Holobound3;
+	public Vector2 Holobound4;
 
 	public float bugColliderSize;
 	public float bugDeathTime;
@@ -23,6 +27,7 @@ public class SettingsJSON
 	public bool emitFromFarthestQuadrant;
 	public bool emitFromInitialGrid;
 	public float experienceLengthSeconds;
+	public float deathLengthSeconds;
 
 	public float faderLevelsMax;
 

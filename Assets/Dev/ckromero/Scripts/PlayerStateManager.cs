@@ -199,7 +199,7 @@ public class PlayerStateManager : MonoBehaviour
 		//A warning before dying in this case
 		//TODO: after a certain amount of time even if no warn (total time since last reset) 
 		//player can die without warning  
-		if ((playerData.expState == ExpState.Warn && Time.time > playerData.dyingTime) || playerData.sessionStartTime > settingsJSON.allowedSessionTime) { 
+		if ((playerData.expState == ExpState.Warn && Time.time > playerData.dyingTime) || playerData.sessionStartTime > settingsJSON.experienceLengthSeconds) { 
 			LoadLevel (9);
 			playerData.level = 9;
 			playerData.levelStartTime = Time.time;

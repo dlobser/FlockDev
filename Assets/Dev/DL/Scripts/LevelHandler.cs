@@ -3,9 +3,6 @@ using System.Collections;
 
 public class LevelHandler : MonoBehaviour {
 
-
-
-
 	public float timeMax;
 	public float timeStartDeathClock;
 	public float timer { get; set; }
@@ -16,7 +13,6 @@ public class LevelHandler : MonoBehaviour {
 	public float hungryTime = 10;
 
 	public float maxLevel = 30;
-
 
 	public FaderManager[] BugsEaten;
 	public FaderManager[] Level;
@@ -33,49 +29,54 @@ public class LevelHandler : MonoBehaviour {
 	// Update is called once per frame
 
 	void Update () {
+		
 		hungerTimer += Time.deltaTime;
 		if (hungerTimer > hungryTime) {
 			ReduceLevel ();
 		}
+
 		levelDelta = level - lerpLevel;
 		lerpLevel = Mathf.MoveTowards (lerpLevel, level, .1f);
 
 		timer += Time.deltaTime;
-		if (timer > timeMax) {
-			level = 0;
-			deathClock = 0;
-			deathCount = 0;
-		}
-		if (timer > timeStartDeathClock) {
+
+
+		if (timer > timeStartDeathClock && timer < timeMax) {
 			deathClock += Time.deltaTime;
-			deathCount = deathClock / (timeMax - timeStartDeathClock);
+			deathCount = Mathf.Min(1.0f,deathClock / (timeMax - timeStartDeathClock));
 		}
-//		Debug.Log (level+" , "+levelDelta+" , " + lerpLevel);
+
 		UpdateFaders ();
+
 	}
 
 	void ReduceLevel(){
+		
 		if (level > 0) {
 			reduceLevelCounter += Time.deltaTime;
 			if (reduceLevelCounter >= 1) {
 				reduceLevelCounter = 0;
 				level -= 1;
 			}
-
 		}
+
 	}
 
 	public void EatBug(){
 		bugsEaten++;
 		level++;
 		hungerTimer = 0;
-		if (timer > timeMax) {
-			timer = 0;
-			bugsEaten = 0;
-			lerpLevel = 0;
-			hungerTimer = 0;
-			level = 0;
-		}
+	}
+
+	public void Reset(){
+		level = 0;
+		deathClock = 0;
+		deathCount = 0;
+		timer = 0;
+		bugsEaten = 0;
+		lerpLevel = 0;
+		hungerTimer = 0;
+		level = 0;
 	}
 
 	void Debugger(){

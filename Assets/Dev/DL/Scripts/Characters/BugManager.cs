@@ -40,8 +40,11 @@ public class BugManager : MonoBehaviour {
 	FaderManager fader;
 	LevelHandler handler;
 
+	FindEmptyCoordinate emptyCoordinate;
+
 	void Awake(){
 		Build ();
+		emptyCoordinate = GameObject.Find ("GridCheck").gameObject.GetComponent<FindEmptyCoordinate> ();
 		fader =  GameObject.Find ("LevelFader").gameObject.GetComponent<FaderManager>();
 		handler =  GameObject.Find ("LevelHandler").gameObject.GetComponent<LevelHandler>();
 	}
@@ -178,8 +181,8 @@ public class BugManager : MonoBehaviour {
 		if (!init)
 			return;
 		else {
-			Vector3 rand = Random.insideUnitSphere;
-			b.origin = spawnPoint.transform.position + new Vector3(rand.x,b.transform.position.y,rand.z) * scale * (gridWidth * .5f);
+//			Vector3 rand = Random.insideUnitSphere;
+			b.origin = emptyCoordinate.emptyCoordinate;// spawnPoint.transform.position + new Vector3(rand.x,b.transform.position.y,rand.z) * scale * (gridWidth * .5f);
 
 		}
 	}
