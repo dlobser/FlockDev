@@ -14,15 +14,28 @@ public class FindEmptyCoordinate : MonoBehaviour {
 	public GameObject actorParent;
 	List<GameObject> boxes;
 	public GameObject indicator;
-
+	float X,Y;
 	public Vector3 emptyCoordinate;
-
+	public bool Rebuild = true;
+	Coroutine finder;
+	Holojam.Tools.Holobounds holobounds;
 	// Use this for initialization
 	void Start () {
-		float X = highBound.x - lowBound.x;
-		float Y = highBound.y - lowBound.y;
+		holobounds = GameObject.Find ("Holobounds").GetComponent<Holojam.Tools.Holobounds> ();
+
+	
+	}
+
+	public void Build(){
+		FindHoloBounds ();
+		X = highBound.x - lowBound.x;
+		Y = highBound.y - lowBound.y;
 		amount = (int)( divisions.x * divisions.y);
 		boxes = new List<GameObject> ();
+		for (int i = 0; i < this.transform.childCount; i++) {
+			if (this.transform.GetChild (0) != null)
+				Destroy (this.transform.GetChild (0).gameObject);
+		}
 		for (int i = 0; i < divisions.x; i++) {
 			for (int j = 0; j < divisions.y; j++) {
 				GameObject g = Instantiate (obj);
@@ -34,7 +47,24 @@ public class FindEmptyCoordinate : MonoBehaviour {
 				boxes.Add (g);
 			}
 		}
-		StartCoroutine (Finder ());
+		if (finder != null)
+			StopCoroutine (finder);
+		finder = StartCoroutine (Finder ());
+		Debug.Log (highBound + "," + lowBound + ",Holobounds");
+	}
+
+	void FindHoloBounds(){
+		highBound = new Vector2 (Mathf.Max (holobounds.bounds [1].x, holobounds.bounds [2].x),
+			Mathf.Max (holobounds.bounds [0].y, holobounds.bounds [1].y));
+		lowBound = new Vector2(Mathf.Min(holobounds.bounds [0].x,holobounds.bounds [3].x),
+			Mathf.Min(holobounds.bounds[3].y,holobounds.bounds[2].y));
+	}
+
+	void Update(){
+		if (Rebuild) {
+			Rebuild = false;
+			Build ();
+		}
 	}
 
 

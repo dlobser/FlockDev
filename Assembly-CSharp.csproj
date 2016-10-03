@@ -91,6 +91,7 @@
      <Compile Include="Assets\Dev\DL\Scripts\GetAverageHeight.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\LevelHandler.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\LevelHandler2.cs" />
+     <Compile Include="Assets\Dev\DL\Scripts\LocalHeadsetEatBug.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Materials\MaterialSwapper.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Materials\MaterialSwapperContinuous.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Materials\MaterialSwapperPingPong.cs" />

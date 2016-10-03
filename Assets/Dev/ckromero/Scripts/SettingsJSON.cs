@@ -30,6 +30,8 @@ public class SettingsJSON
 	public float deathLengthSeconds;
 
 	public float faderLevelsMax;
+	public float faderLevelsMin;
+
 
 	public float graceTime;
 	public string globalHeadsetUIMessage;

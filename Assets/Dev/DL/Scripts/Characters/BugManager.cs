@@ -31,7 +31,7 @@ public class BugManager : MonoBehaviour {
 	public float bugHeight = 0;
 
 	ImageTools.Core.PerlinNoise PNoise;
-	public ParticleSystem part;
+	public ParticleSystem[] part;
 
 	public bool rebuild = false;
 
@@ -153,7 +153,7 @@ public class BugManager : MonoBehaviour {
 		if (!init)
 			return;
 		else {
-			ParticleSystem p = Instantiate (part, b.transform.position, Quaternion.identity) as ParticleSystem;
+			ParticleSystem p = Instantiate (part[(int)(Random.value*part.Length)], b.transform.position, Quaternion.identity) as ParticleSystem;
 			p.Emit (10);
 
 		}
@@ -162,8 +162,8 @@ public class BugManager : MonoBehaviour {
 	public void LevelUp(Bug b){
 		if (!init)
 			return;
-		else
-			handler.EatBug ();
+//		else
+//			handler.EatBug ();
 //			fader.level += 1;
 	}
 

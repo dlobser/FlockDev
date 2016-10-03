@@ -16,12 +16,15 @@ public class SettingsToValues : MonoBehaviour {
 	SettingsJSON prev;
 	Holojam.Tools.Holobounds holobounds;
 
+	FindEmptyCoordinate findEmpty;
+
 	FaderManager fader;
 
 
 
 	// Use this for initialization
 	void Start () {
+		findEmpty = GameObject.Find ("GridCheck").GetComponent<FindEmptyCoordinate> ();
 		fader = GameObject.Find ("LevelFader").GetComponent<FaderManager> ();
 		holobounds = GameObject.Find ("Holobounds").GetComponent<Holojam.Tools.Holobounds>();
 		settings = GameObject.Find ("SettingsManager").GetComponent<SettingsManager> ();
@@ -55,7 +58,8 @@ public class SettingsToValues : MonoBehaviour {
 			prev.Holobound4 != settings.settingsJSON.Holobound4){
 			UpdateHolobound ();
 		}
-		if (prev.faderLevelsMax != settings.settingsJSON.faderLevelsMax) {
+		if (prev.faderLevelsMax != settings.settingsJSON.faderLevelsMax||
+			prev.faderLevelsMin != settings.settingsJSON.faderLevelsMin) {
 			UpdateFaderManager ();
 		}
 		if (prev.experienceLengthSeconds != settings.settingsJSON.experienceLengthSeconds||
@@ -97,6 +101,7 @@ public class SettingsToValues : MonoBehaviour {
 
 	public void UpdateFaderManager(){
 		fader.maxLevel = settings.settingsJSON.faderLevelsMax;
+		fader.minLevel = settings.settingsJSON.faderLevelsMin;
 	}
 
 	public void UpdateBugManager(){
@@ -115,6 +120,8 @@ public class SettingsToValues : MonoBehaviour {
 		holobounds.bounds [1] = settings.settingsJSON.Holobound2;
 		holobounds.bounds [2] = settings.settingsJSON.Holobound3;
 		holobounds.bounds [3] = settings.settingsJSON.Holobound4;
+		holobounds.GetComponent<Holojam.Tools.Fence> ().Rebuild ();
+		findEmpty.Rebuild = true;
 	}
 
 	void propertyCopy(SettingsJSON From, SettingsJSON To){
@@ -137,6 +144,8 @@ public class SettingsToValues : MonoBehaviour {
 		To.emitFromInitialGrid = From.emitFromInitialGrid;
 		To.experienceLengthSeconds = From.experienceLengthSeconds;
 		To.faderLevelsMax = From.faderLevelsMax;
+		To.faderLevelsMin = From.faderLevelsMin;
+
 		To.graceTime = From.graceTime;
 		To.globalHeadsetUIMessage = From.globalHeadsetUIMessage;
 		To.maxSpeedToSitStill = From.maxSpeedToSitStill;

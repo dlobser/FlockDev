@@ -7,6 +7,9 @@ public class TapToReset : MonoBehaviour {
 	int taps;
 	LevelHandler lHandler;
 
+	public GameObject[] activateOnReset;
+	public GameObject[] deactivateOnReset;
+
 	// Use this for initialization
 	void Start () {
 		lHandler = GameObject.Find ("LevelHandler").GetComponent<LevelHandler> ();
@@ -24,7 +27,17 @@ public class TapToReset : MonoBehaviour {
 			taps++;
 			tapCounter = 1.5f;
 			if (taps == 4) {
+				Debug.Log ("poop");
+				for (int i = 0; i < activateOnReset.Length; i++) {
+					if (!activateOnReset [i].activeInHierarchy)
+						activateOnReset [i].SetActive (true);
+				}
+				for (int i = 0; i < deactivateOnReset.Length; i++) {
+					if (deactivateOnReset [i].activeInHierarchy)
+						deactivateOnReset [i].SetActive (false);
+				}
 				lHandler.Reset ();
+				taps = 0;
 			}
 		}
 	}

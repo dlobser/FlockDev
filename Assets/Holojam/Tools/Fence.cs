@@ -57,6 +57,16 @@ namespace Holojam.Tools{
          ProcessMesh();
       }
 
+		public void Rebuild(){
+//			mesh = new Mesh ();
+			verts.Clear ();
+			tris.Clear ();
+			uvs.Clear ();
+			quadIndex = 0;
+			GenerateMesh();
+			ProcessMesh();
+		}
+
       void GenerateMesh(){
          Quad(holobounds.Corner(0),holobounds.Upper(0),holobounds.Upper(1),holobounds.Corner(1));
          Quad(holobounds.Corner(1),holobounds.Upper(1),holobounds.Upper(2),holobounds.Corner(2));
