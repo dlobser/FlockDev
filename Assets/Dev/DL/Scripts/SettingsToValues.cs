@@ -37,7 +37,8 @@ public class SettingsToValues : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (prev.bugColliderSize != settings.settingsJSON.bugColliderSize||
+		if (prev.bugColliderSize != 
+			settings.settingsJSON.bugColliderSize||
 			prev.bugMaxSize != settings.settingsJSON.bugMaxSize||
 			prev.bugMinSize != settings.settingsJSON.bugMinSize) {
 			UpdateBug ();

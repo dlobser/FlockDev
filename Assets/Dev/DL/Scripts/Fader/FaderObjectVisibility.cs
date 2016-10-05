@@ -14,6 +14,7 @@ public class FaderObjectVisibility : Fader {
 			if (i != which)
 				obj [i].SetActive (false);
 		}
-		thisObj.SetActive (true);
+		if(!thisObj.activeInHierarchy)
+			thisObj.SetActive (true);
 	}
 }

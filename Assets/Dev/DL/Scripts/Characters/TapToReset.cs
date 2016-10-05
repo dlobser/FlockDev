@@ -27,7 +27,7 @@ public class TapToReset : MonoBehaviour {
 			taps++;
 			tapCounter = 1.5f;
 			if (taps == 4) {
-				Debug.Log ("poop");
+//				Debug.Log ("poop");
 				for (int i = 0; i < activateOnReset.Length; i++) {
 					if (!activateOnReset [i].activeInHierarchy)
 						activateOnReset [i].gameObject.SetActive (true);
