@@ -54,10 +54,10 @@ public class FindEmptyCoordinate : MonoBehaviour {
 	}
 
 	void FindHoloBounds(){
-		highBound = new Vector2 (Mathf.Max (holobounds.bounds [1].x, holobounds.bounds [2].x),
-			Mathf.Max (holobounds.bounds [0].y, holobounds.bounds [1].y));
-		lowBound = new Vector2(Mathf.Min(holobounds.bounds [0].x,holobounds.bounds [3].x),
-			Mathf.Min(holobounds.bounds[3].y,holobounds.bounds[2].y));
+		highBound = new Vector2 (Mathf.Max (holobounds.bounds [1].x, holobounds.bounds [2].x)-1f,
+			Mathf.Max (holobounds.bounds [0].y, holobounds.bounds [1].y)-1f);
+		lowBound = new Vector2(Mathf.Min(holobounds.bounds [0].x,holobounds.bounds [3].x)+1f,
+			Mathf.Min(holobounds.bounds[3].y,holobounds.bounds[2].y)+1f);
 	}
 
 	void Update(){
