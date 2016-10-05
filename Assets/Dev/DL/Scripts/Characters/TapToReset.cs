@@ -30,11 +30,11 @@ public class TapToReset : MonoBehaviour {
 				Debug.Log ("poop");
 				for (int i = 0; i < activateOnReset.Length; i++) {
 					if (!activateOnReset [i].activeInHierarchy)
-						activateOnReset [i].SetActive (true);
+						activateOnReset [i].gameObject.SetActive (true);
 				}
 				for (int i = 0; i < deactivateOnReset.Length; i++) {
 					if (deactivateOnReset [i].activeInHierarchy)
-						deactivateOnReset [i].SetActive (false);
+						deactivateOnReset [i].gameObject.SetActive (false);
 				}
 				lHandler.Reset ();
 				taps = 0;
