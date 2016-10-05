@@ -25,6 +25,7 @@ public class BirdAvatarLOD : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+			flapCount = Random.value * 10f;
 		dist = this.transform.GetChild(0).GetComponent<DistanceToCamera> ();
 //		trueLODs = bool[LODs.Length];
 //		LODDid = bool[LODs.Length];
