@@ -365,9 +365,27 @@ namespace TREESharp{
 			return stack.Clone () as int[];// tempStack;
 		}
 
-		public static void appendBranch(GameObject obj){
+		public static void appendBranch(GameObject parentJoint, GameObject childJoint ){
+			
+			GameObject pGeo = parentJoint;
+			Joint pJoint = parentJoint.GetComponent<Joint> ();
+			Joint ppJoint = pGeo.transform.parent.GetComponent<Joint> ();
+
+			Joint thisJoint = childJoint.GetComponent<Joint>();
+
+			thisJoint.transform.parent = pGeo.transform.parent;
+			thisJoint.transform.position =   new Vector3(pGeo.transform.position.x,pGeo.transform.position.y,pGeo.transform.position.z);
+			thisJoint.transform.rotation =   new Quaternion(pGeo.transform.rotation.x,pGeo.transform.rotation.y,pGeo.transform.rotation.z,pGeo.transform.rotation.w);
+			thisJoint.transform.localScale = new Vector3(pGeo.transform.localScale.x,pGeo.transform.localScale.y,pGeo.transform.localScale.z);
+
+			ppJoint.limbs.Add (childJoint);
+
+			thisJoint.offset = pJoint.joint;
+			thisJoint.offset2 = pJoint.limbs.Count;
 
 		}
+
+
 
 		public static void makeDictionary(GameObject joint){
 

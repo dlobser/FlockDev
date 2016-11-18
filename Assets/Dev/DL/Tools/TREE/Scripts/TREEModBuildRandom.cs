@@ -3,9 +3,11 @@ using System.Collections;
 
 namespace TREESharp{
 
+
 	public class TREEModBuildRandom : TREEMod {
 
 		public GameObject defaultJoint;
+		GameObject tempJoint;
 
 		public string joints= "10",rads= "1",angles= "0",length= "1",divs= "1",start = "0",end = "-1";
 
@@ -24,11 +26,42 @@ namespace TREESharp{
 				"start",	start,
 				"end",		end
 			);
-			tree.jointDictionary.Clear ();
-			TREEUtils.makeDictionary (tree.gameObject);
+
 			rebuild = false;
 
-			Debug.Log(TREEUtils.findJoint (new int[]{ 0, 0, 0 }, 0, tree.gameObject).gameObject.name);
+			if(tempJoint==null)
+				tempJoint = Instantiate(TREEUtils.findJoint (new int[]{ 0, 0, 0}, 0, tree.gameObject).gameObject);
+
+			GameObject g = TREEUtils.findJoint (new int[]{ 0, 0, (int)Random.Range(0,9) }, 0, tree.gameObject).gameObject;
+			GameObject thisRoot = tree.Branch (10, g.transform);
+			g.GetComponent<Joint> ().limbs.Add (thisRoot);
+
+			for (int i = 0; i < 10; i++) {
+				g = TREEUtils.findJoint (new int[]{ 0, 0, (int)Random.Range(0,9) }, 0, tree.gameObject).gameObject;
+				thisRoot = tree.Branch (10, g.transform);
+				g.GetComponent<Joint> ().limbs.Add (thisRoot);
+
+				tree.jointDictionary.Clear ();
+				TREEUtils.makeDictionary (tree.gameObject);
+			}
+
+//
+//			GameObject p = Instantiate (tempJoint);
+//			TREEUtils.appendBranch (g, p);
+//
+//			tree.jointDictionary.Clear ();
+//			TREEUtils.makeDictionary (tree.gameObject);
+//
+//			p = Instantiate (tempJoint);
+//			g = TREEUtils.findJoint (new int[]{ 0, 0, (int)Random.Range(0,10) }, 0, tree.gameObject).gameObject;
+//
+//			TREEUtils.appendBranch (g, p);
+
+			tree.jointDictionary.Clear ();
+			TREEUtils.makeDictionary (tree.gameObject);
+
+//			p.transform.Rotate (new Vector3 (30, 30, 30));
+
 		}
 		
 		// Update is called once per frame

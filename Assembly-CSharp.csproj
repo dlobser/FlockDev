@@ -19,7 +19,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_4_0;UNITY_5_4;UNITY_5;ENABLE_NEW_BUGREPORTER;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EDITOR_RETINA;ENABLE_RETINA_GUISTYLES;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_SPRITE_POLYGON;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;INCLUDE_DIRECTX12;PLATFORM_SUPPORTS_MONO;INCLUDE_PUBNUB;ENABLE_LOCALIZATION;ENABLE_ANDROID_ATLAS_ETC1_COMPRESSION;ENABLE_EDITOR_TESTS_RUNNER;UNITY_ANDROID;UNITY_ANDROID_API;ENABLE_SUBSTANCE;ENABLE_TEXTUREID_MAP;ENABLE_EGL;ENABLE_NETWORK;ENABLE_RUNTIME_GI;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;PLATFORM_SUPPORTS_ADS_ID;UNITY_CAN_SHOW_SPLASH_SCREEN;ENABLE_UNITYADS_RUNTIME;UNITY_UNITYADS_API;ENABLE_MONO;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_OSX;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_4_2;UNITY_5_4;UNITY_5;ENABLE_NEW_BUGREPORTER;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EDITOR_RETINA;ENABLE_RETINA_GUISTYLES;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_SPRITE_POLYGON;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;INCLUDE_DIRECTX12;PLATFORM_SUPPORTS_MONO;INCLUDE_PUBNUB;ENABLE_LOCALIZATION;ENABLE_ANDROID_ATLAS_ETC1_COMPRESSION;ENABLE_EDITOR_TESTS_RUNNER;UNITY_ANDROID;UNITY_ANDROID_API;ENABLE_SUBSTANCE;ENABLE_TEXTUREID_MAP;ENABLE_EGL;ENABLE_NETWORK;ENABLE_RUNTIME_GI;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;PLATFORM_SUPPORTS_ADS_ID;UNITY_CAN_SHOW_SPLASH_SCREEN;ENABLE_UNITYADS_RUNTIME;UNITY_UNITYADS_API;ENABLE_MONO;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_OSX;UNITY_TEAM_LICENSE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
@@ -120,9 +120,9 @@
      <Compile Include="Assets\Dev\DL\Scripts\directionHintOpacity.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\synchronizableGlobals.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\transformAverage.cs" />
-     <Compile Include="Assets\Dev\DL\Tools\MakeSprite\MakeSpriteSheet.cs" />
-     <Compile Include="Assets\Dev\DL\Tools\MakeSprite\TransformUniversalSetTime.cs" />
-     <Compile Include="Assets\Dev\DL\Tools\MakeSprite\snapshot.cs" />
+     <Compile Include="Assets\Dev\DL\Tools\MakeSprite\Scripts\MakeSpriteSheet.cs" />
+     <Compile Include="Assets\Dev\DL\Tools\MakeSprite\Scripts\TransformUniversalSetTime.cs" />
+     <Compile Include="Assets\Dev\DL\Tools\MakeSprite\Scripts\snapshot.cs" />
      <Compile Include="Assets\Dev\DL\Tools\Painter\Painter.cs" />
      <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\GenomeUtils.cs" />
      <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\Joint.cs" />
@@ -145,7 +145,22 @@
      <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\TreeTransform.cs" />
      <Compile Include="Assets\Dev\DL\Tools\TREE\old\tester2.cs" />
      <Compile Include="Assets\Dev\DL\Tools\TREE\old\tester4.cs" />
+     <Compile Include="Assets\Dev\DL\Tools\TREE\old\tester5.cs" />
      <Compile Include="Assets\Dev\LF\Scripts\MeshRendererSortingLayersEditor.cs" />
+     <Compile Include="Assets\Dev\MusicVideo\Scripts\BugMVideo.cs" />
+     <Compile Include="Assets\Dev\MusicVideo\Scripts\BugManagerMVideo.cs" />
+     <Compile Include="Assets\Dev\MusicVideo\Scripts\FindEmptyCoordinateMVideo.cs" />
+     <Compile Include="Assets\Dev\MusicVideo\Scripts\Flock\FlockBoid.cs" />
+     <Compile Include="Assets\Dev\MusicVideo\Scripts\Flock\FlockBoid_Bird.cs" />
+     <Compile Include="Assets\Dev\MusicVideo\Scripts\Flock\FlockControl.cs" />
+     <Compile Include="Assets\Dev\MusicVideo\Scripts\Flock\FlockManipulator.cs" />
+     <Compile Include="Assets\Dev\MusicVideo\Scripts\Flock\FlockManipulator_Centroid.cs" />
+     <Compile Include="Assets\Dev\MusicVideo\Scripts\Flock\FlockManipulator_CentroidLerp.cs" />
+     <Compile Include="Assets\Dev\MusicVideo\Scripts\Flock\FlockManipulator_CentroidLerped.cs" />
+     <Compile Include="Assets\Dev\MusicVideo\Scripts\Flock\FlockPopulator.cs" />
+     <Compile Include="Assets\Dev\MusicVideo\Scripts\ON_getSpeed.cs" />
+     <Compile Include="Assets\Dev\MusicVideo\Scripts\SwarmMVideo.cs" />
+     <Compile Include="Assets\Dev\MusicVideo\Scripts\swirlsWithTrailMVideo.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\ActorData.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\ActorDataSync.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\ActorJson.cs" />
@@ -302,20 +317,21 @@
      <None Include="Assets\Dev\DL\Shaders\test.shader" />
      <None Include="Assets\Standard Assets\Effects\DepthOfField\Resources\MedianFilter.shader" />
      <None Include="Assets\Dev\DL\Shaders\RGBRemapOpaque.shader" />
+     <None Include="Assets\DeleteMe\twosided.shader" />
      <None Include="Assets\Standard Assets\Effects\DepthOfField\Resources\BokehSplatting.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\BlendModesOverlay.shader" />
      <None Include="Assets\Dev\DL\Shaders\RGBRemap.shader" />
      <None Include="Assets\Standard Assets\Effects\LensAberrations\Resources\LensAberrations.shader" />
      <None Include="Assets\Standard Assets\Effects\TonemappingColorGrading\Resources\HistogramCompute.compute" />
      <None Include="Assets\Holojam\Demo\Shaders\AlphaBlendedColorHard.shader" />
- <Reference Include="UnityEngine.Networking">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
- </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
+ <Reference Include="UnityEngine.Networking">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ </Reference>
  <Reference Include="protobuf-net">
- <HintPath>/Users/ckromero/code/FlockDev/Assets/Plugins/protobuf-net.dll</HintPath>
+ <HintPath>/Users/david/Documents/projects/VR/FlockDev/Assets/Plugins/protobuf-net.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

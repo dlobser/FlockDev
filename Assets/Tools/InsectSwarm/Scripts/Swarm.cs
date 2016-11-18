@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Swarm : MonoBehaviour {
+public class SwarmMVideo : MonoBehaviour {
 
 	public GameObject flyPrefab;
 	List<Fly> flies;
