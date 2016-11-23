@@ -12,7 +12,6 @@ public class AudioManager :MonoBehaviour
 		AudioMixerSnapshot ams = audioMixer.FindSnapshot (amsToName);
 		AudioMixerSnapshot[] amsArray = new AudioMixerSnapshot[]{ams};
 		float[] weightArray = new float[]{ weight };
-
 		audioMixer.TransitionToSnapshots(amsArray,weightArray,timeForTransition); 
 		currentAudioMixerSnapshot=ams.name;
 	}

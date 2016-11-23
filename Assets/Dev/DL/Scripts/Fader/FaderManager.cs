@@ -10,7 +10,7 @@ public class FaderManager : MonoBehaviour {
 
 	float prevLevel = -1f;
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		faders = GetComponentsInChildren<Fader> ();
 		Refresh ();
 	}

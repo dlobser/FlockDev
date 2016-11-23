@@ -5,6 +5,7 @@
 		_MainTex ("Texture", 2D) = "white" {}
 		_Pos ("position",Vector) = (0,0,0,0)
 		_Data ("X:Dist, Y:Mult, Z:Freq, W:Speed", Vector ) = (0,0,0,0)
+		_Color ("Color", Color) = (1,1,1,1)
 	}
 	SubShader
 	{
@@ -41,6 +42,7 @@
 			float4 _MainTex_ST;
 			float4 _Pos;
 			float4 _Data;
+			float4 _Color;
 
 			float4 LerpU( float4 a, float4 b, float t ){
 			     return t*b + ((1-t)*a);
@@ -74,7 +76,7 @@
 				fixed4 col = tex2D(_MainTex, i.uv);
 				// apply fog
 //				UNITY_APPLY_FOG(i.fogCoord, col);
-				return col*col.a;//fixed4(i.uv.x,i.uv.y,0.0,1.0);
+				return col*col.a*_Color;//fixed4(i.uv.x,i.uv.y,0.0,1.0);
 			}
 			ENDCG
 		}

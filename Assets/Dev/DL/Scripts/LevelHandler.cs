@@ -26,6 +26,7 @@ public class LevelHandler : MonoBehaviour {
 	float hungerTimer;
 	float reduceLevelCounter = 0;
 
+    bool upDown = true;
 	// Update is called once per frame
 
 	void Update () {
@@ -63,12 +64,30 @@ public class LevelHandler : MonoBehaviour {
 	}
 
 	public void EatBug(){
-		bugsEaten++;
-		level++;
+		//bugsEaten++;
+        changeLevel();
 		hungerTimer = 0;
 	}
 
-	public void Reset(){
+    public void changeLevel()
+    {
+        if (upDown && level < maxLevel)
+        {
+            bugsEaten++;
+            level++;
+        }
+        if (!upDown && level > 0)
+        {
+            bugsEaten--;
+            level--;
+        }
+        if (level >= maxLevel || level <= 0)
+        {
+            upDown = !upDown;
+        }
+    }
+
+    public void Reset(){
 		level = 0;
 		deathClock = 0;
 		deathCount = 0;

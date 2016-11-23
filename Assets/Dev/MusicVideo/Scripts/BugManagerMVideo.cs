@@ -43,8 +43,14 @@ public class BugManagerMVideo : MonoBehaviour {
 
 	FindEmptyCoordinateMVideo emptyCoordinate;
 
+    bool upDown = true;
+
+    GameObject score;
+
 	void Awake(){
 		Build ();
+        score = GameObject.Find("score").gameObject;
+        Debug.Log(score);
 		emptyCoordinate = GameObject.Find ("FindEmptyCoordinates_ForBugs").gameObject.GetComponent<FindEmptyCoordinateMVideo> ();
 		fader =  GameObject.Find ("LevelFader").gameObject.GetComponent<FaderManager>();
 		handler =  GameObject.Find ("LevelHandler").gameObject.GetComponent<LevelHandler>();
@@ -125,7 +131,7 @@ public class BugManagerMVideo : MonoBehaviour {
 			noiseCounter += noiseSpeed * Time.deltaTime;
 
 			//move bugs toward the camera
-			if( Vector3.Distance( bugs [i].origin, Camera.main.transform.position)>1)
+			if( Vector3.Distance( bugs [i].origin, Camera.main.transform.position)>2)
 				bugs [i].origin = Vector3.Lerp (bugs [i].origin, Camera.main.transform.position, bugLerpToOriginSpeed);
 
 			//			if(nearestActors[i]!=null)
@@ -171,14 +177,32 @@ public class BugManagerMVideo : MonoBehaviour {
 	}
 
 	public void LevelUp(BugMVideo b){
-		if (!init)
-			return;
-		else
-			handler.EatBug ();
-			fader.level += 1;
+        if (!init)
+            return;
+        else
+        {
+            handler.EatBug();
+            score.GetComponent<keepScore>().AddToScore();
+        }
+            //changeLevel();
+			//fader.level += 1;
 	}
 
-
+    public void changeLevel()
+    {
+        if(upDown && fader.level < fader.maxLevel)
+        {
+            fader.level++;
+        }
+        if (!upDown && fader.level > 0)
+        {
+            fader.level++;
+        }
+        if (fader.level >= fader.maxLevel || fader.level<=0)
+        {
+            upDown = false;
+        }
+    }
 	public void SwapTexture(BugMVideo b){
 		if (!init)
 			return;

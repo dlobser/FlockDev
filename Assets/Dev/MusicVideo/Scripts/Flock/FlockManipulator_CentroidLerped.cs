@@ -80,7 +80,7 @@ namespace Flock{
 
 			for (int i = 0; i < targets.Count; i++) {
 
-				float clampSpeed = Mathf.Clamp (speed, 0, 1) * targets.Count;
+				float clampSpeed = Mathf.Clamp (speed*speed, 0, 1) * targets.Count;
 
 				if (i < clampSpeed && i + 1 < clampSpeed)
 					targetLerp [i] = 1;
