@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: a0406d0426c06dc4d9750e4314e51085
+timeCreated: 1481138934
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Kravitz
+  fontNames:
+  - Kravitz
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

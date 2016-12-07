@@ -73,7 +73,7 @@ SubShader {
 				fixed4 col3 = (colR+colG+colB)*shad*shad*_Color*strober;
 //				UNITY_APPLY_FOG(i.fogCoord, col);
 				UNITY_APPLY_FOG(i.fogCoord, col3);
-				UNITY_OPAQUE_ALPHA(col.a);
+				//UNITY_OPAQUE_ALPHA(col.a);
 				return col3;
 			}
 		ENDCG

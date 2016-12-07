@@ -51,7 +51,7 @@ public class MaterialSwapperContinuous : MonoBehaviour {
 		int w = which;
 		if (which > 9)
 			w = 1;
-		fader = w - 1;
+		fader = Mathf.Max(0.0f, w - 1);
 		float from = fader;
 		StartCoroutine (Swap (from,(float)w));
 	}

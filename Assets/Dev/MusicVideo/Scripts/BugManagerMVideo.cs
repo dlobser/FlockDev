@@ -38,7 +38,7 @@ public class BugManagerMVideo : MonoBehaviour {
 
 	GameObject spawnPoint;
 
-	FaderManager fader;
+	public FaderManager fader;
 	LevelHandler handler;
 
 	FindEmptyCoordinateMVideo emptyCoordinate;
@@ -52,7 +52,7 @@ public class BugManagerMVideo : MonoBehaviour {
         score = GameObject.Find("score").gameObject;
         Debug.Log(score);
 		emptyCoordinate = GameObject.Find ("FindEmptyCoordinates_ForBugs").gameObject.GetComponent<FindEmptyCoordinateMVideo> ();
-		fader =  GameObject.Find ("LevelFader").gameObject.GetComponent<FaderManager>();
+		//fader =  GameObject.Find ("LevelFader").gameObject.GetComponent<FaderManager>();
 		handler =  GameObject.Find ("LevelHandler").gameObject.GetComponent<LevelHandler>();
 	}
 
@@ -97,7 +97,9 @@ public class BugManagerMVideo : MonoBehaviour {
 				targets [x + gridWidth * y] = pos;
 				GameObject b = bugPrefabs [(int)Mathf.Floor (Random.value * bugPrefabs.Length)].gameObject;
 				GameObject myBug = Instantiate (b.gameObject, pos, Quaternion.identity) as GameObject;
-				myBug.transform.parent = transform;
+                myBug.transform.GetChild(0).gameObject.GetComponent<MaterialSwapperContinuous>().swapMat((int)(Random.value * 6));
+
+                myBug.transform.parent = transform;
 				string label = "Bug" + x + "." + y;
 				myBug.name = label;
 				bugs [x + gridWidth * y] = myBug.GetComponent<BugMVideo> ();
@@ -137,8 +139,7 @@ public class BugManagerMVideo : MonoBehaviour {
 			//			if(nearestActors[i]!=null)
 			bugs [i].originLerp = Vector3.Lerp( bugs [i].originLerp, Camera.main.transform.position, .05f);
 			bugs [i].originOffset.Set (bugs [i].origin.x, bugs [i].originLerp.y, bugs [i].origin.z);
-
-			Vector3 newPos = bugs [i].origin;
+            Vector3 newPos = bugs [i].origin;
 //			Debug.Log (newPos);
 
 			newPos = bugs [i].origin + new Vector3 (
@@ -207,7 +208,7 @@ public class BugManagerMVideo : MonoBehaviour {
 		if (!init)
 			return;
 		else {
-			b.transform.GetChild(0).gameObject.GetComponent<MaterialSwapperContinuous> ().swapMat ();
+			b.transform.GetChild(0).gameObject.GetComponent<MaterialSwapperContinuous> ().swapMat ((int)(Random.value*6));
 
 		}
 	}
