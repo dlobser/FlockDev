@@ -148,11 +148,13 @@ public class BugMVideo : MonoBehaviour{
 		}
 		active = 0;
 		doneScalingDown = false;
-		yield return new WaitForSeconds(bb.disableTime);
+        this.transform.localScale = Vector3.zero;
+        yield return new WaitForSeconds(bb.disableTime);
 		bb.SendMessage ("ResetPosition", this);
 //		materialSwapper.swapMat ();
 		active = 1;
 		emit = 0;
+        this.transform.localScale = Vector3.zero;
 		while (!doneScalingUp) {
 			if (scale < initScale) {
 				scale = Mathf.MoveTowards (scale, initScale, scaleSpeed);

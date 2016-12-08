@@ -24,6 +24,8 @@ public class LineParticleStrength : MonoBehaviour {
     ScaleEnvironmentWhenReady env;
 
     public GameObject dial;
+
+    public bool UIisActive = true;
     // Use this for initialization
     void Start () {
         env = GameObject.Find("Forest").GetComponent<ScaleEnvironmentWhenReady>();
@@ -54,6 +56,7 @@ public class LineParticleStrength : MonoBehaviour {
             fadeStarted = true;
             env.Add();
             dial.transform.parent.gameObject.SetActive(false);
+            UIisActive = false;
         }
 	}
 
