@@ -50,7 +50,7 @@ public class BugManagerMVideo : MonoBehaviour {
 	void Awake(){
 		Build ();
         score = GameObject.Find("score").gameObject;
-        Debug.Log(score);
+        //Debug.Log(score);
 		emptyCoordinate = GameObject.Find ("FindEmptyCoordinates_ForBugs").gameObject.GetComponent<FindEmptyCoordinateMVideo> ();
 		//fader =  GameObject.Find ("LevelFader").gameObject.GetComponent<FaderManager>();
 		handler =  GameObject.Find ("LevelHandler").gameObject.GetComponent<LevelHandler>();

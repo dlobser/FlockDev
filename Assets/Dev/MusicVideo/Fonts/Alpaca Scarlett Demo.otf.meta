@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: d2c25206cc7f8a44d8a0aa41e5b6ae47
+timeCreated: 1481307333
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Alpaca Scarlett Demo
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 61d809ba0aa2921439fe22e0d4245782, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

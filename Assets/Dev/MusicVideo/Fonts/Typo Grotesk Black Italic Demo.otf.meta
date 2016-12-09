@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: bf27c3ba5fbb26e49a2d0697d29e34e9
+timeCreated: 1481307292
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Typo Grotesk Black
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: b2420e3f41cb53942972a10a23e5dc7a, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -59,14 +59,14 @@ namespace Flock{
 				targetLerp.Add (0);
 			}
 
-			Debug.Log (targets.Count);
+			//Debug.Log (targets.Count);
 
 		}
 
 		void controllerSpeed(){
 			speed = speed * 1000;
 			speed += Vector3.Distance (controller2.transform.position, previousPos) * distanceMultiplier;
-			speed /= 1005;
+			speed /= 1001.5f;
 			previousPos = new Vector3(
 				controller2.transform.position.x,
 				controller2.transform.position.y,
@@ -96,7 +96,7 @@ namespace Flock{
 
 				Vector3 newPos = controller.transform.localToWorldMatrix.MultiplyVector (targets [i]) + controller.transform.position;
 				Vector3 newPos2 = controller2.transform.localToWorldMatrix.MultiplyVector (targets2 [i]) + controller2.transform.position;
-				populator.boids [i].target = Vector3.Lerp(newPos,newPos2,targetLerp[i]) + getNoiseVec (populator.boids [i].initialPosition);
+				populator.boids [i].target = Vector3.Lerp(newPos,newPos2, Mathf.SmoothStep(0,1, targetLerp[i])) + getNoiseVec (populator.boids [i].initialPosition);
 				populator.boids [i].Animate ();
 			}
 

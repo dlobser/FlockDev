@@ -23,7 +23,12 @@ public class FadeUI2 : MonoBehaviour {
         if(Time.time > fadeStartTime && fader < 0)
         {
             this.gameObject.SetActive(false);
-            Debug.Log("falsify");
+            //Debug.Log("falsify");
         }
 	}
+
+    private void OnApplicationQuit()
+    {
+        UIMat.SetColor("_Color", new Color(color.r, color.g, color.b, color.a));
+    }
 }

@@ -21,7 +21,7 @@ public class ScaleEnvironmentWhenReady : MonoBehaviour {
     {
         if (!init&&Time.time>.01f)
         {
-            Debug.Log("init");
+            //Debug.Log("init");
             this.transform.localScale = start;
             RenderSettings.fogColor = startFog;
             Camera.main.backgroundColor = startFog;

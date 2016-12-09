@@ -109,19 +109,28 @@ public class LevelHandler : MonoBehaviour {
 	void UpdateFaders(){
 
 		foreach (FaderManager fader in BugsEaten) {
-			fader.level = bugsEaten;
+            if (fader != null)
+
+                fader.level = bugsEaten;
 		}
 		foreach (FaderManager fader in Level) {
-			fader.level = level;
+            if (fader != null)
+
+                fader.level = level;
 		}
 		foreach (FaderManager fader in LerpLevel) {
-			fader.level = lerpLevel;
+            if (fader != null)
+
+                fader.level = lerpLevel;
 		}
 		foreach (FaderManager fader in LevelDelta) {
-			fader.level = levelDelta;
+            if(fader!=null)
+			    fader.level = levelDelta;
 		}
 		foreach (FaderManager fader in DeathCount) {
-			fader.level = deathCount;
+            if (fader != null)
+
+                fader.level = deathCount;
 		}
 
 	}

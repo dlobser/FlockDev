@@ -24,4 +24,9 @@ public class FadeUI : MonoBehaviour {
             this.gameObject.SetActive(false);
         }
 	}
+
+    private void OnApplicationQuit()
+    {
+        UIMat.SetColor("_Color", new Color(1, 1, 1, 1));
+    }
 }

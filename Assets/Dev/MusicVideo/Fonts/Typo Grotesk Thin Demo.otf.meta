@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: b56009628c8f4654abe15b210baa5f2c
+timeCreated: 1481307292
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Typo Grotesk Thin
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 4a7ec6bb4a5fe2b4e9dc0b127ee777eb, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

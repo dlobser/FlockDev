@@ -20,6 +20,7 @@ public class LineParticleStrength : MonoBehaviour {
 
     public Color startDial;
     public Color endDial;
+    public float startTime;
 
     ScaleEnvironmentWhenReady env;
 
@@ -35,7 +36,8 @@ public class LineParticleStrength : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        GetSpeed();
+        if(Time.time>startTime)
+            GetSpeed();
         trail.time = speed * trailMult;
         parti.emissionRate = speed * partiMult;
         parti.startSpeed = speed * 3;
