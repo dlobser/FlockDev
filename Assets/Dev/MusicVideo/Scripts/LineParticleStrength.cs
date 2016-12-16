@@ -59,7 +59,7 @@ public class LineParticleStrength : MonoBehaviour {
         }
         if (speed > canvasFadeSpeed && !fadeStarted && Time.time>3f)
         {
-            StartCoroutine(fadeUI());
+            //StartCoroutine(fadeUI());
             fadeStarted = true;
             env.Add();
             dial.transform.parent.gameObject.SetActive(false);

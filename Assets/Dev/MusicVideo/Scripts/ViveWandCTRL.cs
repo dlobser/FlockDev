@@ -12,6 +12,9 @@ public class ViveWandCTRL : MonoBehaviour
     public bool triggerDown;
     public bool triggerUp;
 
+    public GameObject wandEnd;
+    public GameObject wandScale;
+    public Vector2 WandEndMinMax;
      
     // Use this for initialization
     void Start()
@@ -36,6 +39,12 @@ public class ViveWandCTRL : MonoBehaviour
         else if (ViveInput.GetPressUp(hand, ControllerButton.Trigger))
         {
             triggerUp = true;
+        }
+        else if (!ViveInput.GetPadPressAxis(hand).Equals(Vector2.zero))
+        {
+            float newZ = Mathf.Clamp(wandEnd.transform.localPosition.z + ViveInput.GetPadPressAxis(hand).y*.1f, WandEndMinMax.x,WandEndMinMax.y);
+            wandEnd.transform.localPosition = new Vector3(0, 0,newZ);
+            wandScale.transform.localScale = new Vector3(wandScale.transform.localScale.x, wandScale.transform.localScale.y, newZ);
         }
     }
 

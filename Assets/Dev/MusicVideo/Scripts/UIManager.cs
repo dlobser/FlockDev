@@ -24,6 +24,8 @@ public class UIManager : MonoBehaviour {
     bool leftHandled = false;
     bool rightHandled = false;
 
+    public GameObject[] hideBothTriggers;
+
     public ViveWandCTRL LeftCTRL;
     public ViveWandCTRL rightCTRL;
 
@@ -44,6 +46,15 @@ public class UIManager : MonoBehaviour {
             showLeftTrigger[i].SetActive(true);
         }
         leftHandled = true;
+    }
+
+    public void handleBoth()
+    {
+        for (int i = 0; i < hideBothTriggers.Length; i++)
+        {
+            hideBothTriggers[i].SetActive(false);
+        }
+       
     }
 
     public void handleRight() {
@@ -74,6 +85,7 @@ public class UIManager : MonoBehaviour {
 
         if (!lineParti1.UIisActive && !lineParti2.UIisActive && DoAndDontIndicator.activeInHierarchy)
         {
+            handleBoth();
             DoAndDontIndicator.SetActive(false);
             BugManager.SetActive(true);
             //scoreAnim.SetTrigger("PLAY");
