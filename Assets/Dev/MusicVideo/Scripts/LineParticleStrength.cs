@@ -22,6 +22,10 @@ public class LineParticleStrength : MonoBehaviour {
     public Color endDial;
     public float startTime;
 
+    public float minDialAngle;
+    public float maxDialAngle;
+
+
     ScaleEnvironmentWhenReady env;
 
     public GameObject dial;
@@ -48,7 +52,8 @@ public class LineParticleStrength : MonoBehaviour {
         float dialer = speed / canvasFadeSpeed;
         if (!fadeStarted)
         {
-            dial.transform.localEulerAngles = new Vector3((dialer * 360) - 90, 90, 90);
+            float dialRemapped = DLUtility.remap(dialer, 0, 1, minDialAngle, maxDialAngle);
+            dial.transform.localEulerAngles = new Vector3((dialRemapped * 360) - 90, 90, 90);
             dial.transform.parent.gameObject.GetComponent<MeshRenderer>().material.color = Color.Lerp(startDial, endDial, dialer);
 
         }

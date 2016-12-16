@@ -13,15 +13,65 @@ public class UIManager : MonoBehaviour {
 
     public GameObject BugManager;
 
+    public int pressed = 0;
+
+    public GameObject[] hideLeftTrigger;
+    public GameObject[] showLeftTrigger;
+
+    public GameObject[] hideRightTrigger;
+    public GameObject[] showRightTrigger;
+
+    bool leftHandled = false;
+    bool rightHandled = false;
+
+    public ViveWandCTRL LeftCTRL;
+    public ViveWandCTRL rightCTRL;
+
     //public Animator scoreAnim;
 
     // Use this for initialization
     void Start () {
 		
 	}
+
+    public void handleLeft() {
+        for (int i = 0; i < hideLeftTrigger.Length; i++)
+        {
+            hideLeftTrigger[i].SetActive(false);
+        }
+        for (int i = 0; i < showLeftTrigger.Length; i++)
+        {
+            showLeftTrigger[i].SetActive(true);
+        }
+        leftHandled = true;
+    }
+
+    public void handleRight() {
+
+        for (int i = 0; i < hideRightTrigger.Length; i++)
+        {
+            hideRightTrigger[i].SetActive(false);
+        }
+        for (int i = 0; i < showRightTrigger.Length; i++)
+        {
+            showRightTrigger[i].SetActive(true);
+        }
+        rightHandled = true;
+    }
 	
 	// Update is called once per frame
 	void Update () {
+
+        if(!rightHandled && rightCTRL.triggerDown)
+        {
+            handleRight();
+        }
+
+        if (!leftHandled && LeftCTRL.triggerDown)
+        {
+            handleLeft();
+        }
+
         if (!lineParti1.UIisActive && !lineParti2.UIisActive && DoAndDontIndicator.activeInHierarchy)
         {
             DoAndDontIndicator.SetActive(false);
