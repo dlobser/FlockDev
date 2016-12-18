@@ -25,6 +25,8 @@ public class LineParticleStrength : MonoBehaviour {
     public float minDialAngle;
     public float maxDialAngle;
 
+    public bool triggered;
+
 
     ScaleEnvironmentWhenReady env;
 
@@ -57,7 +59,7 @@ public class LineParticleStrength : MonoBehaviour {
             dial.transform.parent.gameObject.GetComponent<MeshRenderer>().material.color = Color.Lerp(startDial, endDial, dialer);
 
         }
-        if (speed > canvasFadeSpeed && !fadeStarted && Time.time>3f)
+        if (triggered && speed > canvasFadeSpeed && !fadeStarted && Time.time>3f)
         {
             //StartCoroutine(fadeUI());
             fadeStarted = true;

@@ -54,8 +54,9 @@
 				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
 				float sm = _Data.z;
 
-				float4 noise = float4(snoise(v.vertex*sm+float3(_Data.w*_Time.x,v.uv.x,1)),snoise(sm*v.vertex+float3(1,_Data.w*_Time.x,v.uv.x)),snoise(sm*v.vertex+float3(v.uv.x,1,_Data.w*_Time.x)),0)*v.uv.x*2;
-
+				float noiseIn = snoise(v.vertex*sm + float3(_Data.w*_Time.x, v.uv.x, 1));
+				//float4 noise = float4(snoise(v.vertex*sm+float3(_Data.w*_Time.x,v.uv.x,1)),snoise(sm*v.vertex+float3(1,_Data.w*_Time.x,v.uv.x)),snoise(sm*v.vertex+float3(v.uv.x,1,_Data.w*_Time.x)),0)*v.uv.x*2;
+				float4 noise = float4(noiseIn, noiseIn, noiseIn, 0)*v.uv.x * 2;
 				float dist = max(0,((distance(_Pos,v.vertex)-1.5)*-1));
 				float mult = _Data.x*dist;
 				float4 sub = ((_Pos*mult) - v.vertex ) * v.uv.x ;

@@ -15,6 +15,10 @@ public class ViveWandCTRL : MonoBehaviour
     public GameObject wandEnd;
     public GameObject wandScale;
     public Vector2 WandEndMinMax;
+
+    public LineParticleStrength lineParti;
+    public ControllerTweakBallStrength triggerBall;
+    bool ballTriggerable = false;
      
     // Use this for initialization
     void Start()
@@ -35,10 +39,18 @@ public class ViveWandCTRL : MonoBehaviour
         if (ViveInput.GetPress(hand, ControllerButton.Trigger))
         {
             triggerDown = true;
+            if (!lineParti.triggered)
+                lineParti.triggered = true;
+            if (ballTriggerable)
+            {
+                triggerBall.Ping();
+                ballTriggerable = false;
+            }
         }
         else if (ViveInput.GetPressUp(hand, ControllerButton.Trigger))
         {
             triggerUp = true;
+            ballTriggerable = true;
         }
         else if (!ViveInput.GetPadPressAxis(hand).Equals(Vector2.zero))
         {
@@ -46,6 +58,7 @@ public class ViveWandCTRL : MonoBehaviour
             wandEnd.transform.localPosition = new Vector3(0, 0,newZ);
             wandScale.transform.localScale = new Vector3(wandScale.transform.localScale.x, wandScale.transform.localScale.y, newZ);
         }
+
     }
 
     

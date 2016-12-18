@@ -64,9 +64,11 @@ namespace Flock{
 		}
 
 		void controllerSpeed(){
+            float prevSpeed = speed;
 			speed = speed * 1000;
 			speed += Vector3.Distance (controller2.transform.position, previousPos) * distanceMultiplier;
-			speed /= 1001.5f;
+			speed /= 1001f+(prevSpeed*prevSpeed*3f);
+            //speed = Mathf.Min(1.0f, speed);
 			previousPos = new Vector3(
 				controller2.transform.position.x,
 				controller2.transform.position.y,

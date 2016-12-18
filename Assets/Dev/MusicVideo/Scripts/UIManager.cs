@@ -25,6 +25,7 @@ public class UIManager : MonoBehaviour {
     bool rightHandled = false;
 
     public GameObject[] hideBothTriggers;
+    public GameObject[] showBothTriggers;
 
     public ViveWandCTRL LeftCTRL;
     public ViveWandCTRL rightCTRL;
@@ -54,7 +55,11 @@ public class UIManager : MonoBehaviour {
         {
             hideBothTriggers[i].SetActive(false);
         }
-       
+        for (int i = 0; i < showBothTriggers.Length; i++)
+        {
+            showBothTriggers[i].SetActive(true);
+        }
+
     }
 
     public void handleRight() {

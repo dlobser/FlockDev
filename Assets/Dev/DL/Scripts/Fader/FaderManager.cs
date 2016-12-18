@@ -13,6 +13,7 @@ public class FaderManager : MonoBehaviour {
 	void Awake () {
 		faders = GetComponentsInChildren<Fader> ();
 		Refresh ();
+        Fade();
 	}
 
 	void Refresh(){
@@ -25,13 +26,19 @@ public class FaderManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (prevLevel != level) {
-			for (int i = 0; i < faders.Length; i++) {
-				if (faders [i].min != minLevel || faders [i].max != maxLevel)
-					Refresh ();
-				faders [i].level = level;
-				faders [i].Fade ();
-			}
+            Fade();
 		}
 		prevLevel = level;
 	}
+
+    void Fade()
+    {
+        for (int i = 0; i < faders.Length; i++)
+        {
+            if (faders[i].min != minLevel || faders[i].max != maxLevel)
+                Refresh();
+            faders[i].level = level;
+            faders[i].Fade();
+        }
+    }
 }
