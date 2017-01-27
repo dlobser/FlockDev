@@ -11,7 +11,6 @@ namespace Holojam.Tools{
    [RequireComponent(typeof(MeshRenderer))]
    public class Fence : MonoBehaviour{
       public Material material;
-      public ActorManager actorManager;
 
       public float minRange = 1.5f; //Distance to fade
       public float maxAlpha = 1;
@@ -25,19 +24,10 @@ namespace Holojam.Tools{
       void Update(){
          Color newColor = material.color;
 
-         if(actorManager!=null && actorManager.buildActor!=null){
+         if(BuildManager.BUILD_ACTOR!=null){
             //Modulate transparency
-			float dist = holobounds.Distance(actorManager.buildActor.eyes)/minRange;
-				if ((1-dist) <= 0) {
-					r.enabled = false;
-				}
-				else if ((1-dist) > 0 && !r.enabled) {
-					r.enabled = true;
-				}
-				else if ((1-dist) > 0 && r.enabled) {
-					newColor.a = maxAlpha * (1-dist);
-				}
-           
+            newColor.a =
+               maxAlpha * (1-holobounds.Distance(BuildManager.BUILD_ACTOR.center)/minRange);
          }
          else newColor.a=maxAlpha;
 
@@ -56,16 +46,6 @@ namespace Holojam.Tools{
          GenerateMesh();
          ProcessMesh();
       }
-
-		public void Rebuild(){
-//			mesh = new Mesh ();
-			verts.Clear ();
-			tris.Clear ();
-			uvs.Clear ();
-			quadIndex = 0;
-			GenerateMesh();
-			ProcessMesh();
-		}
 
       void GenerateMesh(){
          Quad(holobounds.Corner(0),holobounds.Upper(0),holobounds.Upper(1),holobounds.Corner(1));
@@ -105,7 +85,7 @@ namespace Holojam.Tools{
          mesh.triangles = tris.ToArray();
          mesh.uv = uvs.ToArray();
 
-         ;
+         mesh.Optimize();
          mesh.RecalculateNormals();
 
          r.material=material;

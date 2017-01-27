@@ -8,38 +8,43 @@ using Holojam.Network;
 namespace Holojam.Tools{
    [CustomEditor(typeof(Viewer)), CanEditMultipleObjects]
    public class ViewerEditor : Editor{
-      SerializedProperty trackingType, actor, trackingTag, localSpace;
+      SerializedProperty trackingType, converter, actor, index, localSpace;
       void OnEnable(){
-         trackingType=serializedObject.FindProperty("trackingType");
-         actor=serializedObject.FindProperty("actor");
-         trackingTag=serializedObject.FindProperty("trackingTag");
+         trackingType = serializedObject.FindProperty("trackingType");
+         converter = serializedObject.FindProperty("converter");
+         actor = serializedObject.FindProperty("actor");
+         index = serializedObject.FindProperty("index");
          localSpace=serializedObject.FindProperty("localSpace");
       }
 
       public override void OnInspectorGUI(){
          serializedObject.Update();
-
-         EditorGUILayout.PropertyField(trackingType);
-         EditorGUILayout.PropertyField(actor);
-
          Viewer v = serializedObject.targetObject as Viewer;
 
-         EditorGUI.BeginDisabledGroup(v.view==null);
-            EditorGUILayout.PropertyField(trackingTag);
-            EditorGUILayout.PropertyField(localSpace);
-         EditorGUI.EndDisabledGroup();
+         if(v.converter.device!=Converter.Device.VIVE){
+            EditorGUILayout.PropertyField(trackingType);
+            EditorGUILayout.PropertyField(converter);
+            EditorGUILayout.PropertyField(actor);
 
-         if(!serializedObject.isEditingMultipleObjects){
-            EditorGUILayout.LabelField(
-               v.actor!=null?"Tracking data is being routed through \""+
-               v.actor.gameObject.name+".\" Remove reference to unlink.":
-               "No actor linked. Tracking data is being sourced directly from the view"+
-               (v.view!=null && v.view.Label!=""?" ("+v.view.Label+").":"."),
-               new GUIStyle(EditorStyles.wordWrappedMiniLabel)
-            );
+            if(v.view!=null){
+               EditorGUILayout.PropertyField(index);
+               EditorGUILayout.PropertyField(localSpace);
+            }
+
+            if(!serializedObject.isEditingMultipleObjects){
+               EditorGUILayout.LabelField(
+                  v.actor!=null?"Tracking data is being routed through \""+
+                  v.actor.gameObject.name+".\" Remove reference to unlink.":
+                  "No actor linked. Tracking data is being sourced from the view"+
+                  (v.view!=null && v.view.label!=""?" ("+v.view.label+").":"."),
+                  new GUIStyle(EditorStyles.wordWrappedMiniLabel)
+               );
+            }
+         }else{
+            EditorGUILayout.LabelField("Viewer disabled: Device is " + v.converter.device,
+               new GUIStyle(EditorStyles.wordWrappedMiniLabel));
          }
 
-         //EditorUtility.SetDirty(serializedObject.targetObject);
          serializedObject.ApplyModifiedProperties();
       }
    }

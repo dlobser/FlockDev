@@ -6,45 +6,44 @@ using UnityEngine;
 using Holojam.Network;
 
 namespace Holojam.Tools{
-   [ExecuteInEditMode, RequireComponent(typeof(HolojamView))]
-   public class Trackable : MonoBehaviour{
-      public Motive.Tag trackingTag = Motive.Tag.BOX1;
+   public class Trackable : Controller{
+      public string label = "Trackable";
+      public string scope = "";
       public bool localSpace = false;
-   
+
+      //Allocation
+      protected override int triplesCount{get{return 1;}}
+      protected override int quadsCount{get{return 1;}}
+      //Proxies
+      public Vector3 rawPosition{
+         get{return GetTriple(0);}
+         set{UpdateTriple(0,value);}
+      }
+      public Quaternion rawRotation{
+         get{return GetQuad(0);}
+         set{UpdateQuad(0,value);}
+      }
+
       //Accessors in case modification needs to be made to the raw data (like smoothing)
       public Vector3 trackedPosition{get{
          return localSpace && transform.parent!=null?
-            transform.parent.TransformPoint(view.RawPosition): view.RawPosition;
+            transform.parent.TransformPoint(rawPosition):rawPosition;
       }}
       public Quaternion trackedRotation{get{
          return localSpace && transform.parent!=null?
-            transform.parent.rotation*view.RawRotation : view.RawRotation;
+            transform.parent.rotation*rawRotation:rawRotation;
       }}
-   
-      //Manage view
-      public HolojamView view{get{
-         if(holojamView==null)holojamView = GetComponent<HolojamView>();
-         return holojamView;
-      }}
-      HolojamView holojamView = null;
 
-      protected void UpdateView(){
-         view.Label = Motive.GetName(trackingTag);
-         view.IsMine = false;
-      }
+      protected override ProcessDelegate Process{get{return UpdateTracking;}}
 
-      //Override these in derived classes
-      protected virtual void Update(){
-         UpdateView(); //Mandatory initialization call
-//			Debug.Log(view.IsTracked);
-         //Optional check--you probably don't want to run this code in edit mode
-         if(!Application.isPlaying)return;
+      protected override string labelField{get{return label;}}
+      protected override string scopeField{get{return scope;}}
+      protected override bool isSending{get{return false;}}
 
-         UpdateTracking();
-      }
+      //Override in derived classes
       protected virtual void UpdateTracking(){
          //By default, assigns position and rotation injectively
-         if(view.IsTracked){
+         if(view.tracked){
             transform.position = trackedPosition;
             transform.rotation = trackedRotation;
          }
@@ -57,7 +56,7 @@ namespace Holojam.Tools{
       void OnDrawGizmosSelected(){
          Gizmos.color = Color.gray;
          //Pivot
-         Drawer.Circle(transform.position,Vector3.up,Vector3.forward,0.18f);
+         Utility.Drawer.Circle(transform.position,Vector3.up,Vector3.forward,0.18f);
          Gizmos.DrawLine(transform.position-0.03f*Vector3.left,transform.position+0.03f*Vector3.left);
          Gizmos.DrawLine(transform.position-0.03f*Vector3.forward,transform.position+0.03f*Vector3.forward);
          //Forward
@@ -67,9 +66,15 @@ namespace Holojam.Tools{
       protected void DrawGizmoGhost(){
          if(!localSpace || transform.parent==null)return;
          Gizmos.color = Color.gray;
-         Gizmos.DrawLine(view.RawPosition-0.03f*Vector3.left,view.RawPosition+0.03f*Vector3.left);
-         Gizmos.DrawLine(view.RawPosition-0.03f*Vector3.forward,view.RawPosition+0.03f*Vector3.forward);
-         Gizmos.DrawLine(view.RawPosition-0.03f*Vector3.up,view.RawPosition+0.03f*Vector3.up);  
+         Gizmos.DrawLine(
+            rawPosition-0.03f*Vector3.left,
+            rawPosition+0.03f*Vector3.left
+         );
+         Gizmos.DrawLine(
+            rawPosition-0.03f*Vector3.forward,
+            rawPosition+0.03f*Vector3.forward
+         );
+         Gizmos.DrawLine(rawPosition-0.03f*Vector3.up,rawPosition+0.03f*Vector3.up);  
       }
    }
 }
