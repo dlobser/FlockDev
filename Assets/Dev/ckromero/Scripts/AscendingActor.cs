@@ -24,7 +24,7 @@ public class AscendingActor : Actor {
 
 	}
 
-	public override Vector3 eyes{
+	public override Vector3 center{
 
 		get{
 			isMoving = true;

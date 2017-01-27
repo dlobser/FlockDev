@@ -21,7 +21,8 @@ public class ActorBirdController : Holojam.Tools.Actor{
 		}
 	}
 
-	public override Vector3 eyes{
+	public override Vector3 center
+    {
 		get{return trackedPosition;}
 	}
 	public override Quaternion orientation{
