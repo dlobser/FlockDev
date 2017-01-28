@@ -114,6 +114,8 @@ namespace Holojam.Tools{
       }
 
       public static bool IsMasterPC(){
+      return Application.isEditor && !global.preview;
+
          switch(Application.platform){
             case RuntimePlatform.OSXEditor: return true;
             case RuntimePlatform.OSXPlayer: return true;

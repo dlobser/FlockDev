@@ -27,16 +27,16 @@ public class SceneReloader : MonoBehaviour
 
 		}			
 		//TODO: Move to SettingsManager
-		if (Time.time - lastSceneLoadTime > timeBetweenSceneReloads) {
-			LoadInScene ();
+    if (Time.time - lastSceneLoadTime > timeBetweenSceneReloads) {
+      LoadInScene ();
 
-		}
+    }
 	}
 
 	void LoadInScene ()
 	{ 
 		Debug.LogWarning ("Loading Scene");
-		SceneManager.LoadScene (1, LoadSceneMode.Single);
+		SceneManager.LoadScene (0, LoadSceneMode.Single);
 		lastSceneLoadTime = Time.time;
 		reloadNow = false;
 	}

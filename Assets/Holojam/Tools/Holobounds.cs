@@ -108,24 +108,6 @@ namespace Holojam.Tools{
          }
       }
 
-      //Save and load calibration data
-      static bool hasPlayed = false;
-      void Start(){
-         if(!Application.isPlaying && hasPlayed){
-            for(int i=0;i<4;++i){
-               bounds[i].x=PlayerPrefs.GetFloat("Holobounds_Corner"+i+"_x");
-               bounds[i].y=PlayerPrefs.GetFloat("Holobounds_Corner"+i+"_y");
-            }
-         } else if(Application.isPlaying)hasPlayed=true;
-      }
-      void OnApplicationQuit(){Save();}
-      void Save(){
-         for(int i=0;i<4;++i){
-            PlayerPrefs.SetFloat("Holobounds_Corner"+i+"_x",bounds[i].x);
-            PlayerPrefs.SetFloat("Holobounds_Corner"+i+"_y",bounds[i].y);
-         }
-      }
-
       //Convert Vector2s to Vector3s (for ease of use)
       Vector3 Floor(Vector2 v){
          Vector3 f = new Vector3(v.x,floor,v.y);
