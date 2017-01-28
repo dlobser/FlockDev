@@ -25,14 +25,13 @@ public class ActorData : MonoBehaviour
 		actSync = (ActorSyncer)go.GetComponent (typeof(ActorSyncer));
 
 		GameObject am = GameObject.Find ("ActorManager");
-		ActorManager actorManager = (ActorManager)am.GetComponent (typeof(ActorManager));
 
 		GameObject hbgo = GameObject.Find ("Holobounds");
 		hb = (Holobounds)hbgo.GetComponent (typeof(Holobounds));
 
 		swarmMaker = GameObject.Find ("SwarmSpawnPoint");
 
-		actors = actorManager.actors;
+		actors = Actor.instances.ToArray();
 		foreach (Actor a in actors) {
 			if (a.name.Contains ("Build")) {
 				currentActor = a.name.Substring (0, a.name.IndexOf ("]") + 1);			

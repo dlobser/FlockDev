@@ -11,7 +11,7 @@ namespace BugJam{
 	   public int index;
 
 	   void Update(){
-	      if(!Holojam.Utility.IsMasterPC())active = int.Parse(bb.bitties[index].ToString());
+	      if(!Holojam.Tools.BuildManager.IsMasterPC())active = int.Parse(bb.bitties[index].ToString());
 	      r.enabled = active==1;
 	   }
 
@@ -23,7 +23,7 @@ namespace BugJam{
 
 	   //None of the stuff below executes on the client.
 	   void OnTriggerEnter(Collider c){
-	      if(!Holojam.Utility.IsMasterPC() || active!=1)return;
+	      if(!Holojam.Tools.BuildManager.IsMasterPC() || active!=1)return;
 	      Holojam.Tools.Actor a = c.GetComponent<Holojam.Tools.Actor>();
 	      if(a!=null){
 	         bb.SendMessage("ProcessCollision",this); //Callback

@@ -70,11 +70,10 @@ public class BugManager : MonoBehaviour {
 		nearestBugLerp = new Vector3[amount];
 		noiseVecs = new Vector3[amount];
 
-		Transform actorManager = GameObject.Find ("ActorManager").transform;
-		actors = new Transform[actorManager.childCount];
 
+		actors = new Transform[Holojam.Tools.Actor.instances.Count];
 		for (int i = 0; i < actors.Length; i++) {
-			actors [i] = actorManager.GetChild (i);
+			actors[i] = Holojam.Tools.Actor.instances[i].transform;
 		}
 
 

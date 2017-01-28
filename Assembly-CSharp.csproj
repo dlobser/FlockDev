@@ -19,7 +19,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_4_0;UNITY_5_4;UNITY_5;UNITY_64;ENABLE_NEW_BUGREPORTER;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_EDITOR_RETINA;ENABLE_RETINA_GUISTYLES;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_SPRITE_POLYGON;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;INCLUDE_DIRECTX12;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_LOCALIZATION;ENABLE_ANDROID_ATLAS_ETC1_COMPRESSION;ENABLE_EDITOR_TESTS_RUNNER;UNITY_STANDALONE_OSX;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_GAMECENTER;ENABLE_TEXTUREID_MAP;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLUSTERINPUT;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_OSX;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_5_0;UNITY_5_5;UNITY_5;UNITY_64;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_SCRIPTING_NEW_CSHARP_COMPILER;UNITY_STANDALONE_OSX;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_GAMECENTER;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_VIDEO;ENABLE_VR;ENABLE_CLUSTERINPUT;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_OSX;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
@@ -36,16 +36,16 @@
     <Reference Include="System" />
     <Reference Include="System.XML" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="UnityEngine">
-      <HintPath>/Applications/Unity/Unity.app/Contents/Managed/UnityEngine.dll</HintPath>
+      <HintPath>/Applications/Unity-5.50f3/Unity-5.50f3.app/Contents/Managed/UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor">
-      <HintPath>/Applications/Unity/Unity.app/Contents/Managed/UnityEditor.dll</HintPath>
+      <HintPath>/Applications/Unity-5.50f3/Unity-5.50f3.app/Contents/Managed/UnityEditor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\BugSpawner.cs" />
      <Compile Include="Assets\Dev\CR\Scripts\SwarmCR.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Characters\ActorBirdController.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Characters\AudioDistance.cs" />
@@ -60,6 +60,7 @@
      <Compile Include="Assets\Dev\DL\Scripts\Characters\MoveIfInactive.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Characters\Poop.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Characters\RandomBug.cs" />
+     <Compile Include="Assets\Dev\DL\Scripts\Characters\Stats.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Characters\SynchronizableMomma.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Characters\SynchronizablePoop.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Characters\TapToReset.cs" />
@@ -97,6 +98,7 @@
      <Compile Include="Assets\Dev\DL\Scripts\Materials\MaterialSwapperPingPong.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Materials\SetMeshAttributes.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Materials\SetTextureArray.cs" />
+     <Compile Include="Assets\Dev\DL\Scripts\SaveStats.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\SettingsToValues.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\ShadowPositioner.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\ShadowsCtrl.cs" />
@@ -105,6 +107,7 @@
      <Compile Include="Assets\Dev\DL\Scripts\Utility\GetSpeed.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Utility\ScaleToDistance.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Utility\SetAnimationFrame.cs" />
+     <Compile Include="Assets\Dev\DL\Scripts\Utility\Singleton.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Utility\copyPos.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Utility\copyTransformsSetHeight.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\Utility\copyTransformsSimple.cs" />
@@ -118,6 +121,7 @@
      <Compile Include="Assets\Dev\DL\Scripts\Utility\setActorDataSyncHeadsetFix.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\directionHintOpacity.cs" />
      <Compile Include="Assets\Dev\DL\Scripts\synchronizableGlobals.cs" />
+     <Compile Include="Assets\Dev\DL\Scripts\transformAverage.cs" />
      <Compile Include="Assets\Dev\DL\Tools\MakeSprite\MakeSpriteSheet.cs" />
      <Compile Include="Assets\Dev\DL\Tools\MakeSprite\TransformUniversalSetTime.cs" />
      <Compile Include="Assets\Dev\DL\Tools\MakeSprite\snapshot.cs" />
@@ -128,11 +132,18 @@
      <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\TREE.cs" />
      <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\TREEMod.cs" />
      <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\TREEModBuild.cs" />
+     <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\TREEModBuildRandom.cs" />
      <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\TREEModCtrl.cs" />
+     <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\TREEModPing.cs" />
      <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\TREEModSwapGeo.cs" />
+     <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\TREEModSwapJoint.cs" />
      <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\TREEModXForm.cs" />
      <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\TREEUtils.cs" />
      <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\Trait.cs" />
+     <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\TreePing.cs" />
+     <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\TreePingColor.cs" />
+     <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\TreePingPlaySound.cs" />
+     <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\TreePingScale.cs" />
      <Compile Include="Assets\Dev\DL\Tools\TREE\Scripts\TreeTransform.cs" />
      <Compile Include="Assets\Dev\DL\Tools\TREE\old\tester2.cs" />
      <Compile Include="Assets\Dev\DL\Tools\TREE\old\tester4.cs" />
@@ -148,6 +159,7 @@
      <Compile Include="Assets\Dev\ckromero\Scripts\BugManager\BugManager_cs__Single_Synch__.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\BugManager\Bug_cs__Multiple_Synch__.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\BugManager\Bug_cs__Single_Synch__.cs" />
+     <Compile Include="Assets\Dev\ckromero\Scripts\BugSpawner.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\DebugX.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\Environment.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\ExpState.cs" />
@@ -171,56 +183,38 @@
      <Compile Include="Assets\Dev\ckromero\Scripts\ZoneManager.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\clickStop.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\expManager.cs" />
-     <Compile Include="Assets\Dev\ckromero\Scripts\flySync.cs" />
      <Compile Include="Assets\Dev\ckromero\Scripts\sphereVisible.cs" />
      <Compile Include="Assets\Holojam\Demo\Scripts\ActorController.cs" />
      <Compile Include="Assets\Holojam\Demo\Scripts\DebugSphere.cs" />
      <Compile Include="Assets\Holojam\Demo\Scripts\ExampleFloor.cs" />
-     <Compile Include="Assets\Holojam\Demo\Scripts\HoloTime.cs" />
-     <Compile Include="Assets\Holojam\Demo\Scripts\Laptop.cs" />
-     <Compile Include="Assets\Holojam\Demo\Scripts\Messenger.cs" />
+     <Compile Include="Assets\Holojam\Demo\Scripts\LookInteraction.cs" />
+     <Compile Include="Assets\Holojam\Demo\Scripts\Rainbow.cs" />
+     <Compile Include="Assets\Holojam\Demo\Scripts\Remote.cs" />
      <Compile Include="Assets\Holojam\Demo\Scripts\RoomGenerator.cs" />
-     <Compile Include="Assets\Holojam\Demo\Scripts\Stylus.cs" />
-     <Compile Include="Assets\Holojam\Demo\Scripts\makeLine.cs" />
-     <Compile Include="Assets\Holojam\Input\Deprecated\GlobalReceiver.cs" />
-     <Compile Include="Assets\Holojam\Input\Deprecated\WandController.cs" />
-     <Compile Include="Assets\Holojam\Input\Deprecated\WiiMote\IWiiMoteHandler.cs" />
-     <Compile Include="Assets\Holojam\Input\Deprecated\WiiMote\WiiMoteModule.cs" />
-     <Compile Include="Assets\Holojam\Server\Deprecated\CustomTrackedObject.cs" />
-     <Compile Include="Assets\Holojam\Server\Deprecated\MasterServer.cs" />
-     <Compile Include="Assets\Holojam\Server\Deprecated\MasterStream.cs" />
-     <Compile Include="Assets\Holojam\Server\Deprecated\ObjectWithOffsetController.cs" />
-     <Compile Include="Assets\Holojam\Server\Deprecated\SynchronizedObject.cs" />
-     <Compile Include="Assets\Holojam\Server\Deprecated\TrackedHeadset.cs" />
-     <Compile Include="Assets\Holojam\Server\Deprecated\TrackedObject.cs" />
-     <Compile Include="Assets\Holojam\Server\HolojamNetwork.cs" />
-     <Compile Include="Assets\Holojam\Server\HolojamView.cs" />
-     <Compile Include="Assets\Holojam\Server\NetworkUtils.cs" />
-     <Compile Include="Assets\Holojam\Server\Protocol\UpdateProtocol-Net.cs" />
-     <Compile Include="Assets\Holojam\Server\Protocol\UpdateProtocolV3.cs" />
+     <Compile Include="Assets\Holojam\Demo\Scripts\SimpleEvent.cs" />
+     <Compile Include="Assets\Holojam\Demo\Scripts\Spinnable.cs" />
+     <Compile Include="Assets\Holojam\Demo\Scripts\SynchronizedTransform.cs" />
+     <Compile Include="Assets\Holojam\Network\Client.cs" />
+     <Compile Include="Assets\Holojam\Network\Notifier.cs" />
+     <Compile Include="Assets\Holojam\Network\Utility.cs" />
+     <Compile Include="Assets\Holojam\Network\View.cs" />
      <Compile Include="Assets\Holojam\Tools\Actor.cs" />
-     <Compile Include="Assets\Holojam\Tools\ActorInstantiator.cs" />
-     <Compile Include="Assets\Holojam\Tools\ActorManager.cs" />
      <Compile Include="Assets\Holojam\Tools\BoundsOffset.cs" />
+     <Compile Include="Assets\Holojam\Tools\BuildManager.cs" />
+     <Compile Include="Assets\Holojam\Tools\Controller.cs" />
+     <Compile Include="Assets\Holojam\Tools\Converter.cs" />
      <Compile Include="Assets\Holojam\Tools\Fence.cs" />
-     <Compile Include="Assets\Holojam\Tools\HoloIK.cs" />
      <Compile Include="Assets\Holojam\Tools\Holobounds.cs" />
-     <Compile Include="Assets\Holojam\Tools\HolojamViewDebugger.cs" />
-     <Compile Include="Assets\Holojam\Tools\PairTarget.cs" />
-     <Compile Include="Assets\Holojam\Tools\Pairable.cs" />
+     <Compile Include="Assets\Holojam\Tools\Metrics.cs" />
+     <Compile Include="Assets\Holojam\Tools\Scope.cs" />
      <Compile Include="Assets\Holojam\Tools\Synchronizable.cs" />
      <Compile Include="Assets\Holojam\Tools\Trackable.cs" />
-     <Compile Include="Assets\Holojam\Tools\VRConsole.cs" />
-     <Compile Include="Assets\Holojam\Tools\VRDebug.cs" />
+     <Compile Include="Assets\Holojam\Tools\ViewDebugger.cs" />
      <Compile Include="Assets\Holojam\Tools\Viewer.cs" />
-     <Compile Include="Assets\Holojam\Utility\Billboard\Billboard.cs" />
-     <Compile Include="Assets\Holojam\Utility\Billboard\BillboardBox.cs" />
-     <Compile Include="Assets\Holojam\Utility\Billboard\BillboardComponent.cs" />
-     <Compile Include="Assets\Holojam\Utility\Billboard\BillboardGraph.cs" />
-     <Compile Include="Assets\Holojam\Utility\Billboard\BillboardLabel.cs" />
      <Compile Include="Assets\Holojam\Utility\Drawer.cs" />
-     <Compile Include="Assets\Holojam\Utility\Singleton.cs" />
-     <Compile Include="Assets\Holojam\Utility\Utility.cs" />
+     <Compile Include="Assets\Holojam\Utility\Global.cs" />
+     <Compile Include="Assets\Holojam\Utility\Palette.cs" />
+     <Compile Include="Assets\Holojam\Vive\ViveRelay.cs" />
      <Compile Include="Assets\Tools\InsectSwarm\Scripts\DieAfterSeconds.cs" />
      <Compile Include="Assets\Tools\InsectSwarm\Scripts\Fly.cs" />
      <Compile Include="Assets\Tools\InsectSwarm\Scripts\InstantiateBurst.cs" />
@@ -244,6 +238,10 @@
      <Compile Include="Assets\VRPanorama\Scripts\VRPanoramaDrawer.cs" />
      <Compile Include="Assets\VRPanorama\StereoPanoramaPlayer\Resources\StereoPanorama.cs" />
      <Compile Include="Assets\VRPanorama\VRCapture.cs" />
+     <Compile Include="Assets\etc\ActorControllerLite.cs" />
+     <Compile Include="Assets\etc\SynchronizedString.cs" />
+     <Compile Include="Assets\etc\VRConsole.cs" />
+     <Compile Include="Assets\etc\VRDebug.cs" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderRGB.shader" />
      <None Include="Assets\Dev\DL\Shaders\RGBRemapSimple.shader" />
      <None Include="Assets\Holojam\Demo\Shaders\AlphaBlendedColorTexture.shader" />
@@ -266,7 +264,6 @@
      <None Include="Assets\Standard Assets\Effects\ScreenSpaceReflection\Resources\ScreenSpaceRaytrace.cginc" />
      <None Include="Assets\Standard Assets\Effects\AmbientOcclusion\Resources\AmbientOcclusion.shader" />
      <None Include="Assets\Dev\DL\Text\UX.txt" />
-     <None Include="Assets\Holojam\Demo\Shaders\CrayonShader.shader" />
      <None Include="Assets\Standard Assets\Effects\AntiAliasing\FXAA\Resources\FXAA.shader" />
      <None Include="Assets\Standard Assets\Effects\TonemappingColorGrading\Resources\HistogramRender.shader" />
      <None Include="Assets\Dev\DL\Shaders\TintTrans.shader" />
@@ -298,14 +295,26 @@
      <None Include="Assets\Standard Assets\Effects\LensAberrations\Resources\LensAberrations.shader" />
      <None Include="Assets\Standard Assets\Effects\TonemappingColorGrading\Resources\HistogramCompute.compute" />
      <None Include="Assets\Holojam\Demo\Shaders\AlphaBlendedColorHard.shader" />
- <Reference Include="UnityEngine.Networking">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
- </Reference>
  <Reference Include="UnityEngine.UI">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ <HintPath>/Applications/Unity-5.50f3/Unity-5.50f3.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
- <Reference Include="protobuf-net">
- <HintPath>/Users/ckromero/code/FlockDev/Assets/Plugins/protobuf-net.dll</HintPath>
+ <Reference Include="UnityEngine.Networking">
+ <HintPath>/Applications/Unity-5.50f3/Unity-5.50f3.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.PlaymodeTestsRunner">
+ <HintPath>/Applications/Unity-5.50f3/Unity-5.50f3.app/Contents/UnityExtensions/Unity/PlaymodeTestsRunner/UnityEngine.PlaymodeTestsRunner.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Analytics">
+ <HintPath>/Applications/Unity-5.50f3/Unity-5.50f3.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.HoloLens">
+ <HintPath>/Applications/Unity-5.50f3/Unity-5.50f3.app/Contents/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.VR">
+ <HintPath>/Applications/Unity-5.50f3/Unity-5.50f3.app/Contents/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
+ </Reference>
+ <Reference Include="FlatBuffers">
+ <HintPath>/Users/Fuguman/Desktop/Nexus II/Main/Development/Games/Software/Research/holojam-io/services/FlockDev/Assets/Plugins/FlatBuffers.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

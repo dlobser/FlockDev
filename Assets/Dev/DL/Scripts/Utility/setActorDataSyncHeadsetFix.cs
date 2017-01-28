@@ -16,9 +16,7 @@ public class setActorDataSyncHeadsetFix : MonoBehaviour {
 
 		GameObject am = GameObject.Find ("ActorManager");
 
-		ActorManager actorManager = (ActorManager)am.GetComponent (typeof(ActorManager));
-
-	 	Holojam.Tools.Actor[]	actors = actorManager.actors;
+	 	Holojam.Tools.Actor[]	actors = Actor.instances.ToArray();
 		foreach (Actor a in actors) {
 			if (a.name.Contains ("Build")) {
 				pState.currentActor =  a.name.Substring (0, a.name.IndexOf ("]") + 1);			

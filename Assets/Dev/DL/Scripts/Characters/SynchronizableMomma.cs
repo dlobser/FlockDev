@@ -3,10 +3,11 @@ using Holojam.Network;
 using System.Collections;
 
 namespace Holojam.Tools{
-	[ExecuteInEditMode, RequireComponent(typeof(HolojamView))]
+	[ExecuteInEditMode, RequireComponent(typeof(View))]
 
-	public class SynchronizableMomma : Synchronizable {
-
+	//public class SynchronizableMomma : Synchronizable {
+	public class SynchronizableMomma{
+/*
 //		public string label = "Label";
 //		public bool useMasterPC = false;
 //		public bool sending = true;
@@ -38,6 +39,6 @@ namespace Holojam.Tools{
 				transform.position=synchronizedVector3;
 				transform.rotation=synchronizedQuaternion;
 			}
+			*/
 		}
-	}
 }

@@ -2,21 +2,16 @@
 using System.Collections;
 using Holojam.Tools;
 
-public class SettingsManager :  Synchronizable {
+public class SettingsManager :  MonoBehaviour {
 
+	public SynchronizedString synchronizable;
 	public SettingsJSON settingsJSON;
-	private Synchronizable synchronizable;
 
-	void Start () {
-		synchronizable = GetComponent<Synchronizable> ();	
-//		settingsJSON = new SettingsJSON ();
-	}
-
-	protected override void Sync() { 
-		if (sending) {
-			synchronizable.synchronizedString = JsonUtility.ToJson (settingsJSON);
+	void Update() { 
+		if (BuildManager.IsMasterPC()) {
+			synchronizable.UpdateText(JsonUtility.ToJson(settingsJSON));
 		} else {
-			settingsJSON = JsonUtility.FromJson<SettingsJSON> (synchronizable.synchronizedString);
+			settingsJSON = JsonUtility.FromJson<SettingsJSON>(synchronizable.GetText());
 		}
 	}
 		

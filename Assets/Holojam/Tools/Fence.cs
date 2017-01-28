@@ -24,10 +24,19 @@ namespace Holojam.Tools{
       void Update(){
          Color newColor = material.color;
 
-         if(BuildManager.BUILD_ACTOR!=null){
+         if(Holojam.Tools.BuildManager.BUILD_INDEX>=0){
             //Modulate transparency
-            newColor.a =
-               maxAlpha * (1-holobounds.Distance(BuildManager.BUILD_ACTOR.center)/minRange);
+         float dist = holobounds.Distance(Holojam.Tools.BuildManager.BUILD_ACTOR.center)/minRange;
+            if ((1-dist) <= 0) {
+               r.enabled = false;
+            }
+            else if ((1-dist) > 0 && !r.enabled) {
+               r.enabled = true;
+            }
+            else if ((1-dist) > 0 && r.enabled) {
+               newColor.a = maxAlpha * (1-dist);
+            }
+           
          }
          else newColor.a=maxAlpha;
 
@@ -43,6 +52,16 @@ namespace Holojam.Tools{
          r=GetComponent<MeshRenderer>();
 
          //Build mesh
+         GenerateMesh();
+         ProcessMesh();
+      }
+
+      public void Rebuild(){
+//       mesh = new Mesh ();
+         verts.Clear ();
+         tris.Clear ();
+         uvs.Clear ();
+         quadIndex = 0;
          GenerateMesh();
          ProcessMesh();
       }

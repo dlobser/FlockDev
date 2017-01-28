@@ -1,9 +1,12 @@
 using UnityEngine;
+using Holojam.Tools;
 
 namespace BugJam
 {
-	public class SingleBugBuilder : Holojam.Tools.Synchronizable
+	public class SingleBugBuilder : Synchronizable
 	{
+		protected override bool hasText{get{return true;}}
+
 		public SingleBug prefab;
 		public int gridWidth = 2;
 		public float scale = 0.5f;
@@ -40,9 +43,9 @@ namespace BugJam
 				bitties = "";
 				foreach (SingleBug b in bugs)
 					bitties += b.active.ToString ();
-				synchronizedString = bitties;
+				UpdateText(bitties);
 			} else {
-				bitties = synchronizedString;
+				bitties = GetText();
 			}
 		}
 

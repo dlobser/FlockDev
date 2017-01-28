@@ -52,7 +52,7 @@ public class Fly : MonoBehaviour {
 //			this.transform.position = Vector3.Lerp (pr, next, positionInterpolationSpeed);
 //		}
 //		else
-		if (Holojam.Utility.IsMasterPC ()) { 
+		if (Holojam.Tools.BuildManager.IsMasterPC ()) { 
 			this.transform.position = target;
 
 			if (lerpRotation)
@@ -76,7 +76,7 @@ public class Fly : MonoBehaviour {
 			}
 		} else {
 			//clients use this to determine if their sprites should be enabled. 
-			if (synchronizable.synchronizedInt == 1) {
+			if (synchronizable.GetInt(0) == 1) {
 				meshRend.enabled = false;
 				active = false;
 			} else {
@@ -98,12 +98,12 @@ public class Fly : MonoBehaviour {
 			Debug.Log (this.name + " is active again.");
 			meshRend.enabled = true;
 			active = true;
-			synchronizable.synchronizedInt = 0;
+			synchronizable.UpdateInt(0,0);
 		}
 	}
 	void OnTriggerEnter(Collider other) {
 
-		if (Holojam.Utility.IsMasterPC ()) {
+		if (Holojam.Tools.BuildManager.IsMasterPC ()) {
 			if (Time.time > 1) {
 				if (other.transform.parent.parent.name != null && other.transform.parent.parent.name == "ActorManager") {
 
@@ -114,7 +114,7 @@ public class Fly : MonoBehaviour {
 					meshRend.enabled = false;
 					active = false;
 					deathTimer = 0;
-					synchronizable.synchronizedInt = 1;
+					synchronizable.UpdateInt(0,1);
 
 					//				GameObject obj = Instantiate (splat, this.transform.position, Quaternion.identity) as GameObject;
 					//				obj.transform.SetParent (this.transform);

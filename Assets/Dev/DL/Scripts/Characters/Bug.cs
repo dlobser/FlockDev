@@ -28,7 +28,9 @@ public class Bug : Synchronizable{
 	int prevEmit = -1;
 	int emit = 0;
 
-	void Awake(){
+	protected void Awake(){
+		ResetView();
+
 		//Okay to do in Awake
 		bb = GameObject.Find("BugManager").GetComponent<BugManager>();
 
@@ -46,21 +48,21 @@ public class Bug : Synchronizable{
 
 	}
 
-	protected override void Sync(){
-		
+	protected override int triplesCount{get{return 2;}}
+	protected override int intsCount{get{return 2;}}
 
+	protected override void Sync(){
 		if(sending){
-			synchronizedVector3=transform.position;
-//			synchronizedQuaternion = new Quaternion (transform.localScale.x, transform.localScale.y, transform.localScale.z, 1);
-			synchronizedInt = active;
-			synchronizedString = emit.ToString ()+","+ transform.localScale.x.ToString()+","+ transform.localScale.y.ToString()+","+ transform.localScale.z.ToString();
+			UpdateTriple(0,transform.position);
+			UpdateTriple(1,transform.localScale);
+			UpdateInt(0,active);
+			UpdateInt(1,emit);
 		}
 		else{
-			transform.position=synchronizedVector3;
-			string[] arr = synchronizedString.Split(new string[]{","},System.StringSplitOptions.None);
-			transform.localScale = new Vector3 (float.Parse(arr[1]), float.Parse(arr[2]),float.Parse(arr[3]));
-			active = synchronizedInt;
-			emit = int.Parse (arr[0]);
+			transform.position = GetTriple(0);
+			transform.localScale = GetTriple(1);
+			active = GetInt(0);
+			emit = GetInt(1);
 		}
 
 		if (prevEmit == 0 && emit == 1) {
@@ -105,7 +107,7 @@ public class Bug : Synchronizable{
 //			Debug.Log ("Poof");
 			
 			// add to bugsEaten for the colliding actor!!!!
-			if (Holojam.Utility.IsMasterPC ()) {
+			if (Holojam.Tools.BuildManager.IsMasterPC ()) {
 				if (Time.time > 1 && collisionAllowed ) {
 					StartCoroutine(CloseCollisionWindow ());
 					if (c.name != null && c.name!="") {

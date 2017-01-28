@@ -7,9 +7,10 @@ using Holojam.Tools;
 
 public class ActorBirdController : Holojam.Tools.Actor{
 	public Transform head;
+   public Color motif;
 
 	protected override void UpdateTracking(){
-		if(view.IsTracked){
+		if(view.tracked){
 //			transform.position=trackedPosition;
 			
 			//This example type uses a separate transform for rotation (a head) instead of itself

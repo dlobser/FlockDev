@@ -4,7 +4,6 @@ using System.Collections;
 public class SettingsToValues : MonoBehaviour {
 
 	public GameObject bugManager;
-	public GameObject actorManager;
 	public LevelHandler levelHandler;
 	public TextMesh text;
 
@@ -30,7 +29,7 @@ public class SettingsToValues : MonoBehaviour {
 		settings = GameObject.Find ("SettingsManager").GetComponent<SettingsManager> ();
 		bugs = bugManager.GetComponentsInChildren<Bug> ();
 		bugManagement = bugManager.GetComponent<BugManager> ();
-		actors = actorManager.GetComponentsInChildren<Holojam.Tools.Actor> ();
+		actors = Holojam.Tools.Actor.instances.ToArray();
 		prev = new SettingsJSON ();
 //		propertyCopy (settings.settingsJSON,prev);
 	}

@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 //using UnityEngine.EventSystems;
 
 public class ChooseHeadset : MonoBehaviour {
-
+/*
 	public GameObject textBox;
 	public GameObject reticleText;
 	public int rows;
@@ -70,6 +70,7 @@ public class ChooseHeadset : MonoBehaviour {
 			message = _message;
 		}
 	}
+	*/
 }
 //
 //	public GraphicRaycaster raycaster; 
@@ -96,4 +97,3 @@ public class ChooseHeadset : MonoBehaviour {
 //			Debug.Log (results [i].gameObject.GetComponent<Text> ().text);
 //		}
 //	}
-//}

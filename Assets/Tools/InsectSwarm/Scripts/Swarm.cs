@@ -41,7 +41,7 @@ public class Swarm : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		if (!Holojam.Utility.IsMasterPC ()) {
+		if (!Holojam.Tools.BuildManager.IsMasterPC ()) {
 			
 			Destroy (this);
 		}

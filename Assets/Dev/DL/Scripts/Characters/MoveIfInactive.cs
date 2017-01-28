@@ -16,7 +16,7 @@ public class MoveIfInactive : MonoBehaviour {
 	IEnumerator mover(){
 		while (true) {
 			for (int i = 0; i < this.transform.childCount; i++) {
-				bool tracked = this.transform.GetChild (i).gameObject.GetComponent<Holojam.Tools.Actor> ().view.IsTracked;
+				bool tracked = this.transform.GetChild (i).gameObject.GetComponent<Holojam.Tools.Actor> ().view.tracked;
 				if (!tracked) {
 					counters [i] += Time.deltaTime;
 					if (counters [i] > missingTrackingTime)

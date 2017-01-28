@@ -4,9 +4,16 @@ using System.Collections.Generic;
 using Holojam.Tools;
 using UnityEngine;
 
-public class ActorSyncer : MonoBehaviour
+public class ActorSyncer : Controller
 {
-	public Synchronizable synchronizable;
+	protected override bool hasText{get{return true;}}
+	protected override string labelField{get{return "ActorSyncer";}}
+	protected override string scopeField{get{return Holojam.Network.Client.SEND_SCOPE;}}
+	protected override bool isSending{get{return BuildManager.IsMasterPC();}}
+	
+	//stub
+	protected override ProcessDelegate Process{get{return Stub;}}
+	void Stub(){}
 
 	private ActorSetJSON capturedASJ;
 	private ActorSetJSON revisedASJ;
@@ -18,10 +25,7 @@ public class ActorSyncer : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		synchronizable = GetComponent<Synchronizable> ();
-		synchronizable.label = "ActorSyncer";
-
-		synchronizable.synchronizedString = "";
+		resetSync();
 		capturedASJ = new ActorSetJSON ();
 		revisedASJ = new ActorSetJSON ();
 		naj = new ActorJson ();
@@ -32,12 +36,12 @@ public class ActorSyncer : MonoBehaviour
 
 	public void PrintSyncString ()
 	{
-		DebugX.Log (synchronizable.synchronizedString);
+		DebugX.Log (GetText());
 	}
 
 	public void resetSync ()
 	{ 
-		synchronizable.synchronizedString = "";
+		ResetView();
 	}
 
 	public void SendSyncStringData (string data)
@@ -45,8 +49,8 @@ public class ActorSyncer : MonoBehaviour
 		if (data != null && data != "") {  
 
 			//search the current synchronized string and see if any data is associated with the current actor (data).
-			if (synchronizable.synchronizedString != null && synchronizable.synchronizedString != "") { 
-				capturedASJ = JsonUtility.FromJson<ActorSetJSON> (synchronizable.synchronizedString);
+			if (GetText() != null && GetText() != "") { 
+				capturedASJ = JsonUtility.FromJson<ActorSetJSON> (GetText());
 				int casjLength = capturedASJ.actors.Length;
 				bool foundExistingActor = false;
 				for (int i = 0; i < casjLength; i++) {
@@ -92,7 +96,7 @@ public class ActorSyncer : MonoBehaviour
 			revisedASJ.actors = ls.ToArray ();
 			}
 
-			synchronizable.synchronizedString = JsonUtility.ToJson (revisedASJ);
+			UpdateText(JsonUtility.ToJson(revisedASJ));
 			PrintSyncString ();
 		}
 	}
@@ -101,8 +105,8 @@ public class ActorSyncer : MonoBehaviour
 	{ 
 		ActorSetJSON newASJ =  new ActorSetJSON ();
 		//remove the actor from the syncstring, all instances just in case!
-		if (synchronizable.synchronizedString != null && synchronizable.synchronizedString != "") { 
-			capturedASJ = JsonUtility.FromJson<ActorSetJSON> (synchronizable.synchronizedString);
+		if (GetText() != null && GetText() != "") { 
+			capturedASJ = JsonUtility.FromJson<ActorSetJSON> (GetText());
 //			newASJ = capturedASJ;
 //			newASJ.actors.Initialize();
 //			revisedASJ=default(revisedASJ);
@@ -119,16 +123,16 @@ public class ActorSyncer : MonoBehaviour
 				}
 			}	
 		}
-		synchronizable.synchronizedString = JsonUtility.ToJson (newASJ);
+		UpdateText(JsonUtility.ToJson(newASJ));
 		PrintSyncString ();
 	}
 
 	public int checkBugsEaten (string actor)
 	{ 
-		if (synchronizable.synchronizedString != cachedSync) {
+		if (GetText() != cachedSync) {
 			capturedASJ = default (ActorSetJSON);	
-			if (synchronizable.synchronizedString != null && synchronizable.synchronizedString != "") { 
-				capturedASJ = JsonUtility.FromJson<ActorSetJSON> (synchronizable.synchronizedString);
+			if (GetText() != null && GetText() != "") { 
+				capturedASJ = JsonUtility.FromJson<ActorSetJSON> (GetText());
 				int casjLength = capturedASJ.actors.Length;
 				for (int i = 0; i < casjLength; i++) {
 					if (capturedASJ.actors [i].actorIndex == actor) {
@@ -136,7 +140,7 @@ public class ActorSyncer : MonoBehaviour
 					}
 				}
 			}
-			cachedSync = synchronizable.synchronizedString;
+			cachedSync = GetText();
 		} 
 
 		return cachedBugsEaten;
@@ -149,8 +153,8 @@ public class ActorSyncer : MonoBehaviour
 		bugsEatenTime = default (List<int>);
 		bool foundTimeList = false;
 			
-		if (synchronizable.synchronizedString != null && synchronizable.synchronizedString != "") { 
-			capturedASJ = JsonUtility.FromJson<ActorSetJSON> (synchronizable.synchronizedString);
+		if (GetText() != null && GetText() != "") { 
+			capturedASJ = JsonUtility.FromJson<ActorSetJSON> (GetText());
 			int casjLength = capturedASJ.actors.Length;
 			for (int i = 0; i < casjLength; i++) {
 				if (capturedASJ.actors [i].actorIndex == actor) {

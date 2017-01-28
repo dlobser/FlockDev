@@ -8,16 +8,17 @@ namespace BugJam {
 	   Renderer r;
 	   int active = 1;
 
+	   protected override int triplesCount{get{return 1;}}
+	   protected override int intsCount{get{return 1;}}
+
 	   protected override void Sync(){
 	      if(sending){
-	         synchronizedVector3=transform.position;
-
-	         synchronizedInt = active;
+	      	UpdateTriple(0,transform.position);
+	      	UpdateInt(0,active);
 	      }
 	      else{
-	         transform.position=synchronizedVector3;
-
-	         active = synchronizedInt;
+	      	transform.position = GetTriple(0);
+	      	active = GetInt(0);
 	      }
 
 	      r.enabled = active==1;

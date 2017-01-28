@@ -7,7 +7,7 @@ public class sphereVisible : MonoBehaviour {
 
 
 	void Start () {
-		if(Holojam.Utility.IsMasterPC ()){
+		if(Holojam.Tools.BuildManager.IsMasterPC ()){
 			mr=GetComponent<MeshRenderer>();
 			mr.enabled=false;
 		}
