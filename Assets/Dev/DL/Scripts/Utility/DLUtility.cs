@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public static class DLUtility {
-
 
 	public static float remap(float s, float a1, float a2, float b1, float b2)
 	{
@@ -38,6 +38,23 @@ public static class DLUtility {
 			{
 				closestDistanceSqr = dSqrToTarget;
 				bestTarget = potentialTarget;
+			}
+		}
+
+		return bestTarget;
+	}
+	public static Transform GetClosestGameObject (Transform GO, List<Holojam.Tools.Actor> actors)
+	{
+		Transform bestTarget = null;
+		float closestDistanceSqr = Mathf.Infinity;
+		Vector3 currentPosition = GO.transform.position;
+		foreach(Holojam.Tools.Actor a in actors){
+			Vector3 directionToTarget = a.transform.position - currentPosition;
+			float dSqrToTarget = directionToTarget.sqrMagnitude;
+			if(dSqrToTarget < closestDistanceSqr && dSqrToTarget>.0001f)
+			{
+				closestDistanceSqr = dSqrToTarget;
+				bestTarget = a.transform;
 			}
 		}
 

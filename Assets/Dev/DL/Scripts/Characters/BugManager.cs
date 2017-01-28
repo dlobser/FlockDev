@@ -19,7 +19,6 @@ public class BugManager : MonoBehaviour {
 	Vector3[] nearestBugOriginOffset;
 	Vector3[] nearestBugLerp;
 	Vector3[] targets;
-	Transform[] actors;
 
 	Vector3[] noiseVecs;
 
@@ -69,13 +68,6 @@ public class BugManager : MonoBehaviour {
 		nearestBugOriginOffset = new Vector3[amount];
 		nearestBugLerp = new Vector3[amount];
 		noiseVecs = new Vector3[amount];
-
-
-		actors = new Transform[Holojam.Tools.Actor.instances.Count];
-		for (int i = 0; i < actors.Length; i++) {
-			actors[i] = Holojam.Tools.Actor.instances[i].transform;
-		}
-
 
 		PNoise = new ImageTools.Core.PerlinNoise (1);
 
@@ -136,7 +128,7 @@ public class BugManager : MonoBehaviour {
 	IEnumerator FindNearestBugs(){
 		while (true) { 
 			for (int i = 0; i < amount; i++) {
-				nearestActors [i] = DLUtility.GetClosestGameObject (bugs [i].transform, actors);
+				nearestActors [i] = DLUtility.GetClosestGameObject (bugs [i].transform, Holojam.Tools.Actor.instances);
 				yield return new WaitForSeconds (0);
 			}
 		}
