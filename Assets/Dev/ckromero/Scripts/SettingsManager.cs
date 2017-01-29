@@ -9,7 +9,7 @@ public class SettingsManager :  MonoBehaviour {
 
 	void Update() { 
 		if (BuildManager.IsMasterPC()) {
-			synchronizable.UpdateText(JsonUtility.ToJson(settingsJSON));
+			synchronizable.SetText(JsonUtility.ToJson(settingsJSON));
 		} else {
 			settingsJSON = JsonUtility.FromJson<SettingsJSON>(synchronizable.GetText());
 		}

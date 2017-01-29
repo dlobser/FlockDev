@@ -33,10 +33,10 @@ public class GlobalSettings : MonoBehaviour {
 		quat.x = warnForSeconds;
 		quat.y = allowedSessionTime;
 		quat.z = timeLeftToDie;
-		synchronizable.UpdateQuad(0,quat);
+		synchronizable.SetQuad(0,quat);
 
 		vec.x = maxSpeedToSitStill;
-		synchronizable.UpdateTriple(0,vec);
+		synchronizable.SetTriple(0,vec);
 
 	}
 }

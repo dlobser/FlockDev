@@ -98,7 +98,7 @@ public class Fly : MonoBehaviour {
 			Debug.Log (this.name + " is active again.");
 			meshRend.enabled = true;
 			active = true;
-			synchronizable.UpdateInt(0,0);
+			synchronizable.SetInt(0,0);
 		}
 	}
 	void OnTriggerEnter(Collider other) {
@@ -114,7 +114,7 @@ public class Fly : MonoBehaviour {
 					meshRend.enabled = false;
 					active = false;
 					deathTimer = 0;
-					synchronizable.UpdateInt(0,1);
+					synchronizable.SetInt(0,1);
 
 					//				GameObject obj = Instantiate (splat, this.transform.position, Quaternion.identity) as GameObject;
 					//				obj.transform.SetParent (this.transform);

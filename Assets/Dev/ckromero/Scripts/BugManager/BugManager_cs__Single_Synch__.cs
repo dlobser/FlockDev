@@ -5,7 +5,7 @@ namespace BugJam
 {
 	public class SingleBugBuilder : Synchronizable
 	{
-		protected override bool hasText{get{return true;}}
+		public override bool hasText{get{return true;}}
 
 		public SingleBug prefab;
 		public int gridWidth = 2;
@@ -43,7 +43,7 @@ namespace BugJam
 				bitties = "";
 				foreach (SingleBug b in bugs)
 					bitties += b.active.ToString ();
-				UpdateText(bitties);
+				SetText(bitties);
 			} else {
 				bitties = GetText();
 			}

@@ -48,15 +48,15 @@ public class Bug : Synchronizable{
 
 	}
 
-	protected override int triplesCount{get{return 2;}}
-	protected override int intsCount{get{return 2;}}
+	public override int tripleCount{get{return 2;}}
+	public override int intCount{get{return 2;}}
 
 	protected override void Sync(){
 		if(sending){
-			UpdateTriple(0,transform.position);
-			UpdateTriple(1,transform.localScale);
-			UpdateInt(0,active);
-			UpdateInt(1,emit);
+			SetTriple(0,transform.position);
+			SetTriple(1,transform.localScale);
+			SetInt(0,active);
+			SetInt(1,emit);
 		}
 		else{
 			transform.position = GetTriple(0);

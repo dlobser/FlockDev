@@ -8,13 +8,13 @@ namespace BugJam {
 	   Renderer r;
 	   int active = 1;
 
-	   protected override int triplesCount{get{return 1;}}
-	   protected override int intsCount{get{return 1;}}
+	   public override int tripleCount{get{return 1;}}
+	   public override int intCount{get{return 1;}}
 
 	   protected override void Sync(){
 	      if(sending){
-	      	UpdateTriple(0,transform.position);
-	      	UpdateInt(0,active);
+	      	SetTriple(0,transform.position);
+	      	SetInt(0,active);
 	      }
 	      else{
 	      	transform.position = GetTriple(0);

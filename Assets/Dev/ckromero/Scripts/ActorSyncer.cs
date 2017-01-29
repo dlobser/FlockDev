@@ -6,10 +6,10 @@ using UnityEngine;
 
 public class ActorSyncer : Controller
 {
-	protected override bool hasText{get{return true;}}
-	protected override string labelField{get{return "ActorSyncer";}}
-	protected override string scopeField{get{return Holojam.Network.Client.SEND_SCOPE;}}
-	protected override bool isSending{get{return BuildManager.IsMasterPC();}}
+	public override bool hasText{get{return true;}}
+	public override string labelField{get{return "ActorSyncer";}}
+	public override string scopeField{get{return Holojam.Network.Client.SEND_SCOPE;}}
+	public override bool isSending{get{return BuildManager.IsMasterPC();}}
 	
 	//stub
 	protected override ProcessDelegate Process{get{return Stub;}}
@@ -96,7 +96,7 @@ public class ActorSyncer : Controller
 			revisedASJ.actors = ls.ToArray ();
 			}
 
-			UpdateText(JsonUtility.ToJson(revisedASJ));
+			SetText(JsonUtility.ToJson(revisedASJ));
 			PrintSyncString ();
 		}
 	}
@@ -123,7 +123,7 @@ public class ActorSyncer : Controller
 				}
 			}	
 		}
-		UpdateText(JsonUtility.ToJson(newASJ));
+		SetText(JsonUtility.ToJson(newASJ));
 		PrintSyncString ();
 	}
 
