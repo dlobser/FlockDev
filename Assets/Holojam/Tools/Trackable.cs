@@ -25,11 +25,11 @@ namespace Holojam.Tools{
       }
 
       //Accessors in case modification needs to be made to the raw data (like smoothing)
-      public Vector3 trackedPosition{get{
+      public virtual Vector3 trackedPosition{get{
          return localSpace && transform.parent!=null?
             transform.parent.TransformPoint(rawPosition):rawPosition;
       }}
-      public Quaternion trackedRotation{get{
+		public virtual Quaternion trackedRotation{get{
          return localSpace && transform.parent!=null?
             transform.parent.rotation*rawRotation:rawRotation;
       }}
