@@ -36,7 +36,7 @@ public class TapToReset : MonoBehaviour {
 		}
 	}
 
-  void ButtonReset(){
+  public void ButtonReset(){
   for (int i = 0; i < activateOnReset.Length; i++) {
     if (!activateOnReset [i].activeInHierarchy)
       activateOnReset [i].gameObject.SetActive (true);

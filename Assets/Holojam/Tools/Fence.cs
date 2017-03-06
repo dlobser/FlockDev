@@ -22,26 +22,26 @@ namespace Holojam.Tools{
       List<Vector2> uvs = new List<Vector2>();
 
       void Update(){
-         Color newColor = material.color;
-
-         if(Holojam.Tools.BuildManager.BUILD_INDEX>=0){
-            //Modulate transparency
-         float dist = holobounds.Distance(Holojam.Tools.BuildManager.BUILD_ACTOR.center)/minRange;
-            if ((1-dist) <= 0) {
-               r.enabled = false;
-            }
-            else if ((1-dist) > 0 && !r.enabled) {
-               r.enabled = true;
-            }
-            else if ((1-dist) > 0 && r.enabled) {
-               newColor.a = maxAlpha * (1-dist);
-            }
-           
-         }
-         else newColor.a=maxAlpha;
-
-         //Update material
-         material.color=newColor;
+//         Color newColor = material.color;
+//
+//         if(Holojam.Tools.BuildManager.BUILD_INDEX>=0){
+//            //Modulate transparency
+//         float dist = holobounds.Distance(Holojam.Tools.BuildManager.BUILD_ACTOR.center)/minRange;
+//            if ((1-dist) <= 0) {
+//               r.enabled = false;
+//            }
+//            else if ((1-dist) > 0 && !r.enabled) {
+//               r.enabled = true;
+//            }
+//            else if ((1-dist) > 0 && r.enabled) {
+//               newColor.a = maxAlpha * (1-dist);
+//            }
+//           
+//         }
+//         else newColor.a=maxAlpha;
+//
+//         //Update material
+//         material.color=newColor;
       }
 
       Holobounds holobounds;
