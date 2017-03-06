@@ -12,7 +12,7 @@ public class ResetManager : MonoBehaviour {
 	string[] signal;
 	// Use this for initialization
 	void Start () {
-		signal = new string[5] { "1", "2", "3", "4","ALL" };
+		signal = new string[7] { "1", "2", "3", "4","5","6","ALL" };
 	}
 
 	// Update is called once per frame
@@ -26,8 +26,12 @@ public class ResetManager : MonoBehaviour {
 			text = signal [2];
 		if (Input.GetKeyDown(KeyCode.R))
 			text = signal [3];
-		if (Input.GetKeyDown(KeyCode.A))
-			text = signal [4];
+    if (Input.GetKeyDown(KeyCode.T))
+      text = signal[4];
+    if (Input.GetKeyDown(KeyCode.Y))
+      text = signal[5];
+    if (Input.GetKeyDown(KeyCode.A))
+			text = signal [6];
 		if (BuildManager.IsMasterPC()) {
 			synchronizable.SetText(text);
 		} else {
