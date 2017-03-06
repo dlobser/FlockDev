@@ -8,8 +8,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlockDev", "Assembly-CSharp-Editor-firstpass.csproj", "{E0E44276-908E-32A9-D79B-E7F03172EC0C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlockDev", "Assembly-CSharp-Editor.csproj", "{C10BA8B1-D993-229A-B9DB-3B8E8B08C0A8}"
+<<<<<<< HEAD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlockDev", "Assembly-UnityScript-Editor.unityproj", "{DC01319E-0150-1F79-0087-DB0A7808AD2D}"
+=======
+>>>>>>> 4a3c380cc3f106e00e97e3aa86fb85aca1547cf8
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
