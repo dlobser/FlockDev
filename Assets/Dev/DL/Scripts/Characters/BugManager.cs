@@ -75,7 +75,7 @@ public class BugManager : MonoBehaviour {
 		for(int x = 0 ; x < gridWidth ; ++x ){
 			for (int y = 0 ; y < gridWidth ; ++y) {
 				Vector3 posA = new Vector3 ((x-gridWidth/2) * scale, bugHeight, (y-gridWidth/2) * scale);
-				Vector3 pos = transform.position + posA;
+				Vector3 pos = transform.position;//+ posA;
 				targets [x + gridWidth * y] = pos;
 				GameObject b = bugPrefabs [(int)Mathf.Floor (Random.value * bugPrefabs.Length)].gameObject;
 				GameObject myBug = Instantiate (b.gameObject, pos, Quaternion.identity) as GameObject;
