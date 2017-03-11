@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 using Holojam.Tools;
-using System;
+using Holojam.Network;
 
 public class ActorDataSync : MonoBehaviour
 {
@@ -15,8 +17,6 @@ public class ActorDataSync : MonoBehaviour
 	//	private GameObject swarmMaker;
 	private ActorSyncer actSync;
 	private Actor[] actors;
-
-    //public static List<Actor> instances = new List<Actor>();
 
     //	private bool canCallFunction = true;
 
@@ -35,8 +35,8 @@ public class ActorDataSync : MonoBehaviour
 ////		} else {
 ////			//NORMALIZE HERE
 //////			actorManager.buildTag
-        
-		foreach (Actor a in Holojam.Tools.Actor.instances) {
+
+		foreach (Actor a in Controller.All<Actor>()) {
 			if (a.index == Holojam.Tools.BuildManager.BUILD_INDEX) {
 				currentActor = a.name.Substring (0, a.name.IndexOf ("]") + 1);			
 				Debug.Log ("curentActor is: " + currentActor);
@@ -84,7 +84,7 @@ public class ActorDataSync : MonoBehaviour
 
 	public void SwapActor ()
 	{
-		actors = Actor.instances.ToArray();
+    actors = Controller.All<Actor>().ToArray();
 		Actor currentActorComponent;
 
 		foreach (Actor a in actors) {

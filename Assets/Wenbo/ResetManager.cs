@@ -18,21 +18,21 @@ public class ResetManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		string text = "";
-		if (Input.GetKeyDown(KeyCode.Q))
+		if (Input.GetKeyDown(KeyCode.Alpha0))
 			text = signal [0];
-		if (Input.GetKeyDown(KeyCode.W))
+		if (Input.GetKeyDown(KeyCode.Alpha1))
 			text = signal [1];
-		if (Input.GetKeyDown(KeyCode.E))
+		if (Input.GetKeyDown(KeyCode.Alpha2))
 			text = signal [2];
-		if (Input.GetKeyDown(KeyCode.R))
+		if (Input.GetKeyDown(KeyCode.Alpha3))
 			text = signal [3];
-    if (Input.GetKeyDown(KeyCode.T))
+    if (Input.GetKeyDown(KeyCode.Alpha4))
       text = signal[4];
-    if (Input.GetKeyDown(KeyCode.Y))
+    if (Input.GetKeyDown(KeyCode.Alpha5))
       text = signal[5];
-    if (Input.GetKeyDown(KeyCode.A))
+    if (Input.GetKeyDown(KeyCode.Alpha6))
 			text = signal [6];
-		if (BuildManager.IsMasterPC()) {
+		if (BuildManager.IsMasterClient()) {
 			synchronizable.SetText(text);
 		} else {
 			text = synchronizable.GetText();

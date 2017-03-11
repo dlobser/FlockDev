@@ -1,6 +1,7 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 using Holojam.Tools;
 
 public class setActorDataSyncHeadsetFix : MonoBehaviour {
@@ -16,7 +17,7 @@ public class setActorDataSyncHeadsetFix : MonoBehaviour {
 
 		GameObject am = GameObject.Find ("ActorManager");
 
-	 	Holojam.Tools.Actor[]	actors = Actor.instances.ToArray();
+	 	Actor[]	actors = Holojam.Network.Controller.All<Actor>().ToArray();
 		foreach (Actor a in actors) {
 			if (a.name.Contains ("Build")) {
 				pState.currentActor =  a.name.Substring (0, a.name.IndexOf ("]") + 1);			

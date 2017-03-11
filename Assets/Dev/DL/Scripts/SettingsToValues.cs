@@ -1,5 +1,6 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using System.Linq;
+using UnityEngine;
 
 public class SettingsToValues : MonoBehaviour {
 
@@ -19,8 +20,6 @@ public class SettingsToValues : MonoBehaviour {
 
 	FaderManager fader;
 
-
-
 	// Use this for initialization
 	void Start () {
 		findEmpty = GameObject.Find ("GridCheck").GetComponent<FindEmptyCoordinate> ();
@@ -29,7 +28,7 @@ public class SettingsToValues : MonoBehaviour {
 		settings = GameObject.Find ("SettingsManager").GetComponent<SettingsManager> ();
 		bugs = bugManager.GetComponentsInChildren<Bug> ();
 		bugManagement = bugManager.GetComponent<BugManager> ();
-		actors = Holojam.Tools.Actor.instances.ToArray();
+    actors = Holojam.Network.Controller.All<Holojam.Tools.Actor>().ToArray();
 		prev = new SettingsJSON ();
 //		propertyCopy (settings.settingsJSON,prev);
 	}

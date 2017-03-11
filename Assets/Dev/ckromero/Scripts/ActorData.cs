@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 using Holojam.Tools;
-using System;
 
 public class ActorData : MonoBehaviour
 {
@@ -31,7 +32,7 @@ public class ActorData : MonoBehaviour
 
 		swarmMaker = GameObject.Find ("SwarmSpawnPoint");
 
-		actors = Actor.instances.ToArray();
+    actors = Holojam.Network.Controller.All<Actor>().ToArray();
 		foreach (Actor a in actors) {
 			if (a.name.Contains ("Build")) {
 				currentActor = a.name.Substring (0, a.name.IndexOf ("]") + 1);			

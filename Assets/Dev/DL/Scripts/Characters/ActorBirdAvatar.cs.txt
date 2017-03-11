@@ -1,0 +1,29 @@
+﻿using UnityEngine;
+using Holojam.Tools;
+
+public class ActorBirdAvatar : Holojam.Tools.Actor{
+  public Transform head;
+  public Color motif;
+
+  protected override void UpdateTracking(){
+    if (Tracked) {
+      if (head != null) {
+        head.localPosition = TrackedPosition;
+        head.rotation = TrackedRotation;
+      }
+      else Debug.LogWarning("ActorController: No head found for "+gameObject.name);
+    }
+  }
+
+  public override Quaternion Orientation{
+    get{return TrackedRotation;}
+  }
+
+  void Start(){ApplyMotif();}
+
+  void ApplyMotif(){
+    if(Application.isPlaying)
+      foreach(Renderer r in GetComponentsInChildren<Renderer>())
+        if(r.gameObject.tag=="Motif")r.material.color=motif;
+  }
+}

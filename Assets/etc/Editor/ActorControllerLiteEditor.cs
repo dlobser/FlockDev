@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(ActorControllerLite)), CanEditMultipleObjects]
-public class ActorControllerLiteEditor : Holojam.Tools.ActorEditor{
+[CustomEditor(typeof(ActorAvatarLite)), CanEditMultipleObjects]
+public class ActorAvatarLiteEditor : Holojam.Tools.ActorEditor{
    SerializedProperty mask, motif;
    protected override void EnableDerived(){
       motif = serializedObject.FindProperty("motif");

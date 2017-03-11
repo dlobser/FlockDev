@@ -1,6 +1,5 @@
-using UnityEngine;
 using System.Collections;
-
+using UnityEngine;
 
 public class BugManager : MonoBehaviour {
 //	public Bug bug;
@@ -128,7 +127,9 @@ public class BugManager : MonoBehaviour {
 	IEnumerator FindNearestBugs(){
 		while (true) { 
 			for (int i = 0; i < amount; i++) {
-				nearestActors [i] = DLUtility.GetClosestGameObject (bugs [i].transform, Holojam.Tools.Actor.instances);
+				nearestActors [i] = DLUtility.GetClosestGameObject (
+          bugs [i].transform, Holojam.Network.Controller.All<Holojam.Tools.Actor>()
+        );
 				yield return new WaitForSeconds (0);
 			}
 		}

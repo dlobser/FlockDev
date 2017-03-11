@@ -1,24 +1,27 @@
-//ViveRelay.cs
-//Created by Aaron C Gaudette on 26.01.17
+// ViveRelay.cs
+// Created by Holojam Inc. on 26.01.17
 
 using UnityEngine;
 
-namespace Holojam.Vive{
-   public class ViveRelay : Tools.Controller{
-      protected override ProcessDelegate Process{get{return Relay;}}
+namespace Holojam.Vive {
 
-      public override string labelField{
-         get{return Network.Canon.IndexToLabel(Tools.BuildManager.BUILD_INDEX);}
-      }
-      public override string scopeField{get{return "HolojamVive";}}
-      public override bool isSending{get{return !Holojam.Tools.BuildManager.IsMasterPC();}}
+  /// <summary>
+  /// Add this component to the CameraRig prefab on Camera (eye)
+  /// to synchronize HTC Vives within the Actor system.
+  /// </summary>
+  public sealed class ViveRelay : Tools.Relay {
 
-      public override int tripleCount{get{return 1;}}
-      public override int quadCount{get{return 1;}}
+    /// <summary>
+    /// The ViveRelay doesn't send on master clients.
+    /// </summary>
+    public override bool Sending { get { return !Holojam.Tools.BuildManager.IsMasterClient(); } }
 
-      void Relay(){
-         SetTriple(0,transform.position);
-         SetQuad(0,transform.rotation);
-      }
-   }
+    /// <summary>
+    /// Send position and rotation every update.
+    /// </summary>
+    protected override void Load() {
+      Position = transform.position;
+      Rotation = transform.rotation;
+    }
+  }
 }

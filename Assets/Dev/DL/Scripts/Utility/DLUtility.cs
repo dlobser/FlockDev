@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
+//using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 public static class DLUtility {
 
@@ -43,7 +44,7 @@ public static class DLUtility {
 
 		return bestTarget;
 	}
-	public static Transform GetClosestGameObject (Transform GO, List<Holojam.Tools.Actor> actors)
+	public static Transform GetClosestGameObject (Transform GO, ReadOnlyCollection<Holojam.Tools.Actor> actors)
 	{
 		Transform bestTarget = null;
 		float closestDistanceSqr = Mathf.Infinity;

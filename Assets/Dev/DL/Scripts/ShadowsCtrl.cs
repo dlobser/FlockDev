@@ -15,9 +15,10 @@ public class ShadowsCtrl : MonoBehaviour {
 		settings = GameObject.Find ("SettingsManager").GetComponent<SettingsManager> ();
 		shadows = new List<ShadowPositioner> ();
 		actors = new List<Transform> ();
-		for (int i = 0; i < Holojam.Tools.Actor.instances.Count; i++) {
-			Transform t = Holojam.Tools.Actor.instances[i].transform;
-			if (!t.gameObject.GetComponent<Holojam.Tools.Actor>().isBuild) {
+    var allActors = Holojam.Network.Controller.All<Holojam.Tools.Actor>();
+		for (int i = 0; i < allActors.Count; i++) {
+			Transform t = allActors[i].transform;
+			if (!t.gameObject.GetComponent<Holojam.Tools.Actor>().IsBuild) {
 				ShadowPositioner sh = Instantiate (shadow).GetComponent<ShadowPositioner>();
 				sh.transform.parent = this.transform;
 				shadows.Add (sh);

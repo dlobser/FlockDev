@@ -13,7 +13,7 @@ public class LocalHeadsetEatBug : MonoBehaviour {
 
 	void OnTriggerEnter(Collider c){
 		Bug b = c.GetComponent<Bug>();
-		if(b!=null && actor.isBuild){
+		if(b!=null && actor.IsBuild){
 //			this.GetComponent<SphereCollider> ().enabled = false;
 			handler.EatBug ();
 		}
