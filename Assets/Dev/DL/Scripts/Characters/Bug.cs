@@ -3,7 +3,6 @@ using System.Collections;
 using Holojam.Tools;
 
 public class Bug : SynchronizableTrackable {
-  public Vector3 lastPosition { get; set; }
   public Vector3 origin { get; set; }
   public float scaleSpeed = .1f;
   public int collisionWindow=2;
