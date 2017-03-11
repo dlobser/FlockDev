@@ -10,9 +10,9 @@ namespace Holojam.Tools{
    [RequireComponent(typeof(MeshFilter))]
    [RequireComponent(typeof(MeshRenderer))]
    public class Fence : MonoBehaviour{
+      public const MIN_RANGE = .5f; //Distance to fade
       public Material material;
 
-      public float minRange = 1.5f; //Distance to fade
       public float maxAlpha = 1;
 
       //Mesh data
@@ -25,7 +25,7 @@ namespace Holojam.Tools{
     Color newColor = material.color;
 
     if(!Holojam.Tools.BuildManager.IsMasterClient()) {
-      float dist = holobounds.Distance(Holojam.Tools.BuildManager.BUILD_ACTOR.Center)/minRange;
+      float dist = holobounds.Distance(Holojam.Tools.BuildManager.BUILD_ACTOR.Center) / MIN_RANGE;
       if ((1-dist) <= 0) {
          r.enabled = false;
       } else if ((1-dist) > 0 && !r.enabled) {
