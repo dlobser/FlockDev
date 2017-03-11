@@ -49,7 +49,7 @@ public class Bug : SynchronizableTrackable {
   }
 
   public override void ResetData() {
-    data = new Holojam.Network.Flake(2, 0, 0, 2);
+    data = new Holojam.Network.Flake(2, 1, 0, 2);
   }
 
   protected override void Sync() {

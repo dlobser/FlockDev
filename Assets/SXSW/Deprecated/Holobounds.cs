@@ -3,6 +3,7 @@
 //Playspace manager and access point
 
 using UnityEngine;
+using Holojam.Network;
 
 namespace Holojam.Tools{
    [ExecuteInEditMode]
@@ -12,7 +13,7 @@ namespace Holojam.Tools{
       public float ceiling = 3; //Ceiling Y -- not used for tracking
       public bool localSpace = false;
 
-      public Tools.Trackable calibrator; //Tracked tool for setting values
+      public Trackable calibrator; //Tracked tool for setting values
 
       //Reference values & functions
 
@@ -70,7 +71,7 @@ namespace Holojam.Tools{
             Debug.LogWarning("Holobounds: Calibrator not set");
             return;
          }
-         Vector3 position = calibrator.TrackedPosition;
+         Vector3 position = calibrator.RawPosition;
          if(i<4)bounds[i]=new Vector2(position.x,position.z);
          else if(i==4)floor=position.y;
          else ceiling=position.y;
@@ -105,6 +106,24 @@ namespace Holojam.Tools{
          else{
             transform.localPosition=Vector3.zero;
             transform.localRotation=Quaternion.identity;
+         }
+      }
+
+      //Save and load calibration data
+      static bool hasPlayed = false;
+      void Start(){
+         if(!Application.isPlaying && hasPlayed){
+            for(int i=0;i<4;++i){
+               bounds[i].x=PlayerPrefs.GetFloat("Holobounds_Corner"+i+"_x");
+               bounds[i].y=PlayerPrefs.GetFloat("Holobounds_Corner"+i+"_y");
+            }
+         } else if(Application.isPlaying)hasPlayed=true;
+      }
+      void OnApplicationQuit(){Save();}
+      void Save(){
+         for(int i=0;i<4;++i){
+            PlayerPrefs.SetFloat("Holobounds_Corner"+i+"_x",bounds[i].x);
+            PlayerPrefs.SetFloat("Holobounds_Corner"+i+"_y",bounds[i].y);
          }
       }
 

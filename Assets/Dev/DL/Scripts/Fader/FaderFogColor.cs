@@ -13,10 +13,12 @@ public class FaderFogColor : Fader {
 			Color nextColor = _Color [(int)Mathf.Clamp (Mathf.Ceil (currentLevel), 0, _Color.Length - 1)];
 			Color matColor = Color.Lerp (thisColor, nextColor, currentLevel - Mathf.Floor (currentLevel));
 			RenderSettings.fogColor = matColor;
-			Camera.main.backgroundColor = matColor;
+      if (Camera.main)
+			  Camera.main.backgroundColor = matColor;
 		} else {
 			RenderSettings.fogColor=thisColor;
-			Camera.main.backgroundColor = thisColor;
+      if (Camera.main)
+			  Camera.main.backgroundColor = thisColor;
 		}
 	}
 }

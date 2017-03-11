@@ -21,31 +21,28 @@ namespace Holojam.Tools{
       int quadIndex = 0;
       List<Vector2> uvs = new List<Vector2>();
 
-      void Update(){
-//         Color newColor = material.color;
-//
-//         if(Holojam.Tools.BuildManager.BUILD_INDEX>=0){
-//            //Modulate transparency
-//         float dist = holobounds.Distance(Holojam.Tools.BuildManager.BUILD_ACTOR.center)/minRange;
-//            if ((1-dist) <= 0) {
-//               r.enabled = false;
-//            }
-//            else if ((1-dist) > 0 && !r.enabled) {
-//               r.enabled = true;
-//            }
-//            else if ((1-dist) > 0 && r.enabled) {
-//               newColor.a = maxAlpha * (1-dist);
-//            }
-//           
-//         }
-//         else newColor.a=maxAlpha;
-//
-//         //Update material
-//         material.color=newColor;
+  void Update(){
+    Color newColor = material.color;
+
+    if(!Holojam.Tools.BuildManager.IsMasterClient()) {
+      float dist = holobounds.Distance(Holojam.Tools.BuildManager.BUILD_ACTOR.Center)/minRange;
+      if ((1-dist) <= 0) {
+         r.enabled = false;
+      } else if ((1-dist) > 0 && !r.enabled) {
+         r.enabled = true;
+      } else if ((1-dist) > 0 && r.enabled) {
+         newColor.a = maxAlpha * (1-dist);
       }
+    } else {
+      newColor.a=maxAlpha;
+    }
+
+    material.color = newColor;
+  }
 
       Holobounds holobounds;
       Mesh mesh; Renderer r;
+
       void Start(){
          holobounds=GetComponent<Holobounds>();
          mesh=GetComponent<MeshFilter>().mesh;
