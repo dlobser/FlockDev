@@ -9,24 +9,29 @@ namespace Holojam.Vive {
 
   /// <summary>
   /// The counterpart of ViveControllerReceiver. Add this component to the Controller
-  /// game objects under the CameraRig prefa to synchronize Vive controllers (position, rotation, input)
+  /// game objects under the CameraRig prefab to synchronize Vive controllers (position, rotation, input)
   /// across the Holojam network with standard labels.
   /// </summary>
   public class ViveControllerRelay : Tools.Relay {
+    public ViveModule.Type type = ViveModule.Type.LEFT;
 
-    public string label = "left";
     private SteamVR_TrackedObject controller;
 
     /// <summary>
     /// The ViveControllerRelay doesn't send on master clients.
     /// </summary>
-    public override bool Sending { get { return !Holojam.Tools.BuildManager.IsMasterClient(); } }
+    public override bool Sending {
+      get {
+        return !Holojam.Tools.BuildManager.IsMasterClient()
+          && !Holojam.Tools.BuildManager.IsSpectator();
+      }
+    }
 
     /// <summary>
-    /// Automatically selects the canon Vive label depending on the build index, with an additional controller label.
+    /// Appends a controller identifier to the canon build label.
     /// </summary>
-    public override string Label {
-      get { return Network.Canon.IndexToLabel(Tools.BuildManager.BUILD_INDEX,label); }
+    public override string Extra {
+      get { return ViveModule.TypeToString(type); }
     }
 
     /// <summary>
@@ -37,7 +42,7 @@ namespace Holojam.Vive {
     }
 
     /// <summary>
-    /// Send position and rotation every update.
+    /// Send position and rotation every update, along with the input data.
     /// </summary>
     protected override void Load() {
       Position = transform.position;

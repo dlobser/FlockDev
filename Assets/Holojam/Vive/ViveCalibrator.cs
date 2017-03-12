@@ -23,7 +23,7 @@ namespace Holojam.Vive {
     public Transform centroid;
 
     private ViveControllerReceiver receiver;
-    private Vector3 cachedPosition;
+    private Vector3 cachedPosition = Vector3.zero;
 
     /// <summary>
     /// If true, a global space calibration will be triggered on button press.
@@ -48,7 +48,8 @@ namespace Holojam.Vive {
       base.Awake();
 
       receiver = GetComponent<ViveControllerReceiver>();
-      cachedPosition = centroid.position;
+      if (centroid)
+        cachedPosition = centroid.position;
     }
 
     /// <summary>
@@ -58,7 +59,15 @@ namespace Holojam.Vive {
     protected override void Update() {
       base.Update();
 
-      receiver.label = Network.Canon.IndexToLabel(Tools.BuildManager.BUILD_INDEX, "right");
+      receiver.index = Tools.BuildManager.BUILD_INDEX;
+      receiver.type = ViveModule.Type.RIGHT;
+      receiver.updateTracking = true;
+
+      if (!centroid) {
+        Debug.LogWarning("Holojam.Vive.ViveCalibrator: Centroid not assigned!");
+        return;
+      }
+
       if (receiver.GetPressDown(EVRButtonId.k_EButton_Grip) && canCalibrate)
         // Calibrate to the relative position of the controller
         Calibrate(receiver.TrackedPosition - centroid.position);
@@ -86,7 +95,8 @@ namespace Holojam.Vive {
     /// Offset the centroid by its difference to the absolute center.
     /// </summary>
     void Calibrate(Vector3 center) {
-      if (Tools.BuildManager.IsMasterClient()) return;
+      if (Tools.BuildManager.IsMasterClient() || Tools.BuildManager.IsSpectator())
+        return;
       centroid.position = cachedPosition - new Vector3(center.x, 0, center.z);
     }
   }
