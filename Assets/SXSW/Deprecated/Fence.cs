@@ -10,7 +10,7 @@ namespace Holojam.Tools{
    [RequireComponent(typeof(MeshFilter))]
    [RequireComponent(typeof(MeshRenderer))]
    public class Fence : MonoBehaviour{
-      public const MIN_RANGE = .5f; //Distance to fade
+      public const float MIN_RANGE = .5f; //Distance to fade
       public Material material;
 
       public float maxAlpha = 1;
