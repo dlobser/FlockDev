@@ -13,10 +13,10 @@ public class DistanceToCamera : MonoBehaviour {
 
     if (!cameraEye) {
       Debug.Log("DistanceToCamera: Camera (eye) not found!)");
-      GameObject masterCam = GameObject.Find("MasterCamera");
+      GameObject masterCam = GameObject.Find("Spectator");
 
       if (!masterCam) {
-        Debug.Log("DistanceToCamera: MasterCam not found!)");
+        Debug.Log("DistanceToCamera: Spectator not found!)");
       } else {
         target = masterCam.transform;
       }
