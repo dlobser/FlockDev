@@ -12,7 +12,7 @@ public class ResetManager : MonoBehaviour {
   string[] signal;
   // Use this for initialization
   void Start () {
-    signal = new string[7] { "1", "2", "3", "4","5","6","ALL" };
+    signal = new string[7] { "1", "2", "3", "4", "5", "6", "ALL" };
   }
 
   // Update is called once per frame
@@ -36,6 +36,8 @@ public class ResetManager : MonoBehaviour {
 
     if (BuildManager.IsMasterClient()) {
       synchronizable.SetText(text);
+      if (text != "")
+        Network.RemoteLogger.Log("Reset " + text);
     } else {
       text = synchronizable.GetText();
       int index;
@@ -44,8 +46,6 @@ public class ResetManager : MonoBehaviour {
         tap.ButtonReset ();
       }
     }
-    Debug.Log (text);
-
+    //Debug.Log (text);
   }
-
 }
