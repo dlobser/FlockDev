@@ -54,6 +54,7 @@ public class Spectator : Holojam.Tools.Trackable {
     }
   }
 
+  // Only load spectator values after a timeout
   IEnumerator LoadSpectator() {
     yield return new WaitForSeconds(2);
     if (!Tracked) {
