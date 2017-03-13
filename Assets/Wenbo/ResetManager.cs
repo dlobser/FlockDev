@@ -37,7 +37,7 @@ public class ResetManager : MonoBehaviour {
     if (BuildManager.IsMasterClient()) {
       synchronizable.SetText(text);
       if (text != "")
-        Network.RemoteLogger.Log("Reset " + text);
+        Holojam.Network.RemoteLogger.Log("Reset " + text);
     } else {
       text = synchronizable.GetText();
       int index;
