@@ -30,6 +30,9 @@ public class ShadowsCtrl : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		for (int i = 0; i < shadows.Count; i++) {
+			if (shadows [i] == null || settings == null || settings.settingsJSON == null) {
+				continue;
+			}
 			shadows [i].shadowSize = settings.settingsJSON.shadowSize;
 			Vector4 colVec = settings.settingsJSON.shadowColor;
 			col.r = colVec.x;
