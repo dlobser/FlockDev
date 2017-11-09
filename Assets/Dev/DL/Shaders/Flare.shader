@@ -1,4 +1,6 @@
-﻿// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
 
 // Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
 
@@ -51,7 +53,7 @@ Shader "Unlit/Flare"
 //				 I_Object2World[3][3] = tmp;
 				 v.vertex = mul(I_Object2World, v.vertex);
 
-				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);// + mul( unity_WorldToObject, float4( 0,_Height,0,0) ));
+				o.vertex = UnityObjectToClipPos(v.vertex);// + mul( unity_WorldToObject, float4( 0,_Height,0,0) ));
 //			    o.vertex += mul( unity_WorldToObject, float4( 0,0,0,1 ) );
 				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
 				UNITY_TRANSFER_FOG(o,o.vertex);

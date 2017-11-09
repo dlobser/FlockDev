@@ -9,7 +9,7 @@ public class ONMenu : MonoBehaviour {
 	static void TakeScreenshot()
 	{
 		string filename = "Screen Shot " + System.DateTime.Now.ToString("yyyy-MM-dd a\\t HH.mm.ss") + ".png";
-		Application.CaptureScreenshot(filename);
+		ScreenCapture.CaptureScreenshot(filename);
 	}
 
 

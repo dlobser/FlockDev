@@ -23,7 +23,7 @@ namespace Holojam{
 			transform.position+=trackedPosition-Camera.main.transform.position;
 			
 			if(IsTracked){
-				Quaternion imu = UnityEngine.VR.InputTracking.GetLocalRotation(UnityEngine.VR.VRNode.CenterEye);
+				Quaternion imu = UnityEngine.XR.InputTracking.GetLocalRotation(UnityEngine.XR.XRNode.CenterEye);
 				Quaternion optical = trackedRotation*Quaternion.Inverse(imu);
 				
 				//Calculate rotation difference since last timestep

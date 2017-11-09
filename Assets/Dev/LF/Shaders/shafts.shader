@@ -1,4 +1,6 @@
-﻿
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+
 
 Shader "OceansVR/Effect/shafts"
 {
@@ -63,7 +65,7 @@ Shader "OceansVR/Effect/shafts"
             v2f vert (appdata v)
             {
                 v2f o;
-                o.vertex = mul(UNITY_MATRIX_MVP, v.vertex + float4(sin(v.vertex.x*2+_Time.z)*.05*v.vertex.y,v.vertex.y*sin(v.vertex.y+_Time.z)*.05,0,0) );//UnityObjectToClipPos(v.vertex);
+                o.vertex = UnityObjectToClipPos(v.vertex + float4(sin(v.vertex.x*2+_Time.z)*.05*v.vertex.y,v.vertex.y*sin(v.vertex.y+_Time.z)*.05,0,0) );//UnityObjectToClipPos(v.vertex);
 
 //                float4 v2 = float4(0,sin(o.vertex.y+_Time.z),0,0);
 				o.vertex = o.vertex;//+v2;// mul(UNITY_MATRIX_MVP,vert );
