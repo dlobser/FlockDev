@@ -14,7 +14,15 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using WaveVR_Log;
 
-public class WaveVR_EventHandler: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
+public class WaveVR_EventHandler: MonoBehaviour,
+    IPointerEnterHandler,
+    IPointerExitHandler,
+    IPointerDownHandler,
+    IBeginDragHandler,
+    IDragHandler,
+    IEndDragHandler,
+    IDropHandler,
+    IPointerHoverHandler
 {
     private const string LOG_TAG = "WaveVR_EventHandler";
     private WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
@@ -74,8 +82,8 @@ public class WaveVR_EventHandler: MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void OnDrag(PointerEventData eventData)
     {
-        Camera c = eventData.enterEventCamera;
-        goPosition = c.ScreenToWorldPoint (new Vector3 (eventData.position.x, eventData.position.y, goPositionZ));
+        Camera _cam = eventData.enterEventCamera;
+        goPosition = _cam.ScreenToWorldPoint (new Vector3 (eventData.position.x, eventData.position.y, goPositionZ));
         //Log.d (LOG_TAG, "OnDrag() camera: " + c + ", position: " + goPosition);
     }
 
@@ -99,6 +107,11 @@ public class WaveVR_EventHandler: MonoBehaviour, IPointerEnterHandler, IPointerE
         #if UNITY_EDITOR
         Debug.Log("WaveVR_EventHandler::OnDrop, position: " + goPosition);
         #endif
+    }
+
+    public void OnPointerHover (PointerEventData eventData)
+    {
+        transform.Rotate (0, 12 * (10 * Time.deltaTime), 0);
     }
     #endregion
 

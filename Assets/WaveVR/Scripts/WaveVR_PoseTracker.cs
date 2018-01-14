@@ -27,9 +27,31 @@ public class WaveVR_PoseTracker : MonoBehaviour
     public bool inverseRotation = false;
     public bool trackRotation = true;
 
+    public enum TrackingEvent {
+        WhenUpdate,  // Pose will delay one frame.
+        WhenNewPoses
+    };
+
+    public TrackingEvent timing = TrackingEvent.WhenNewPoses;
+
 #if UNITY_EDITOR
     WaveVR_EmulatorPoseTracker emulatorTracker = null;
 #endif
+
+    public void Update()
+    {
+        if (timing == TrackingEvent.WhenNewPoses)
+            return;
+        if (WaveVR.Instance == null)
+            return;
+
+        WaveVR.Device device = WaveVR.Instance.getDeviceByType(type);
+        if (device.connected)
+        {
+            updatePose(device.rigidTransform);
+        }
+    }
+
 
     /// if device connected, get new pose, then update new position and rotation of transform
     private void OnNewPoses(params object[] args)
@@ -67,7 +89,9 @@ public class WaveVR_PoseTracker : MonoBehaviour
 
     void OnEnable()
     {
-        WaveVR_Utils.Event.Listen(WaveVR_Utils.Event.NEW_POSES, OnNewPoses);
+        if (timing == TrackingEvent.WhenNewPoses)
+            WaveVR_Utils.Event.Listen(WaveVR_Utils.Event.NEW_POSES, OnNewPoses);
+
 #if UNITY_EDITOR
         emulatorTracker = GetComponent<WaveVR_EmulatorPoseTracker>();
         if (emulatorTracker == null)
@@ -81,7 +105,9 @@ public class WaveVR_PoseTracker : MonoBehaviour
 
     void OnDisable()
     {
-        WaveVR_Utils.Event.Remove(WaveVR_Utils.Event.NEW_POSES, OnNewPoses);
+        if (timing == TrackingEvent.WhenNewPoses)
+            WaveVR_Utils.Event.Remove(WaveVR_Utils.Event.NEW_POSES, OnNewPoses);
+
 #if UNITY_EDITOR
         if (emulatorTracker != null)
         {

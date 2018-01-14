@@ -11,7 +11,7 @@
 using UnityEngine;
 using wvr;
 using WaveVR_Log;
-//
+
 public struct ClickedEventArgs
 {
     public WVR_DeviceType device;
@@ -176,7 +176,7 @@ public class WaveVR_TrackedButtons : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!WaveVR.Hmd)
+        if (WaveVR.Instance == null)
             return;
 
         if (!WaveVR_Controller.Input (device).connected)

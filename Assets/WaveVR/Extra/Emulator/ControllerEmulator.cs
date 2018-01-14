@@ -13,20 +13,6 @@ using System.Collections;
 
 using WaveVREmulator;
 
-public enum ConnectionState
-{
-    /// Indicates that an error has occurred.
-    Error = -1,
-    /// Indicates that the controller is disconnected.
-    Disconnected = 0,
-    /// Indicates that the device is scanning for controllers.
-    Scanning = 1,
-    /// Indicates that the device is connecting to a controller.
-    Connecting = 2,
-    /// Indicates that the device is connected to a controller.
-    Connected = 3,
-};
-
 public class ControllerEmulator : MonoBehaviour
 {
     public string WIFI_IP = "192.168.0.2";

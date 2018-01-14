@@ -16,10 +16,12 @@ xmlns:tools="http://schemas.android.com/tools">
             <meta-data android:name="unityplayer.UnityActivity" android:value="true" />
             <meta-data android:name="unityplayer.SkipPermissionsDialog" android:value="true" />
         </activity>
-        <meta-data android:name="com.htc.vr.content.NumDoF" android:value="6/6DoF"/>  <!--value 6/6DoF means your APP supports 6DoF HMD and 6DoF controller tracking.-->
-        <!--change NumDoF value to 3/3DoF here if your APP supports 3DoF HMD and 3DoF controller tracking.-->
-        <!--change NumDoF value to 6/3DoF here if your APP supports 6DoF HMD but 3DoF controller tracking.-->
-        <!--change NumDoF value to 3/6DoF here if your APP supports 3DoF HMD but 6DoF controller tracking.-->
+        <meta-data android:name="com.htc.vr.content.NumDoFHmd" android:value="6DoF"/>
+        <meta-data android:name="com.htc.vr.content.NumDoFController" android:value="6DoF"/>
+        <!--Please consider the DoF support of HMD and controller individually for your content.-->
+        <!--Set value “3DoF” if your content only considers the rotation pose. -->
+        <!--Set value “6DoF” if your content considers both rotation and position pose. -->
+        <!--Set value “3,6DoF” if your content is capable of supporting both 3 and 6 DoF playing. -->
         <meta-data android:name="com.htc.vr.content.NumController" android:value="2"/>  <!--fill the value of how many controllers the application can support.-->
     </application>
 

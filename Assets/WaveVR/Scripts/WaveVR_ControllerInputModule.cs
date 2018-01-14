@@ -64,6 +64,7 @@ public class WaveVR_ControllerInputModule : BaseInputModule
 
     #region EventSystem data
     private PointerEventData rightHandPointer, leftHandPointer;
+    private GameObject prevObject_right, prevObject_left;
     #endregion
 
     // Do NOT allow event DOWN being sent multiple times during CLICK_TIME.
@@ -422,6 +423,20 @@ public class WaveVR_ControllerInputModule : BaseInputModule
         }
     }
 
+    private void OnTriggerHover_Right()
+    {
+        GameObject _go = GetRightHandObject ();
+
+        ExecuteEvents.ExecuteHierarchy(_go, rightHandPointer, WaveVR_ExecuteEvents.pointerHoverHandler);
+    }
+
+    private void OnTriggerHover_Left()
+    {
+        GameObject _go = GetLeftHandObject ();
+
+        ExecuteEvents.ExecuteHierarchy(_go, leftHandPointer, WaveVR_ExecuteEvents.pointerHoverHandler);
+    }
+
     private void OnTriggerDown_Right()
     {
         GameObject _go = GetRightHandObject ();
@@ -715,10 +730,16 @@ public class WaveVR_ControllerInputModule : BaseInputModule
 
     private void Process_RightHand()
     {
+        prevObject_right = GetRightHandObject ();
+
         GraphicRaycast_Right ();
         if (GetRightHandObject () == null)
             PhysicRaycast_Right ();
         OnTriggerEnterAndExit_Right ();
+
+        GameObject _curGO = GetRightHandObject ();
+        if (_curGO != null && _curGO == prevObject_right)
+            OnTriggerHover_Right ();
 
         // right button not pressed -> pressed, only 1 frame
         bool btnPressDown = Input.GetMouseButtonDown(1);
@@ -765,10 +786,16 @@ public class WaveVR_ControllerInputModule : BaseInputModule
 
     private void Process_LeftHand()
     {
+        prevObject_left = GetLeftHandObject ();
+
         GraphicRaycast_Left ();
         if (GetLeftHandObject () == null)
             PhysicRaycast_Left ();
         OnTriggerEnterAndExit_Left ();
+
+        GameObject _curGO = GetLeftHandObject ();
+        if (_curGO != null && _curGO == prevObject_left)
+            OnTriggerHover_Left ();
 
         // left button not pressed -> pressed, only 1 frame
         bool btnPressDown = Input.GetMouseButtonDown (0);

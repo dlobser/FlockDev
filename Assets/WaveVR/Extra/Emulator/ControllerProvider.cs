@@ -14,6 +14,20 @@ using wvr;
 
 /// @cond
 namespace WaveVREmulator {
+    public enum EmuConnectionState
+    {
+        /// Indicates that an error has occurred.
+        Error = -1,
+        /// Indicates that the controller is disconnected.
+        Disconnected = 0,
+        /// Indicates that the device is scanning for controllers.
+        Scanning = 1,
+        /// Indicates that the device is connecting to a controller.
+        Connecting = 2,
+        /// Indicates that the device is connected to a controller.
+        Connected = 3,
+    };
+
     public class ControllerProvider
     {
         private ControllerState state = new ControllerState();
@@ -60,7 +74,7 @@ namespace WaveVREmulator {
 
         public void ReadState(ControllerState outState) {
             lock (state) {
-                state.connectionState = SocketManager.Instance.Connected ? ConnectionState.Connected : ConnectionState.Connecting;
+                state.connectionState = SocketManager.Instance.Connected ? EmuConnectionState.Connected : EmuConnectionState.Connecting;
                 outState.CopyFrom(state);
             }
             state.ClearTransientState();

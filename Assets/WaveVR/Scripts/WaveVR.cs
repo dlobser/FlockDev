@@ -9,6 +9,7 @@
 // specifications, and documentation provided by HTC to You."
 
 using UnityEngine;
+using UnityEngine.Assertions;
 using wvr;
 using WaveVR_Log;
 
@@ -54,6 +55,22 @@ public class WaveVR : System.IDisposable
     public Device controllerLeft { get; private set; }
     public Device controllerRight { get; private set; }
 
+    public Device getDeviceByType(WVR_DeviceType type)
+    {
+        switch (type)
+        {
+            case WVR_DeviceType.WVR_DeviceType_HMD:
+                return hmd;
+            case WVR_DeviceType.WVR_DeviceType_Controller_Right:
+                return controllerRight;
+            case WVR_DeviceType.WVR_DeviceType_Controller_Left:
+                return controllerLeft;
+            default:
+                Assert.raiseExceptions = true;
+                return hmd;  // Should not happen
+        }
+    }
+
     private static void ReportError(WVR_InitError error)
     {
         switch (error)
@@ -73,6 +90,7 @@ public class WaveVR : System.IDisposable
         }
     }
 
+    [System.Obsolete("Please check WaveVR.Instance directly")]
     public static bool Hmd
     {
         get
@@ -227,6 +245,11 @@ public class WaveVR : System.IDisposable
         //}
 
         Log.gpl.d(LOG_TAG, "send new poses");
+        for (int i = 0; i < poses.Length; i++)
+        {
+            if (poses [i].pose.IsValidPose)
+                Log.gpl.d (LOG_TAG, "device " + i + " pose: {" + poses[i].pose.PoseMatrix + "}");
+        }
         WaveVR_Utils.Event.Send(WaveVR_Utils.Event.NEW_POSES, poses, rtPoses);
         Log.gpl.d(LOG_TAG, "after new poses");
         WaveVR_Utils.Event.Send(WaveVR_Utils.Event.AFTER_NEW_POSES);

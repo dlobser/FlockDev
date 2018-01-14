@@ -16,7 +16,7 @@ namespace WaveVREmulator {
     public class ControllerState
     {
         // Orientation
-        internal ConnectionState connectionState = ConnectionState.Disconnected;
+        internal EmuConnectionState connectionState = EmuConnectionState.Disconnected;
         internal Quaternion orientation = Quaternion.identity;
 
         // Pad key

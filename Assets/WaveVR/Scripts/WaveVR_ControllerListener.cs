@@ -163,7 +163,7 @@ public class WaveVR_ControllerListener : MonoBehaviour
                 if (!Application.isEditor)
                 #endif
                 {
-                    if (WaveVR.Hmd)
+                    if (WaveVR.Instance != null)
                     {
                         bool _c = Interop.WVR_IsDeviceConnected (DeviceType);
                         if (connected != _c)
@@ -231,7 +231,7 @@ public class WaveVR_ControllerListener : MonoBehaviour
                 } else
                 #endif
                 {
-                    if (WaveVR.Hmd)
+                    if (WaveVR.Instance != null)
                     {
                         _pressed = Interop.WVR_GetInputButtonState (DeviceType, WVR_InputId.WVR_InputId_Alias1_Menu);
                     }
@@ -286,7 +286,7 @@ public class WaveVR_ControllerListener : MonoBehaviour
                 } else
                 #endif
                 {
-                    if (WaveVR.Hmd)
+                    if (WaveVR.Instance != null)
                     {
                         _pressed = Interop.WVR_GetInputButtonState (DeviceType, WVR_InputId.WVR_InputId_Alias1_Grip);
                     }
@@ -341,7 +341,7 @@ public class WaveVR_ControllerListener : MonoBehaviour
                 } else
                 #endif
                 {
-                    if (WaveVR.Hmd)
+                    if (WaveVR.Instance != null)
                     {
                         _pressed = Interop.WVR_GetInputButtonState (DeviceType, WVR_InputId.WVR_InputId_Alias1_Touchpad);
                     }
@@ -396,7 +396,7 @@ public class WaveVR_ControllerListener : MonoBehaviour
                 } else
                 #endif
                 {
-                    if (WaveVR.Hmd)
+                    if (WaveVR.Instance != null)
                     {
                         _pressed = Interop.WVR_GetInputButtonState (DeviceType, WVR_InputId.WVR_InputId_Alias1_Trigger);
                     }
@@ -477,7 +477,7 @@ public class WaveVR_ControllerListener : MonoBehaviour
                 } else
                 #endif
                 {
-                    if (WaveVR.Hmd)
+                    if (WaveVR.Instance != null)
                     {
                         _touched = Interop.WVR_GetInputTouchState (DeviceType, WVR_InputId.WVR_InputId_Alias1_Touchpad);
                     }
@@ -532,7 +532,7 @@ public class WaveVR_ControllerListener : MonoBehaviour
                 } else
                 #endif
                 {
-                    if (WaveVR.Hmd)
+                    if (WaveVR.Instance != null)
                     {
                         _touched = Interop.WVR_GetInputTouchState (DeviceType, WVR_InputId.WVR_InputId_Alias1_Trigger);
                     }
