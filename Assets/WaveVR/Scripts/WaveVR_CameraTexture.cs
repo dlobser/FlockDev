@@ -15,104 +15,111 @@ using WaveVR_Log;
 using System;
 using wvr;
 
-[RequireComponent(typeof(MeshRenderer))]
-public class WaveVR_CameraTexture : MonoBehaviour
+public class WaveVR_CameraTexture
 {
     private static string LOG_TAG = "WVR_CameraTexture";
-    private MeshRenderer meshrenderer;
 
-    private IntPtr natTextureId;
-    private uint Textureid;
-    private int mWidth = 0;
-    private int mHeight = 0;
-    bool texUpdated = false;
-    bool texStarted = false;
-    public WVR_CameraSource CameraSource = WVR_CameraSource.WVR_CameraSource_Android;
-    Texture2D _texture = null;
+    private WVR_CameraInfo_t camerainfo;
+    private bool mStarted = false;
+    private uint nativeTextureId = 0;
+    private float spentTime = Time.time;
+    public bool isStarted
+    {
+        get
+        {
+            return mStarted;
+        }
+    }
+
+    public delegate void UpdateCameraCompleted(uint nativeTextureId);
+    public static event UpdateCameraCompleted UpdateCameraCompletedDelegate = null;
+
+    public delegate void StartCameraCompleted(bool result);
+    public static event StartCameraCompleted StartCameraCompletedDelegate = null;
+
+    private static WaveVR_CameraTexture mInstance = null;
+
+    public static WaveVR_CameraTexture instance
+    {
+        get
+        {
+            if (mInstance == null)
+            {
+                mInstance = new WaveVR_CameraTexture();
+            }
+
+            return mInstance;
+        }
+    }
 
     private void OnStartCameraCompleted(params object[] args)
     {
-        Log.d(LOG_TAG, "OnStartCameraCompleted start tid: " + System.Threading.Thread.CurrentThread.ManagedThreadId);
+        mStarted = (bool)args[0];
+        if (StartCameraCompletedDelegate != null) StartCameraCompletedDelegate(mStarted);
+        if (!mStarted) return ;
+        camerainfo = (WVR_CameraInfo_t)args[1];
 
-        Textureid = (uint)args[0];
-        natTextureId = (System.IntPtr)Textureid;
-        uint tmpW = (uint)args[1];
-        mWidth = (int)tmpW;
-        uint tmpH = (uint)args[2];
-        mHeight = (int)tmpH;
-        texStarted = true;
-
-        Log.d(LOG_TAG, "OnStartCameraCompleted, native texture = " + natTextureId.ToInt32() + " width = " + mWidth + " height = " + mHeight);
+        Log.d(LOG_TAG, "OnStartCameraCompleted, result = " + mStarted + " type = " + camerainfo.imgType + " width = " + camerainfo.width + " height = " + camerainfo.height);
     }
 
     private void OnUpdateCameraCompleted(params object[] args)
     {
-        texUpdated = (bool)args[0];
+        bool texUpdated = (bool)args[0];
+        Log.d(LOG_TAG, "OnUpdateCameraCompleted, result = " + texUpdated + ", refresh rate = " + (1 / (System.DateTime.Now.Millisecond - spentTime))*1000 + "/sec");
+
+        if (UpdateCameraCompletedDelegate != null)  UpdateCameraCompletedDelegate(nativeTextureId);
     }
 
-    private void play()
+    public uint getNativeTextureId()
     {
+        if (!mStarted) return 0;
+        return nativeTextureId;
+    }
+
+    public bool startCamera()
+    {
+        if (mStarted) return false;
         WaveVR_Utils.Event.Listen("StartCameraCompleted", OnStartCameraCompleted);
         WaveVR_Utils.Event.Listen("UpdateCameraCompleted", OnUpdateCameraCompleted);
-        Interop.WVR_SetCameraSource(CameraSource);
+
         WaveVR_Utils.SendRenderEvent(WaveVR_Utils.RENDEREVENTID_StartCamera);
+        return true;
     }
 
-    private void stop()
+    public WVR_CameraImageType GetCameraImageType()
     {
+        return camerainfo.imgType;
+    }
+
+    public uint GetCameraImageWidth()
+    {
+        if (!mStarted) return 0;
+        return camerainfo.width;
+    }
+
+    public uint GetCameraImageHeight()
+    {
+        if (!mStarted) return 0;
+        return camerainfo.width;
+    }
+
+    public void stopCamera()
+    {
+        if (!mStarted) return ;
         WaveVR_Utils.Event.Remove("StartCameraCompleted", OnStartCameraCompleted);
         WaveVR_Utils.Event.Remove("UpdateCameraCompleted", OnUpdateCameraCompleted);
         WaveVR_Utils.SendRenderEvent(WaveVR_Utils.RENDEREVENTID_StopCamera);
     }
 
-    private void CameraUpdate()
+    public void updateTexture(uint textureId)
     {
-        if (texStarted)
+        nativeTextureId = textureId;
+        if (!mStarted)
         {
-            if (texUpdated)
-            {
-                texUpdated = false;
-                if (_texture == null)
-                {
-                    _texture = Texture2D.CreateExternalTexture(mWidth, mHeight, TextureFormat.ARGB32, false, false, natTextureId);
-                    meshrenderer.material.mainTexture = _texture;
-                }
-                else
-                {
-                    _texture.UpdateExternalTexture(natTextureId);
-                }
-            }
-            WaveVR_Utils.SendRenderEvent(WaveVR_Utils.RENDEREVENTID_UpdateCamera);
-        }
-    }
-
-    // Use this for initialization
-    void Start()
-    {
-#if UNITY_EDITOR
-        if (Application.isEditor)
-        {
+            Log.d(LOG_TAG, "camera not started yet");
             return;
         }
-#endif
-        meshrenderer = GetComponent<MeshRenderer>();
-        play();
-    }
-
-    void OnDisable()
-    {
-        stop();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-#if UNITY_EDITOR
-        if (Application.isEditor)
-        {
-            return;
-        }
-#endif
-        CameraUpdate();
+        spentTime = System.DateTime.Now.Millisecond;
+        WaveVR_Utils.SendRenderEvent(WaveVR_Utils.RENDEREVENTID_UpdateCamera);
     }
 }

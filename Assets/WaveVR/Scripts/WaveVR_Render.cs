@@ -176,6 +176,7 @@ public class WaveVR_Render : MonoBehaviour
             currentRt = GetRenderTextureByPtr(currentPtr);
             if (currentPtr == IntPtr.Zero)
                 currentPtr = IntPtr.Zero;
+            //Log.d(LOG_TAG, "TextureID" + currentPtr.ToInt32());
         }
     }
 
@@ -361,12 +362,8 @@ public class WaveVR_Render : MonoBehaviour
         if (textureManager == null)
             textureManager = new TextureManager();
 
-#if UNITY_EDITOR
-        if (!Application.isEditor)
-#endif
-        WaveVR_Utils.SendRenderEvent(WaveVR_Utils.RENDEREVENTID_ATWEnable);
+        WaveVR_Utils.IssueEngineEvent(WaveVR_Utils.EngineEventID.HMD_INITIAILZED);
 
-        Input.backButtonLeavesApp = true;
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         Application.targetFrameRate = targetFPS;
         Log.d(LOG_TAG, "Awake()-");
@@ -395,6 +392,7 @@ public class WaveVR_Render : MonoBehaviour
         WaveVR_Utils.Event.Listen("IpdChanged", OnIpdChanged);
         enableRenderLoop(true);
         setLoadingCanvas(true);
+        WaveVR_Utils.IssueEngineEvent(WaveVR_Utils.EngineEventID.UNITY_ENABLE);
         Log.d(LOG_TAG, "OnEnable()-");
     }
 
@@ -428,14 +426,16 @@ public class WaveVR_Render : MonoBehaviour
     void OnApplicationPause(bool pauseStatus)
     {
         Log.d(LOG_TAG, "Pause(" + pauseStatus + ")");
-#if UNITY_EDITOR
-        if (!Application.isEditor)
-#endif
+
+        if (pauseStatus)
         {
-            if (pauseStatus) {
-                WaveVR_Utils.WVR_PauseATW();
-            }
+            WaveVR_Utils.IssueEngineEvent(WaveVR_Utils.EngineEventID.UNITY_APPLICATION_PAUSE);
         }
+        else
+        {
+            WaveVR_Utils.IssueEngineEvent(WaveVR_Utils.EngineEventID.UNITY_APPLICATION_RESUME);
+        }
+
         setLoadingCanvas(true);
         enableRenderLoop(!pauseStatus);
     }
@@ -447,13 +447,7 @@ public class WaveVR_Render : MonoBehaviour
 
     void OnApplicationQuit()
     {
-#if UNITY_EDITOR
-        if (Application.isEditor)
-            return;
-#endif
-        Log.d(LOG_TAG, "OnApplicationQuit()+");
-        WaveVR_Utils.WVR_OnApplicationQuit();
-        Log.d(LOG_TAG, "OnApplicationQuit()-");
+        WaveVR_Utils.IssueEngineEvent(WaveVR_Utils.EngineEventID.UNITY_APPLICATION_QUIT);
     }
 
     void OnDisable()
@@ -464,7 +458,7 @@ public class WaveVR_Render : MonoBehaviour
         if (!Application.isEditor)
 #endif
         {
-            WaveVR_Utils.WVR_OnDisable();
+            WaveVR_Utils.IssueEngineEvent(WaveVR_Utils.EngineEventID.UNITY_DISABLE);
         }
         WaveVR_Utils.Event.Remove("IpdChanged", OnIpdChanged);
         setLoadingCanvas(false);
@@ -476,6 +470,7 @@ public class WaveVR_Render : MonoBehaviour
         Log.d(LOG_TAG, "OnDestroy()+");
         textureManager = null;
         instance = null;
+        WaveVR_Utils.IssueEngineEvent(WaveVR_Utils.EngineEventID.UNITY_DESTROY);
         Log.d(LOG_TAG, "OnDestroy()-");
     }
 
@@ -500,8 +495,8 @@ public class WaveVR_Render : MonoBehaviour
                     break;
                 }
             }
-            WaveVR_Utils.SendRenderEvent(WaveVR_Utils.RENDEREVENTID_ATWEnable);
         }
+        WaveVR_Utils.IssueEngineEvent(WaveVR_Utils.EngineEventID.FIRST_FRAME);
 
         setLoadingCanvas(false);
         Log.d(LOG_TAG, "RenderLoop() is running");
@@ -522,7 +517,6 @@ public class WaveVR_Render : MonoBehaviour
                 WaveVR.Instance.UpdatePoses(origin);
                 // Set next texture before running any graphic command.
                 textureManager.Next();
-                WaveVR_Utils.SetTexture(textureManager.left.currentPtr, textureManager.right.currentPtr);
             }
 
             if (configurationChanged)
@@ -534,6 +528,9 @@ public class WaveVR_Render : MonoBehaviour
             RenderEye(lefteye.getCamera(), WVR_Eye.WVR_Eye_Left);
             RenderEye(righteye.getCamera(), WVR_Eye.WVR_Eye_Right);
             WaveVR_Utils.Trace.EndSection(false);
+
+            // Put here to control the time of next frame.
+            TimeControl();
 
             Log.gpl.d(LOG_TAG, "End of frame");
             yield return wait;
@@ -566,6 +563,10 @@ public class WaveVR_Render : MonoBehaviour
         }
 #endif
         // Do submit
+        WaveVR_Utils.SetRenderTexture(isleft ?
+            textureManager.left.currentPtr :
+            textureManager.right.currentPtr);
+
         WaveVR_Utils.SendRenderEventNative(isleft ?
             WaveVR_Utils.k_nRenderEventID_SubmitL :
             WaveVR_Utils.k_nRenderEventID_SubmitR);
@@ -792,4 +793,30 @@ public class WaveVR_Render : MonoBehaviour
         m[3, 2] = -1;
         return m;
     }
+
+#region TimeControl
+    // TimeControl: Set Time.timeScale = 0 if input focus in gone.
+    private bool previousInputFocus = true;
+    public bool needTimeControl = false;
+
+    private void TimeControl()
+    {
+        if (needTimeControl)
+        {
+#if UNITY_EDITOR
+            // Nothing can simulate the focus lost in editor.  Just leave.
+            if (Application.isEditor)
+                return;
+#endif
+            bool hasInputFocus = !Interop.WVR_IsInputFocusCapturedBySystem();
+
+            if (!previousInputFocus || !hasInputFocus)
+            {
+                previousInputFocus = hasInputFocus;
+                Time.timeScale = hasInputFocus ? 1 : 0;
+                Log.d(LOG_TAG, "InputFocus " + hasInputFocus + "Time.timeScale " + Time.timeScale);
+            }
+        }
+    }
+#endregion
 }

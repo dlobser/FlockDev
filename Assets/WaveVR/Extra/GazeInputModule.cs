@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿#pragma warning disable 0414 // private field assigned but not used.
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -153,7 +155,11 @@ public class GazeInputModule : PointerInputModule
             }
         }
         if (gazePointer == null)
-            gazePointer = Object.FindObjectOfType<WaveVR_Reticle>();
+        {
+            GameObject head = WaveVR_Render.Instance.gameObject;
+            if (head != null)
+                gazePointer = head.GetComponentInChildren<WaveVR_Reticle> ();
+        }
 
         if (pointerData.pointerEnter == null && currentOverGO == null) {
             UpdateReticle(currentOverGO, pointerData);

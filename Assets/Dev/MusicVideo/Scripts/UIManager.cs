@@ -5,7 +5,7 @@ using UnityEngine;
 public class UIManager : MonoBehaviour {
 
     public LineParticleStrength lineParti1;
-    public LineParticleStrength lineParti2;
+//    public LineParticleStrength lineParti2;
 
     public GameObject fadeSphere;
     public GameObject score;
@@ -18,17 +18,17 @@ public class UIManager : MonoBehaviour {
     public GameObject[] hideLeftTrigger;
     public GameObject[] showLeftTrigger;
 
-    public GameObject[] hideRightTrigger;
-    public GameObject[] showRightTrigger;
+//    public GameObject[] hideRightTrigger;
+//    public GameObject[] showRightTrigger;
 
     bool leftHandled = false;
-    bool rightHandled = false;
+//    bool rightHandled = false;
 
     public GameObject[] hideBothTriggers;
     public GameObject[] showBothTriggers;
 
-    public ViveWandCTRL LeftCTRL;
-    public ViveWandCTRL rightCTRL;
+    public WaveVR_TrackedButtons LeftCTRL;
+//    public ViveWandCTRL rightCTRL;
 
     //public Animator scoreAnim;
 
@@ -46,6 +46,7 @@ public class UIManager : MonoBehaviour {
         {
             showLeftTrigger[i].SetActive(true);
         }
+//		lineParti1.triggered = true;
         leftHandled = true;
     }
 
@@ -62,33 +63,35 @@ public class UIManager : MonoBehaviour {
 
     }
 
-    public void handleRight() {
-
-        for (int i = 0; i < hideRightTrigger.Length; i++)
-        {
-            hideRightTrigger[i].SetActive(false);
-        }
-        for (int i = 0; i < showRightTrigger.Length; i++)
-        {
-            showRightTrigger[i].SetActive(true);
-        }
-        rightHandled = true;
-    }
+//    public void handleRight() {
+//
+//        for (int i = 0; i < hideRightTrigger.Length; i++)
+//        {
+//            hideRightTrigger[i].SetActive(false);
+//        }
+//        for (int i = 0; i < showRightTrigger.Length; i++)
+//        {
+//            showRightTrigger[i].SetActive(true);
+//        }
+//        rightHandled = true;
+//    }
 	
 	// Update is called once per frame
 	void Update () {
 
-        if(!rightHandled && rightCTRL.triggerDown)
-        {
-            handleRight();
-        }
+//        if(!rightHandled && rightCTRL.triggerDown)
+//        {
+//            handleRight();
+//        }
 
-        if (!leftHandled && LeftCTRL.triggerDown)
+        if (!leftHandled && LeftCTRL.triggerPressed)
         {
             handleLeft();
         }
 
-        if (!lineParti1.UIisActive && !lineParti2.UIisActive && DoAndDontIndicator.activeInHierarchy)
+//		Debug.Log (lineParti1.UIisActive);
+
+        if (!lineParti1.UIisActive && DoAndDontIndicator.activeInHierarchy)
         {
             handleBoth();
             DoAndDontIndicator.SetActive(false);

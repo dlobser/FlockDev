@@ -25,6 +25,8 @@
 // limitations under the License.
 
 using UnityEngine;
+using wvr;
+using WaveVR_Log;
 
 /// <summary>
 /// Draws a circular reticle in front of any object that the user gazes at.
@@ -32,6 +34,8 @@ using UnityEngine;
 /// </summary>
 [RequireComponent(typeof(Renderer))]
 public class WaveVR_Reticle : MonoBehaviour {
+    public bool ListenToDevice = false;
+    public WVR_DeviceType device;
     /// <summary>
     /// Number of segments making the reticle circle.
     /// </summary>
@@ -58,8 +62,9 @@ public class WaveVR_Reticle : MonoBehaviour {
     public int rotationSpeed = 6;  // 1 the highest speed
 
     private Material materialComp;
+    private Mesh mesh;
     private float reticleDistanceInMeters = 10.0f;      // Current distance of the reticle (in meters).
-    private const float kReticleDistanceMin = 0.45f;    // Minimum distance of the reticle (in meters).
+    private const float kReticleDistanceMin = 1.0f;     // Minimum distance of the reticle (in meters).
     private const float kReticleDistanceMax = 10.0f;    // Maximum distance of the reticle (in meters).
     private float reticleInnerAngle = 0.0f;             // Current inner angle of the reticle (in degrees).
     private float reticleOuterAngle = 0.3f;             // Current outer angle of the reticle (in degrees).
@@ -71,21 +76,42 @@ public class WaveVR_Reticle : MonoBehaviour {
     private Color colorFactor = Color.black;            // The color variable of reticle pointer
     private float colorFlickerTime = 0.0f;              // The color flicker time
     private float progressTime = 0.0f;
-    private bool isTriggerProgress = false;
+    private bool isTriggerProgress = false;             // true: show progress effect of reticle, false: remove progress effect of reticle
     private int rotSpeedLimit = 36;                     // Internal rotation speed limit, it means the lowest rotationSpeed is 9
+    private bool enabledReticle = true;                 // true: show reticle, false: remove reticle
+    private bool meshIsCreated = false;                 // true: the mesh of reticle is created, false: the mesh of reticle is not ready
     int internalRotationSpeed;
     int colorIter = 0;
     float[] colorRotation;
     int[] rotSpeedBound;
 
     void Start () {
-        CreateGazePointer();
-        colorFlickerTime = Time.unscaledTime;
-        materialComp = gameObject.GetComponent<Renderer>().material;
-        UpdateRotSpeedBound(rotationSpeed * 4);
+         if (enabledReticle) {
+              if (!meshIsCreated) {
+                   initialReticle();
+              }
+         } else {
+              if (meshIsCreated) {
+                   removeReticle();
+              }
+         }
     }
 
-    void Update () {
+    void Update() {
+        if (ListenToDevice)
+            enabledReticle = WaveVR_Controller.Input (device).connected ? true : false;
+
+        if (enabledReticle) {
+            if (!meshIsCreated) {
+                initialReticle();
+            }
+        } else {
+            if (meshIsCreated) {
+                removeReticle();
+            }
+            return;
+        }
+
         reticleDistanceInMeters = Mathf.Clamp(reticleDistanceInMeters, kReticleDistanceMin, kReticleDistanceMax);
 
         if (reticleInnerAngle < kReticleMinInnerAngle)
@@ -166,6 +192,19 @@ public class WaveVR_Reticle : MonoBehaviour {
         materialComp.SetFloat("_DistanceInMeters", reticleDistanceInMeters);
     }
 
+    private void initialReticle() {
+        CreateGazePointer();
+        colorFlickerTime = Time.unscaledTime;
+        materialComp = gameObject.GetComponent<Renderer>().material;
+        UpdateRotSpeedBound(rotationSpeed * 4);
+        meshIsCreated = true;
+    }
+
+    private void removeReticle () {
+        mesh.Clear();
+        meshIsCreated = false;
+    }
+
     private void CreateGazePointer() {
         int vertexCount = (reticleSegments + 1) * 2;
         Vector3[] vertices = new Vector3[vertexCount];
@@ -191,7 +230,7 @@ public class WaveVR_Reticle : MonoBehaviour {
             vert += 2;
         }
 
-        Mesh mesh = new Mesh();
+        mesh = new Mesh();
         gameObject.AddComponent<MeshFilter>();
         GetComponent<MeshFilter>().mesh = mesh;
         mesh.vertices = vertices;
@@ -211,6 +250,14 @@ public class WaveVR_Reticle : MonoBehaviour {
         rotSpeedBound[5] = ((internalRotationSpeed / 4) * 3) - 1;
         rotSpeedBound[6] = (internalRotationSpeed / 4) * 3;
         rotSpeedBound[7] = internalRotationSpeed - 1;
+    }
+
+    public void ShowReticle() {
+        enabledReticle = true;
+    }
+
+    public void RemoveReticle() {
+        enabledReticle = false;
     }
 
     public void SetColorFlicker(bool switchOn) {
@@ -255,8 +302,12 @@ public class WaveVR_Reticle : MonoBehaviour {
     }
 
     public void triggerProgressBar (bool switchOn) {
+        bool preValue = isTriggerProgress;
+
         isTriggerProgress = switchOn;
-        materialComp.SetFloat("_TriggerProgress", isTriggerProgress ? 1.0f : 0.0f);
+        if (enabledReticle && preValue) {
+            materialComp.SetFloat("_TriggerProgress", isTriggerProgress ? 1.0f : 0.0f);
+        }
     }
 
     private void SetGazeTarget (Vector3 target, bool interactive) {
@@ -269,5 +320,10 @@ public class WaveVR_Reticle : MonoBehaviour {
             reticleInnerAngle = kReticleMinInnerAngle;
             reticleOuterAngle = kReticleMinOuterAngle;
         }
+    }
+
+    public void SetReticleColor(Color reticle_color)
+    {
+        reticleColor = reticle_color;
     }
 }

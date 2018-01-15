@@ -15,6 +15,102 @@ namespace wvr
 {
     public class Interop
     {
+        #region Interaction
+        // ------------- wvr_events.h -------------
+        // Events: swipe, battery status.
+        [DllImportAttribute("wvr_api", EntryPoint = "WVR_PollEventQueue", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool WVR_PollEventQueue(ref WVR_Event_t e);
+
+        // ------------- wvr_device.h -------------
+        // Button types for which device is capable.
+        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetInputDeviceCapability", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int WVR_GetInputDeviceCapability(WVR_DeviceType type, WVR_InputType inputType);
+
+        // Button press and touch state.
+        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetInputDeviceState", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool WVR_GetInputDeviceState(WVR_DeviceType type, uint inputMask, ref uint buttons, ref uint touches,
+            [In, Out] WVR_AnalogState_t[] analogArray, int analogArrayCount);
+
+        // Count of specified button type.
+        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetInputTypeCount", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int WVR_GetInputTypeCount(WVR_DeviceType type, WVR_InputType inputType);
+
+        // Button press state.
+        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetInputButtonState", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool WVR_GetInputButtonState(WVR_DeviceType type, WVR_InputId id);
+
+        // Button touch state.
+        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetInputTouchState", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool WVR_GetInputTouchState(WVR_DeviceType type, WVR_InputId id);
+
+        // Axis of analog button: touchpad (x, y), trigger (x only)
+        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetInputAnalogAxis", CallingConvention = CallingConvention.Cdecl)]
+        public static extern WVR_Axis_t WVR_GetInputAnalogAxis(WVR_DeviceType type, WVR_InputId id);
+
+        // Get transform of specified device.
+        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetPoseState", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void WVR_GetPoseState(WVR_DeviceType type, WVR_PoseOriginModel originModel, uint predictedMilliSec, ref WVR_PoseState_t poseState);
+
+        // Get all attributes of pose of all devices.
+        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetSyncPose", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void WVR_GetSyncPose(WVR_PoseOriginModel originModel, [In, Out] WVR_DevicePosePair_t[] poseArray, uint pairArrayCount);
+
+        // Device connection state.
+        [DllImportAttribute("wvr_api", EntryPoint = "WVR_IsDeviceConnected", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool WVR_IsDeviceConnected(WVR_DeviceType type);
+
+        // Make device vibrate.
+        [DllImportAttribute("wvr_api", EntryPoint = "WVR_TriggerVibrator", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void WVR_TriggerVibrator(WVR_DeviceType type, WVR_InputId id, ushort durationMicroSec);
+
+        // Recenter the scene.
+        [DllImportAttribute("wvr_api", EntryPoint = "WVR_TriggerRecenter", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void WVR_TriggerRecenter();
+
+        // ------------- wvr_arena.h -------------
+        // Get current attributes of arena.
+        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetArena", CallingConvention = CallingConvention.Cdecl)]
+        public static extern WVR_Arena_t WVR_GetArena();
+
+        // Set up arena.
+        [DllImportAttribute("wvr_api", EntryPoint = "WVR_SetArena", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool WVR_SetArena(ref WVR_Arena_t arena);
+
+        // Get visibility type of arena.
+        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetArenaVisible", CallingConvention = CallingConvention.Cdecl)]
+        public static extern WVR_ArenaVisible WVR_GetArenaVisible();
+
+        // Set visibility type of arena.
+        [DllImportAttribute("wvr_api", EntryPoint = "WVR_SetArenaVisible", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void WVR_SetArenaVisible(WVR_ArenaVisible config);
+
+        // Check if player is over range of arena.
+        [DllImportAttribute("wvr_api", EntryPoint = "WVR_IsOverArenaRange", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool WVR_IsOverArenaRange();
+
+        // ------------- wvr_status.h -------------
+        // Battery electricity (%).
+        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetDeviceBatteryPercentage", CallingConvention = CallingConvention.Cdecl)]
+        public static extern float WVR_GetDeviceBatteryPercentage(WVR_DeviceType type);
+
+        // Battery life status.
+        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetBatteryStatus", CallingConvention = CallingConvention.Cdecl)]
+        public static extern WVR_BatteryStatus WVR_GetBatteryStatus(WVR_DeviceType type);
+
+        // Battery is charging or not.
+        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetChargeStatus", CallingConvention = CallingConvention.Cdecl)]
+        public static extern WVR_ChargeStatus WVR_GetChargeStatus(WVR_DeviceType type);
+
+        // Whether battery is overheat.
+        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetBatteryTemperatureStatus", CallingConvention = CallingConvention.Cdecl)]
+        public static extern WVR_BatteryTemperatureStatus WVR_GetBatteryTemperatureStatus(WVR_DeviceType type);
+
+        // Battery temperature.
+        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetBatteryTemperature", CallingConvention = CallingConvention.Cdecl)]
+        public static extern float WVR_GetBatteryTemperature(WVR_DeviceType type);
+
+        #endregion
+
         // wvr.h
         [DllImportAttribute("wvr_api", EntryPoint = "WVR_Init", CallingConvention = CallingConvention.Cdecl)]
         public static extern WVR_InitError WVR_Init(WVR_AppType eType);
@@ -29,75 +125,37 @@ namespace wvr
         [DllImportAttribute("wvr_api", EntryPoint = "WVR_IsInputFocusCapturedBySystem", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool WVR_IsInputFocusCapturedBySystem();
 
-        // TODO - where ??
         [DllImportAttribute("wvr_api", EntryPoint = "WVR_RenderInit", CallingConvention = CallingConvention.Cdecl)]
         internal static extern void WVR_RenderInit(ref WVR_RenderInitParams_t param);
 
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int WVR_Main_t(int argc, IntPtr[] argv);
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_RegisterMain", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void WVR_RegisterMain([MarshalAs(UnmanagedType.FunctionPtr)] WVR_Main_t main );
-
         // wvr_camera.h
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_SetCameraSource", CallingConvention = CallingConvention.Cdecl)]
-        public static extern bool WVR_SetCameraSource(WVR_CameraSource source);
-
         [DllImportAttribute("wvr_api", EntryPoint = "WVR_StartCamera", CallingConvention = CallingConvention.Cdecl)]
-        public static extern uint WVR_StartCamera(ref uint pWidth, ref uint pHeight);
+        public static extern bool WVR_StartCamera(ref WVR_CameraInfo_t info);
 
         [DllImportAttribute("wvr_api", EntryPoint = "WVR_StopCamera", CallingConvention = CallingConvention.Cdecl)]
         public static extern void WVR_StopCamera();
 
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_UpdateFrameTexture", CallingConvention = CallingConvention.Cdecl)]
-        public static extern bool WVR_UpdateFrameTexture();
+        [DllImportAttribute("wvr_api", EntryPoint = "WVR_UpdateTexture", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool WVR_UpdateTexture(uint textureid );
 
-        // wvr_events.h
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_PollEventQueue", CallingConvention = CallingConvention.Cdecl)]
-        public static extern bool WVR_PollEventQueue(ref WVR_Event_t e);
+        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetCameraIntrinsic", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool WVR_GetCameraIntrinsic(ref WVR_CameraPosition position, ref WVR_CameraIntrinsic_t intrinsic);
 
         // wvr_device.h
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_IsDeviceConnected", CallingConvention = CallingConvention.Cdecl)]
-        public static extern bool WVR_IsDeviceConnected(WVR_DeviceType type);
-
         [DllImportAttribute("wvr_api", EntryPoint = "WVR_IsDeviceSuspend", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool WVR_IsDeviceSuspend(WVR_DeviceType type);
-
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetInputDeviceCapability", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int WVR_GetInputDeviceCapability(WVR_DeviceType type, WVR_InputType inputType);
-
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetInputTypeCount", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int WVR_GetInputTypeCount(WVR_DeviceType type, WVR_InputType inputType);
-
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetInputDeviceState", CallingConvention = CallingConvention.Cdecl)]
-        public static extern bool WVR_GetInputDeviceState(WVR_DeviceType type, uint inputMask, ref int buttons, ref int touches,
-            [In, Out] WVR_AnalogState_t[] analogArray, int analogArrayCount);
-
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetInputButtonState", CallingConvention = CallingConvention.Cdecl)]
-        public static extern bool WVR_GetInputButtonState(WVR_DeviceType type, WVR_InputId id);
-
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetInputTouchState", CallingConvention = CallingConvention.Cdecl)]
-        public static extern bool WVR_GetInputTouchState(WVR_DeviceType type, WVR_InputId id);
-
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetInputAnalogAxis", CallingConvention = CallingConvention.Cdecl)]
-        public static extern WVR_Axis_t WVR_GetInputAnalogAxis(WVR_DeviceType type, WVR_InputId id);
-
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetPoseState", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void WVR_GetPoseState(WVR_DeviceType type, WVR_PoseOriginModel originModel, uint predictedMilliSec, ref WVR_PoseState_t poseState);
-
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetSyncPose", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void WVR_GetSyncPose(WVR_PoseOriginModel originModel, [In, Out] WVR_DevicePosePair_t[] poseArray, uint pairArrayCount);
-
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_TriggerVibrator", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void WVR_TriggerVibrator(WVR_DeviceType type, WVR_InputId id, ushort durationMicroSec);
-
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_TriggerRecenter", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void WVR_TriggerRecenter();
 
         [DllImportAttribute("wvr_api", EntryPoint = "WVR_ConvertMatrixQuaternion", CallingConvention = CallingConvention.Cdecl)]
         public static extern void WVR_ConvertMatrixQuaternion(ref WVR_Matrix4f_t mat, ref WVR_Quatf_t quat, bool m2q);
 
         [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetDegreeOfFreedom", CallingConvention = CallingConvention.Cdecl)]
         public static extern WVR_NumDoF WVR_GetDegreeOfFreedom(WVR_DeviceType type);
+
+        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetParameters", CallingConvention = CallingConvention.Cdecl)]
+        public static extern uint WVR_GetParameters(WVR_DeviceType type, IntPtr pchValue, IntPtr retValue, uint unBufferSize);
+
+        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetDefaultControllerRole", CallingConvention = CallingConvention.Cdecl)]
+        public static extern WVR_DeviceType WVR_GetDefaultControllerRole();
 
         // TODO
         [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetRenderTargetSize", CallingConvention = CallingConvention.Cdecl)]
@@ -135,94 +193,6 @@ namespace wvr
 
         [DllImportAttribute("wvr_api", EntryPoint = "WVR_ReleaseTextureQueue", CallingConvention = CallingConvention.Cdecl)]
         public static extern void WVR_ReleaseTextureQueue(IntPtr handle);
-
-        // wvr_arena.h
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetArenaRange", CallingConvention = CallingConvention.Cdecl)]
-        public static extern WVR_Hexagon_t WVR_GetArenaRange();
-
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_SetArenaRange", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void WVR_SetArenaRange(ref WVR_Hexagon_t range);
-
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_SetArenaOrigin", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void WVR_SetArenaOrigin(WVR_PoseOriginModel origin_type, float x, float y, float z, float yaw);
-
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetArenaOrigin", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void WVR_GetArenaOrigin(WVR_PoseOriginModel origin_type, ref float x, ref float y, ref float z, ref float yaw);
-
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_IsArenaVisible", CallingConvention = CallingConvention.Cdecl)]
-        public static extern bool WVR_IsArenaVisible();
-
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_SetArenaVisible", CallingConvention = CallingConvention.Cdecl)]
-
-        public static extern void WVR_SetArenaVisible(WVR_ArenaVisible config);
-
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_SaveArenaData", CallingConvention = CallingConvention.Cdecl)]
-        public static extern bool WVR_SaveArenaData();
-
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_IsArenaCalibrated", CallingConvention = CallingConvention.Cdecl)]
-        public static extern bool WVR_IsArenaCalibrated();
-
-        // wvr_status.h
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetDeviceBatteryPercentage", CallingConvention = CallingConvention.Cdecl)]
-        public static extern float WVR_GetDeviceBatteryPercentage(WVR_DeviceType type);
-
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetBatteryStatus", CallingConvention = CallingConvention.Cdecl)]
-        public static extern WVR_BatteryStatus WVR_GetBatteryStatus(WVR_DeviceType type);
-
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetChargeStatus", CallingConvention = CallingConvention.Cdecl)]
-        public static extern WVR_ChargeStatus WVR_GetChargeStatus(WVR_DeviceType type);
-
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetBatteryTemperatureStatus", CallingConvention = CallingConvention.Cdecl)]
-        public static extern WVR_BatteryTemperatureStatus WVR_GetBatteryTemperatureStatus(WVR_DeviceType type);
-
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetBatteryTemperature", CallingConvention = CallingConvention.Cdecl)]
-        public static extern float WVR_GetBatteryTemperature(WVR_DeviceType type);
-
-        // wvr_overlay.h
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GenOverlay", CallingConvention = CallingConvention.Cdecl)]
-        public static extern WVR_OverlayError WVR_GenOverlay(ref int overlayId);
-
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_DelOverlay", CallingConvention = CallingConvention.Cdecl)]
-        public static extern WVR_OverlayError WVR_DelOverlay(int overlayId);
-
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_SetOverlayFixedPosition", CallingConvention = CallingConvention.Cdecl)]
-        public static extern WVR_OverlayError WVR_SetOverlayFixedPosition(int overlayId, ref WVR_OverlayPosition_t position);
-
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetOverlayFixedPosition", CallingConvention = CallingConvention.Cdecl)]
-        public static extern WVR_OverlayError WVR_GetOverlayFixedPosition(int overlayId, ref WVR_OverlayPosition_t position);
-
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetOverlayTransformType", CallingConvention = CallingConvention.Cdecl)]
-        public static extern WVR_OverlayError WVR_GetOverlayTransformType(int overlayId, ref WVR_OverlayTransformType type);
-
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_SetBlendOverlayColor", CallingConvention = CallingConvention.Cdecl)]
-        public static extern WVR_OverlayError WVR_SetBlendOverlayColor(int overlayId, ref WVR_OverlayBlendColor_t color);
-
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetBlendOverlayColor", CallingConvention = CallingConvention.Cdecl)]
-        public static extern WVR_OverlayError WVR_GetBlendOverlayColor(int overlayId, ref WVR_OverlayBlendColor_t color);
-
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_SetBlendOverlayAlpha", CallingConvention = CallingConvention.Cdecl)]
-        public static extern WVR_OverlayError WVR_SetBlendOverlayAlpha(int overlayId, float alpha);
-
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetBlendOverlayAlpha", CallingConvention = CallingConvention.Cdecl)]
-        public static extern WVR_OverlayError WVR_GetBlendOverlayAlpha(int overlayId, ref float alpha);
-
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_ShowOverlay", CallingConvention = CallingConvention.Cdecl)]
-        public static extern WVR_OverlayError WVR_ShowOverlay(int overlayId);
-
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_HideOverlay", CallingConvention = CallingConvention.Cdecl)]
-        public static extern WVR_OverlayError WVR_HideOverlay(int overlayId);
-
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_SetOverlayTextureId", CallingConvention = CallingConvention.Cdecl)]
-        public static extern WVR_OverlayError WVR_SetOverlayTextureId(int overlayId, ref WVR_OverlayTexture_t texture);
-
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_IsOverlayShow", CallingConvention = CallingConvention.Cdecl)]
-        public static extern bool WVR_IsOverlayShow(int overlayId);
-
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_RegisterOverlayInputEvent", CallingConvention = CallingConvention.Cdecl)]
-        public static extern WVR_OverlayError WVR_RegisterOverlayInputEvent(ref WVR_OverlayInputEvent_t callback);
-
-        [DllImportAttribute("wvr_api", EntryPoint = "WVR_UnregisterOverlayInputEvent", CallingConvention = CallingConvention.Cdecl)]
-        public static extern WVR_OverlayError WVR_UnregisterOverlayInputEvent(ref WVR_OverlayInputEvent_t callback);
     }
 
     public enum WVR_AppType
@@ -259,6 +229,7 @@ namespace wvr
         WVR_EventType_TouchpadSwipe_RightToLeft          = 30015,
         WVR_EventType_TouchpadSwipe_DownToUp             = 30016,
         WVR_EventType_TouchpadSwipe_UpToDown             = 30017,
+        WVR_EventType_Settings_Controller                = 30022,
 
         /* Input Button Event region */
         WVR_EventType_ButtonPressed                      = 200,
@@ -332,6 +303,7 @@ namespace wvr
         WVR_InputId_6     = 6,
         WVR_InputId_7     = 7,
         WVR_InputId_8     = 8,
+        WVR_InputId_9     = 9,
 
         WVR_InputId_16    = 16,
         WVR_InputId_17    = 17,
@@ -346,6 +318,7 @@ namespace wvr
         WVR_InputId_Alias1_DPad_Down   = WVR_InputId_6,
         WVR_InputId_Alias1_Volume_Up   = WVR_InputId_7,
         WVR_InputId_Alias1_Volume_Down = WVR_InputId_8,
+        WVR_InputId_Alias1_Bumper      = WVR_InputId_9,
 
         WVR_InputId_Alias1_Touchpad    = WVR_InputId_16,
         WVR_InputId_Alias1_Trigger     = WVR_InputId_17,
@@ -397,7 +370,8 @@ namespace wvr
 
     public enum WVR_ETextureTarget
     {
-        WVR_ETextureTarget_2D
+        WVR_ETextureTarget_2D,
+        WVR_ETextureTarget_2D_ARRAY
     }
 
     public enum WVR_TextureFormat
@@ -419,11 +393,22 @@ namespace wvr
         WVR_RenderConfig_Timewarp_Asynchronous          = 0x0300
     }
 
-    public enum WVR_CameraSource
+    public enum WVR_CameraImageType
     {
-        WVR_CameraSource_Android = 0,
-        WVR_CameraSource_External = 1,
-        WVR_CameraSource_Max = 2,
+        WVR_CameraImageType_SingleEye = 0,     // the image is comprised of one camera
+        WVR_CameraImageType_DualEye   = 1,     // the image is comprised of dual cameras
+    }
+
+    public enum WVR_CameraImageFormat
+    {
+        WVR_CameraImageFormat_YUV_420     = 0, // the image format is YUV420
+        WVR_CameraImageFormat_Grayscale   = 1, // the image format is 8-bit gray-scale
+    }
+
+    public enum WVR_CameraPosition
+    {
+        WVR_CameraPosition_Right    = 0,
+        WVR_CameraPosition_left     = 1,
     }
 
     public enum WVR_OverlayError
@@ -445,6 +430,13 @@ namespace wvr
     {
         WVR_NumDoF_3DoF = 0,
         WVR_NumDoF_6DoF = 1,
+    }
+
+    public enum WVR_ArenaShape
+    {
+        WVR_ArenaShape_None 	 = 0,
+        WVR_ArenaShape_Rectangle = 1,
+        WVR_ArenaShape_Round	 = 2,
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -474,11 +466,33 @@ namespace wvr
     }
 
     [StructLayout(LayoutKind.Sequential)]
+    public struct WVR_Vector2f_t
+    {
+        public float v0;
+        public float v1;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
     public struct WVR_Vector3f_t
     {
         public float v0;  // float[3]
         public float v1;
         public float v2;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct WVR_CameraIntrinsic_t {
+        public WVR_Vector2f_t    focalLength;
+        public WVR_Vector2f_t    principalPoint;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct WVR_CameraInfo_t {
+        public WVR_CameraImageType   imgType;    // SINGLE OR STEREO image
+        public WVR_CameraImageFormat imgFormat;
+        public uint              width;
+        public uint              height;
+        public uint              size;       // The buffer size for raw image data
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -559,6 +573,13 @@ namespace wvr
         public WVR_DeviceErrorStatus status;
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct WVR_IPDEvent_t
+    {
+        public WVR_CommonEvent_t common;
+        public float ipdMeters;
+    }
+
     [StructLayout(LayoutKind.Explicit)]
     public struct WVR_Event_t
     {
@@ -566,6 +587,7 @@ namespace wvr
         [FieldOffset(0)] public WVR_DeviceEvent_t      device;
         [FieldOffset(0)] public WVR_InputEvent_t       input;
         [FieldOffset(0)] public WVR_ErrorStatusEvent_t error;
+        [FieldOffset(0)] public WVR_IPDEvent_t         ipd;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -609,6 +631,29 @@ namespace wvr
         public uint textureId;
         public uint width;
         public uint height;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct WVR_ArenaRectangle_t {
+        public float width;
+        public float length;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct WVR_ArenaRound_t {
+        public float diameter;
+    }
+
+    [StructLayout(LayoutKind.Explicit)]
+    public struct WVR_ArenaArea_t {
+        [FieldOffset(0)] public WVR_ArenaRectangle_t rectangle;
+        [FieldOffset(0)] public WVR_ArenaRound_t round;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct WVR_Arena_t {
+        public WVR_ArenaShape shape;
+        public WVR_ArenaArea_t area;
     }
 
     public delegate void WVR_OverlayInputEventCallback(int overlayId, WVR_EventType type, WVR_InputId inputId);

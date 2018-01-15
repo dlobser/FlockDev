@@ -21,13 +21,6 @@ namespace WaveVR_Log
         private const int ANDROID_LOG_WARN = 5;
         private const int ANDROID_LOG_ERROR = 6;
 
-        public static bool FLAG_DEBUG = false;
-        public static bool FLAG_PERFORMANCE = false;
-        public static bool FLAG_POSE = false;
-        public static bool FLAG_AXIS = false;
-        public static bool FLAG_BUTTON = false;
-        public static bool FLAG_EVENT = false;
-
 #if UNITY_ANDROID && !UNITY_EDITOR
         [DllImportAttribute("log", EntryPoint = "__android_log_print", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         internal static extern int __android_log_print(int prio, string tag, string fmt, System.IntPtr ptr);
@@ -38,17 +31,6 @@ namespace WaveVR_Log
             return 0;
         }
 #endif
-        public static void getLogFlags()
-        {
-            AndroidJavaClass clazz = new AndroidJavaClass("com.htc.vr.unity.WVRUnityVRActivity");
-            AndroidJavaObject activity = clazz.CallStatic<AndroidJavaObject>("getInstance");
-            FLAG_DEBUG = activity.Call<bool>("getLogFlag", 0);
-            FLAG_PERFORMANCE = activity.Call<bool>("getLogFlag", 1);
-            FLAG_POSE = activity.Call<bool>("getLogFlag", 2);
-            FLAG_AXIS = activity.Call<bool>("getLogFlag", 5);
-            FLAG_BUTTON = activity.Call<bool>("getLogFlag", 6);
-            FLAG_EVENT = activity.Call<bool>("getLogFlag", 11);
-        }
 
         public static void d(string tag, string message)
         {

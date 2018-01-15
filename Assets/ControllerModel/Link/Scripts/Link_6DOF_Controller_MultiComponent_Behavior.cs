@@ -28,7 +28,6 @@ public class Link_6DOF_Controller_MultiComponent_Behavior : MonoBehaviour {
     [Range(0, 1.0f)]
     public float[] percents = new float[6];
 
-    private int frameCount = 0;
     private MeshRenderer batteryMeshRenderer = null;
 
     private Vector3 originPosition;
@@ -247,6 +246,9 @@ public class Link_6DOF_Controller_MultiComponent_Behavior : MonoBehaviour {
 
     private bool updateBatteryInfo()
     {
+        if (Application.isEditor)
+            return false;
+
         float batteryPer = Interop.WVR_GetDeviceBatteryPercentage(device);
         Log.d(LOG_TAG, "BatteryPercentage device: " + device + ", percentage: " + batteryPer);
         if (batteryPer < 0)

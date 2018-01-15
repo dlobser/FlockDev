@@ -22,7 +22,7 @@ public class FollowTransform : MonoBehaviour {
     public bool followPostion = true;
     public bool followRotation = false;
 
-    private WaveVR_PoseTracker inverter;
+    private WaveVR_DevicePoseTracker inverter;
 	
     void OnEnable()
     {
@@ -51,11 +51,11 @@ public class FollowTransform : MonoBehaviour {
     void Expand()
     {
         // TODO Check if a PoseTracker between this and target.
-        inverter = target.GetComponentInChildren<WaveVR_PoseTracker>();
+        inverter = target.GetComponentInChildren<WaveVR_DevicePoseTracker>();
         if (inverter == null)
         {
             var obj = new GameObject("OriginPredictor");
-            inverter = obj.AddComponent<WaveVR_PoseTracker>();
+            inverter = obj.AddComponent<WaveVR_DevicePoseTracker>();
             obj.transform.SetParent(target.transform, false);
         }
 

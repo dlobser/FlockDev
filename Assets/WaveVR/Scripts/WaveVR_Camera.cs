@@ -29,4 +29,13 @@ public class WaveVR_Camera : MonoBehaviour
     {
         return cam;
     }
+
+	void OnRenderObject()
+	{
+		if (Camera.current == cam && eye == WVR_Eye.WVR_Eye_Left) {
+			WaveVR_Utils.Event.Send(WaveVR_Utils.Event.RENDER_OBJECT_LEFT);
+		} else if (Camera.current == cam && eye == WVR_Eye.WVR_Eye_Right) {
+			WaveVR_Utils.Event.Send(WaveVR_Utils.Event.RENDER_OBJECT_RIGHT);
+		}
+	}
 }

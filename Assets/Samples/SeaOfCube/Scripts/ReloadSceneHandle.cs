@@ -1,4 +1,4 @@
-﻿// "WaveVR SDK 
+// "WaveVR SDK
 // © 2017 HTC Corporation. All Rights Reserved.
 //
 // Unless otherwise required by copyright law and practice,
@@ -22,6 +22,7 @@ public class ReloadSceneHandle : MonoBehaviour {
     private WaveVR_PermissionManager pmInstance = null;
     private WaveVR_Resource wvrRes = null;
     bool inited = false;
+    private static int systemCheckFailCount = 0;
 
     void Start()
     {
@@ -84,12 +85,20 @@ public class ReloadSceneHandle : MonoBehaviour {
 
     IEnumerator checkPackageManagerStatus()
     {
-        while (!pmInstance.isInitialized())
+        if (systemCheckFailCount < 10)
         {
-            Log.d(LOG_TAG, "not inited");
-            yield return new WaitForSeconds(0.2f);
+            if (!pmInstance.isInitialized())
+            {
+                systemCheckFailCount++;
+                yield return new WaitForSeconds(0.1f);
+            } else
+            {
+                inited = true;
+                yield break;
+            }
         }
-        inited = true;
+
+        inited = false;
         yield break;
     }
 
@@ -132,6 +141,7 @@ public class ReloadSceneHandle : MonoBehaviour {
         #endif
 
         if (inited) {
+            Log.d(LOG_TAG, "Permission Request action");
             string[] permArray = {
                "android.permission.CAMERA", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE"
             };

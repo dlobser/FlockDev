@@ -24,6 +24,13 @@ public class WaveVR_FPS : MonoBehaviour
 
     void LateUpdate()
     {
+        // Avoid crash when timeScale is 0.
+        if (Time.deltaTime == 0)
+        {
+            textField.text = "0fps";
+            return;
+        }
+
         string text = "";
         float interp = Time.deltaTime / (0.5f + Time.deltaTime);
         float currentFPS = 1.0f / Time.deltaTime;

@@ -18,7 +18,6 @@ public class WaveVR_Settings : EditorWindow
     const string gpuSkinning = "GPU Skinning";
     const string AndroidMinSDK = "Android Min SDK version";
     const string AndroidTargetSDK = "Android Target SDK version";
-
     const BuildTarget recommended_BuildTarget = BuildTarget.Android;
     const UIOrientation recommended_defaultOrientation = UIOrientation.LandscapeLeft;
     const bool recommended_enableMTRendering = true;
@@ -31,31 +30,46 @@ public class WaveVR_Settings : EditorWindow
 
     static WaveVR_Settings()
     {
+        if (EditorUserBuildSettings.activeBuildTarget != BuildTarget.Android)
+            return;
         EditorApplication.update += Update;
+    }
+
+    [UnityEditor.MenuItem("WaveVR/Preference/DefaultPreferenceDialog")]
+    static void UpdateWithClearIgnore()
+    {
+        EditorPrefs.DeleteKey(ignore + buildTarget);
+        EditorPrefs.DeleteKey(ignore + defaultOrientation);
+        EditorPrefs.DeleteKey(ignore + enableMTRendering);
+        EditorPrefs.DeleteKey(ignore + graphicsJobs);
+        EditorPrefs.DeleteKey(ignore + AndroidMinSDK);
+        EditorPrefs.DeleteKey(ignore + AndroidTargetSDK);
+        EditorPrefs.DeleteKey(ignore + gpuSkinning);
+        Update();
     }
 
     static void Update()
     {
         bool show =
-            (!EditorPrefs.HasKey(ignore + buildTarget) &&
-                EditorUserBuildSettings.activeBuildTarget != recommended_BuildTarget) ||
-            (!EditorPrefs.HasKey(ignore + defaultOrientation) &&
-                PlayerSettings.defaultInterfaceOrientation != recommended_defaultOrientation) ||
-            (!EditorPrefs.HasKey(ignore + enableMTRendering) &&
+           (!EditorPrefs.HasKey(ignore + buildTarget) &&
+               EditorUserBuildSettings.activeBuildTarget != recommended_BuildTarget) ||
+           (!EditorPrefs.HasKey(ignore + defaultOrientation) &&
+               PlayerSettings.defaultInterfaceOrientation != recommended_defaultOrientation) ||
+           (!EditorPrefs.HasKey(ignore + enableMTRendering) &&
 #if UNITY_2017_2_OR_NEWER
                 PlayerSettings.GetMobileMTRendering(BuildTargetGroup.Android) != recommended_enableMTRendering) ||
 #else
                 PlayerSettings.mobileMTRendering != recommended_enableMTRendering) ||
 #endif
             (!EditorPrefs.HasKey(ignore + graphicsJobs) &&
-                PlayerSettings.graphicsJobs != recommended_graphicsJobs) ||
-            (!EditorPrefs.HasKey(ignore + AndroidMinSDK) &&
-                PlayerSettings.Android.minSdkVersion != recommended_AndroidMinSDK) ||
-            (!EditorPrefs.HasKey(ignore + AndroidTargetSDK) &&
-                PlayerSettings.Android.targetSdkVersion != recommended_AndroidTargetSDK) ||
-            (!EditorPrefs.HasKey(ignore + gpuSkinning) &&
-                PlayerSettings.gpuSkinning != recommended_GpuSkinning) ||
-            forceShow;
+               PlayerSettings.graphicsJobs != recommended_graphicsJobs) ||
+           (!EditorPrefs.HasKey(ignore + AndroidMinSDK) &&
+               PlayerSettings.Android.minSdkVersion < recommended_AndroidMinSDK) ||
+           (!EditorPrefs.HasKey(ignore + AndroidTargetSDK) &&
+               PlayerSettings.Android.targetSdkVersion != recommended_AndroidTargetSDK) ||
+           (!EditorPrefs.HasKey(ignore + gpuSkinning) &&
+               PlayerSettings.gpuSkinning != recommended_GpuSkinning) ||
+           forceShow;
 
         if (show)
         {
@@ -78,7 +92,7 @@ public class WaveVR_Settings : EditorWindow
     public void OnGUI()
     {
         var resourcePath = GetResourcePath();
-        var logo = AssetDatabase.LoadAssetAtPath<Texture2D>(resourcePath + "logo.png");
+        var logo = AssetDatabase.LoadAssetAtPath<Texture2D>(resourcePath + "vivewave_logo_flat.png");
         var rect = GUILayoutUtility.GetRect(position.width, 150, GUI.skin.box);
         if (logo)
             GUI.DrawTexture(rect, logo, ScaleMode.ScaleToFit);
@@ -269,6 +283,8 @@ public class WaveVR_Settings : EditorWindow
             GUILayout.EndHorizontal();
         }
 
+
+
         GUILayout.BeginHorizontal();
 
         GUILayout.FlexibleSpace();
@@ -366,5 +382,5 @@ public class WaveVR_Settings : EditorWindow
 
         GUILayout.EndHorizontal();
     }
-}
 
+}

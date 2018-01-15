@@ -16,7 +16,7 @@ namespace Flock{
 			manip = GetComponent<FlockManipulator> ();
 			int w = 0;
 			for (int i = 0; i < manip.targets.Count; i++) {
-				FlockBoid b = Instantiate (boidPrefabs [w]);
+				FlockBoid b = Instantiate (boidPrefabs [w],new Vector3(0,100,0),Quaternion.identity);
 				b.Init ();
 				boids.Add(b);
 				boids [i].gameObject.name = boidPrefabs [w].gameObject.name;

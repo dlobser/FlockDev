@@ -24,15 +24,21 @@ public class ControllerConnectionStateReactor : MonoBehaviour
 
     void OnEnable()
     {
-        WaveVR_Utils.Event.Listen(WaveVR_Utils.Event.DEVICE_CONNECTED, onDeviceConnected);
-        if (checkConnection() != connected)
-            connected = !connected;
-        setActive(connected && (!mFocusCapturedBySystem));
+        if (!Application.isEditor)
+        {
+            WaveVR_Utils.Event.Listen (WaveVR_Utils.Event.DEVICE_CONNECTED, onDeviceConnected);
+            if (checkConnection () != connected)
+                connected = !connected;
+            setActive (connected && (!mFocusCapturedBySystem));
+        }
     }
 
     void OnDisable()
     {
-        WaveVR_Utils.Event.Remove(WaveVR_Utils.Event.DEVICE_CONNECTED, onDeviceConnected);
+        if (!Application.isEditor)
+        {
+            WaveVR_Utils.Event.Remove (WaveVR_Utils.Event.DEVICE_CONNECTED, onDeviceConnected);
+        }
     }
 
     void Update ()
@@ -82,6 +88,22 @@ public class ControllerConnectionStateReactor : MonoBehaviour
 
     private void onDeviceConnected(params object[] args)
     {
+        WVR_DeviceType type = this.type;
+        if (WaveVR_Controller.IsLeftHanded)
+        {
+            switch (type)
+            {
+            case WVR_DeviceType.WVR_DeviceType_Controller_Right:
+                type = WVR_DeviceType.WVR_DeviceType_Controller_Left;
+                break;
+            case WVR_DeviceType.WVR_DeviceType_Controller_Left:
+                type = WVR_DeviceType.WVR_DeviceType_Controller_Right;
+                break;
+            default:
+                break;
+            }
+        }
+
         var _dt = (WVR_DeviceType)args[0];
         var _connected = (bool)args[1];
         Log.i (LOG_TAG, "device " + _dt + " is " + (_connected == true ? "connected" : "disconnected"));

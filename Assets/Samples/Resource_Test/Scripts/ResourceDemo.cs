@@ -13,8 +13,11 @@ public class ResourceDemo : MonoBehaviour {
     void Start () {
         Log.d(LOG_TAG, "start()");
 #if UNITY_EDITOR
-        Debug.Log("ResourceDemo can't run on editor!");
-        return;
+        if (Application.isEditor)
+        {
+            Debug.Log("ResourceDemo can't run on editor!");
+            return;
+        }
 #endif
         rw = WaveVR_Resource.instance;
 

@@ -24,11 +24,11 @@ public class TrackedButtons : WaveVR_TrackedButtons
 
 	private void PrintEvent(ClickedEventArgs e)
 	{
-//		Log.d(TAG, "PrintEvent: " + Environment.NewLine + 
-//			"Device: " + e.device + Environment.NewLine + 
-//			"Flag: " + e.flags + Environment.NewLine + 
-//            "X: " + e.axis.x + Environment.NewLine + 
-//            "Y: " + e.axis.y);
+		Log.d(TAG, "PrintEvent: " + 
+			"Device: " + e.device + 
+			"Flag: " + e.flags +
+            "X: " + e.axis.x + 
+            "Y: " + e.axis.y);
 	}
 
 	private void MenuButtonClickedHandler (object sender, ClickedEventArgs e)

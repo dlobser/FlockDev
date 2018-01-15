@@ -69,7 +69,7 @@ public class WaveVR_ControllerManager : MonoBehaviour
     }
     #endregion
 
-    private void SetTrackedDeviceIndex(CIndex _index)
+    private void BroadcastToObjects(CIndex _index)
     {
         WVR_DeviceType deviceIndex = WVR_DeviceType.WVR_DeviceType_Controller_Right;
 
@@ -102,14 +102,14 @@ public class WaveVR_ControllerManager : MonoBehaviour
             if (ControllerConnected [(uint)CIndex.right] != connected)
             {   // Connection status has been changed.
                 ControllerConnected [(uint)CIndex.right] = connected;
-                SetTrackedDeviceIndex (CIndex.right);
+                BroadcastToObjects (CIndex.right);
             }
         } else if (device == WVR_DeviceType.WVR_DeviceType_Controller_Left)
         {
             if (ControllerConnected [(uint)CIndex.left] != connected)
             {   // Connection status has been changed.
                 ControllerConnected [(uint)CIndex.left] = connected;
-                SetTrackedDeviceIndex (CIndex.left);
+                BroadcastToObjects (CIndex.left);
             }
         }
     }

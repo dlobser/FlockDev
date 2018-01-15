@@ -43,6 +43,45 @@ public static class WaveVR_Utils
         public ulong BtnTouched;
     }
 
+    public class OEMConfig
+    {
+        private const string OEM_CONFIG_CLASSNAME = "com.htc.vr.unity.OEMConfig";
+        private static AndroidJavaObject mOEMConfig = null;
+
+        private static void initAJC()
+        {
+            if (mOEMConfig == null)
+            {
+                AndroidJavaClass ajc = new AndroidJavaClass(OEM_CONFIG_CLASSNAME);
+
+                if (ajc == null)
+                {
+                    Log.e(LOG_TAG, "AndroidJavaClass is null");
+                    return;
+                }
+                // Get the OEMConfig object
+                mOEMConfig = ajc.CallStatic<AndroidJavaObject>("getInstance");
+            }
+        }
+
+        public static string getControllerConfig()
+        {
+#if UNITY_EDITOR
+            if (Application.isPlaying)
+                return "";
+#endif
+                initAJC();
+            string getString = "";
+            if (mOEMConfig != null)
+            {
+                getString = mOEMConfig.Call<string>("getJsonRawData");
+                Log.d(LOG_TAG, "JSON raw data = " + getString);
+            }
+
+            return getString;
+        }
+    }
+
     public class Event
     {
         public static string DEVICE_CONNECTED = "device_connected";
@@ -50,6 +89,10 @@ public static class WaveVR_Utils
         public static string AFTER_NEW_POSES = "after_new_poses";
         public static string ALL_VREVENT = "all_vrevent";  // Called when had event from WVR_PollEventQueue()
         public static string BATTERY_STATUS_UPDATE = "BatteryStatus_Update";
+        public static string CONTROLLER_MODEL_LOADED = "controller_model_loaded";
+        public static string CONTROLLER_MODEL_UNLOADED = "controller_model_unloaded";
+        public static string RENDER_OBJECT_LEFT = "Render_left";
+        public static string RENDER_OBJECT_RIGHT = "Render_right";
 
         public delegate void Handler(params object[] args);
 
@@ -94,19 +137,6 @@ public static class WaveVR_Utils
 
     public static Quaternion GetRotation(this Matrix4x4 matrix)
     {
-        Quaternion q = new Quaternion();
-        q.w = Mathf.Sqrt(Mathf.Max(0, 1 + matrix.m00 + matrix.m11 + matrix.m22)) / 2;
-        q.x = Mathf.Sqrt(Mathf.Max(0, 1 + matrix.m00 - matrix.m11 - matrix.m22)) / 2;
-        q.y = Mathf.Sqrt(Mathf.Max(0, 1 - matrix.m00 + matrix.m11 - matrix.m22)) / 2;
-        q.z = Mathf.Sqrt(Mathf.Max(0, 1 - matrix.m00 - matrix.m11 + matrix.m22)) / 2;
-        q.x = _copysign(q.x, matrix.m21 - matrix.m12);
-        q.y = _copysign(q.y, matrix.m02 - matrix.m20);
-        q.z = _copysign(q.z, matrix.m10 - matrix.m01);
-        return q;
-    }
-
-    public static Quaternion GetRotation2(this Matrix4x4 matrix)
-    {
         float tr = matrix.m00 + matrix.m11 + matrix.m22;
         float qw, qx, qy, qz;
         if (tr > 0) {
@@ -134,6 +164,13 @@ public static class WaveVR_Utils
             qy = (matrix.m12 + matrix.m21) / S;
             qz = 0.25f * S;
         }
+        return new Quaternion(qx, qy, qz, qw);
+    }
+
+    [System.Obsolete("Do NOT used any more.")]
+    public static Quaternion GetRotation2(this Matrix4x4 matrix)
+    {
+        float qw = 0, qx = 0, qy = 0, qz = 0;
         return new Quaternion(qx, qy, qz, qw);
     }
 
@@ -174,7 +211,7 @@ public static class WaveVR_Utils
         {
             var m = toMatrix44(pose);
             this.pos = m.GetPosition();
-            this.rot = m.GetRotation2();
+            this.rot = m.GetRotation();
         }
 
         public static Matrix4x4 toMatrix44(WVR_Matrix4f_t pose)
@@ -203,7 +240,13 @@ public static class WaveVR_Utils
         {
             var m = toMatrix44(pose);
             this.pos = m.GetPosition();
-            this.rot = m.GetRotation2();
+            this.rot = m.GetRotation();
+        }
+
+        public void update(Vector3 position, Quaternion orientation)
+        {
+            this.pos = position;
+            this.rot = orientation;
         }
 
         public override bool Equals(object o)
@@ -329,7 +372,10 @@ public static class WaveVR_Utils
     public static extern void NativeRenderEvent(int eventID);
 
     [DllImportAttribute("wvrunity", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void SetTexture(System.IntPtr left, System.IntPtr right);
+    public static extern void SetCurrentRenderTexture(System.IntPtr current);
+
+    [DllImportAttribute("wvrunity", EntryPoint = "nativeProcessEngineEvent", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void NativeProcessEngineEvent(uint tID, uint eventID);
 
 #if SYSTRACE_NATIVE
     [DllImportAttribute("wvrunity", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
@@ -341,21 +387,6 @@ public static class WaveVR_Utils
 
     [DllImportAttribute("wvr_api", EntryPoint = "WVR_IsATWActive", CallingConvention = CallingConvention.Cdecl)]
     public static extern bool WVR_IsATWActive();
-
-    [DllImportAttribute("wvr_api", EntryPoint = "WVR_SetATWActive", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void WVR_SetATWActive(bool active);
-
-    [DllImportAttribute("wvr_api", EntryPoint = "WVR_PauseATW", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void WVR_PauseATW();
-
-    [DllImportAttribute("wvr_api", EntryPoint = "WVR_ResumeATW", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void WVR_ResumeATW();
-
-    [DllImportAttribute("wvr_api", EntryPoint = "WVR_OnDisable", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void WVR_OnDisable();
-
-    [DllImportAttribute("wvr_api", EntryPoint = "WVR_OnApplicationQuit", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void WVR_OnApplicationQuit();
 
     [DllImportAttribute("wvr_api", EntryPoint = "WVR_GetNumberOfTextures", CallingConvention = CallingConvention.Cdecl)]
     public static extern int WVR_GetNumberOfTextures();
@@ -372,8 +403,6 @@ public static class WaveVR_Utils
     public const int RENDEREVENTID_INIT_GRAPHIC = 0;
     public const int RENDEREVENTID_Systrace_BeginSession = 4;
     public const int RENDEREVENTID_Systrace_EndSession = 5;
-    public const int RENDEREVENTID_ATWEnable = 8;
-    public const int RENDEREVENTID_ATWDisable = 9;
     public const int RENDEREVENTID_StartCamera = 21;
     public const int RENDEREVENTID_StopCamera = 22;
     public const int RENDEREVENTID_UpdateCamera = 23;
@@ -381,6 +410,12 @@ public static class WaveVR_Utils
     [MonoPInvokeCallback(typeof(RenderEventDelegate))]
     private static void RenderEvent(int eventId)
     {
+        if ((eventId & (int)EngineEventID.ENGINE_EVENT_ID_BEGIN) == (int) EngineEventID.ENGINE_EVENT_ID_BEGIN)
+        {
+            NativeProcessEngineEvent((uint) EngineThreadID.RENDER_THREAD, (uint)eventId);
+            return;
+        }
+        
         switch (eventId)
         {
             case RENDEREVENTID_INIT_GRAPHIC:
@@ -405,19 +440,12 @@ public static class WaveVR_Utils
             case RENDEREVENTID_Systrace_EndSession:
                 TraceEndSection();
                 break;
-            case RENDEREVENTID_ATWEnable:
-                WVR_ResumeATW();
-                break;
-            case RENDEREVENTID_ATWDisable:
-                WVR_PauseATW();
-                break;
             case RENDEREVENTID_StartCamera:
                 {
-                    uint rWidth = 0;
-                    uint rHeight = 0;
-                    var textureId = Interop.WVR_StartCamera(ref rWidth, ref rHeight);
+                    WVR_CameraInfo_t camerainfo = new WVR_CameraInfo_t();
+                    var result = Interop.WVR_StartCamera(ref camerainfo);
 
-                    WaveVR_Utils.Event.Send("StartCameraCompleted", textureId, rWidth, rHeight);
+                    WaveVR_Utils.Event.Send("StartCameraCompleted", result, camerainfo);
                 }
 
                 break;
@@ -429,17 +457,32 @@ public static class WaveVR_Utils
                 break;
             case RENDEREVENTID_UpdateCamera:
                 {
-                    var updatedtexture = Interop.WVR_UpdateFrameTexture();
-                    WaveVR_Utils.Event.Send("UpdateCameraCompleted", updatedtexture);
+                    var updated = Interop.WVR_UpdateTexture(WaveVR_CameraTexture.instance.getNativeTextureId());
+                    WaveVR_Utils.Event.Send("UpdateCameraCompleted", updated);
                 }
 
                 break;
         }
     }
 
-    private delegate void RenderEventDelegate(int eye);
+    private delegate void RenderEventDelegate(int e);
     private static RenderEventDelegate RenderEventHandle = new RenderEventDelegate(RenderEvent);
     private static System.IntPtr RenderEventHandlePtr = Marshal.GetFunctionPointerForDelegate(RenderEventHandle);
+
+    [MonoPInvokeCallback(typeof(RenderEventDelegate))]
+    private static void SetRenderTextureRenderThread(int textureId)
+    {
+        System.IntPtr ptr = new System.IntPtr(textureId);
+        SetCurrentRenderTexture(ptr);
+    }
+
+    private static RenderEventDelegate SetRenderTextureHandle = new RenderEventDelegate(SetRenderTextureRenderThread);
+    private static System.IntPtr SetRenderTextureHandlePtr = Marshal.GetFunctionPointerForDelegate(SetRenderTextureHandle);
+
+    public static void SetRenderTexture(System.IntPtr textureId)
+    {
+        GL.IssuePluginEvent(SetRenderTextureHandlePtr, textureId.ToInt32());
+    }
 
     public static void SendRenderEvent(int eventId)
     {
@@ -449,5 +492,61 @@ public static class WaveVR_Utils
     public static void SendRenderEventNative(int eventId)
     {
         GL.IssuePluginEvent(GetRenderEventFunc(), eventId);
+    }
+
+    public enum EngineThreadID {
+        JAVA_THREAD,
+        GAME_THREAD,
+        RENDER_THREAD,
+        WORKER1_THREAD,
+        WORKER2_THREAD,
+    }
+
+    public enum EngineEventID
+    {
+        ENGINE_EVENT_ID_BEGIN = 0xA000,
+
+        HMD_CREATE,
+        HMD_INITIAILZED,
+        HMD_RESUME,
+        HMD_PAUSE,
+        HMD_TERMINATED,
+
+        FIRST_FRAME,
+        FRAME_START,
+        FRAME_END,
+
+        UNITY_AWAKE,
+        UNITY_ENABLE,
+        UNITY_DISABLE,
+        UNITY_START,
+        UNITY_DESTROY,
+        UNITY_APPLICATION_RESUME,
+        UNITY_APPLICATION_PAUSE,
+        UNITY_APPLICATION_QUIT,
+
+        ENGINE_EVENT_ID_END
+    }
+
+    public static void IssueEngineEvent(EngineEventID eventID)
+    {
+        IssueEngineEvent(EngineThreadID.GAME_THREAD, eventID);
+        IssueEngineEvent(EngineThreadID.RENDER_THREAD, eventID);
+    }
+
+    public static void IssueEngineEvent(EngineThreadID tID, EngineEventID eventID)
+    {
+#if UNITY_EDITOR
+        if (Application.isEditor)
+            return;
+#endif
+        if (tID == EngineThreadID.RENDER_THREAD)
+        {
+            SendRenderEvent((int) eventID);
+        }
+        else
+        {
+            NativeProcessEngineEvent((uint) tID, (uint)eventID);
+        }
     }
 }

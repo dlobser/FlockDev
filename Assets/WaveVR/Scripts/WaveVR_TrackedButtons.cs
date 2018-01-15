@@ -150,8 +150,8 @@ public class WaveVR_TrackedButtons : MonoBehaviour
                 {
                     axis.x = analogArray [i].axis.x;
                     axis.y = _id == WVR_InputId.WVR_InputId_Alias1_Trigger ? 0 : analogArray [i].axis.y;    // trigger does NOT have y value
-                    if (Log.FLAG_BUTTON)
-                        Log.d (LOG_TAG, "button " + _id + " x=" + axis.x + ", y=" + axis.y);
+                    //if (Log.FLAG_BUTTON)
+                    //    Log.d (LOG_TAG, "button " + _id + " x=" + axis.x + ", y=" + axis.y);
                     break;
                 } else
                 {
@@ -182,26 +182,26 @@ public class WaveVR_TrackedButtons : MonoBehaviour
         if (!WaveVR_Controller.Input (device).connected)
             return;
 
-        int buttons = -1, touches = -1;
+        uint buttons = 0, touches = 0;
 
         int analogArrayCount = Interop.WVR_GetInputTypeCount(device, WVR_InputType.WVR_InputType_Analog);
         WVR_AnalogState_t[] analogArray = new WVR_AnalogState_t[analogArrayCount];
         if (Interop.WVR_GetInputDeviceState (device, inputMask, ref buttons, ref touches, analogArray, analogArrayCount))
         {
+            ClickedEventArgs e;
+            e.device = device;
+            e.flags = buttons;
+            e.axis = Vector2.zero;
+
             /**
              * for Button
              **/
-            if (buttons != -1)
+            if (buttons != 0)
             {
-                ClickedEventArgs e;
-                e.device = device;
-                e.flags = (uint)buttons;
-                e.axis = Vector2.zero;
-
                 ulong btnState = (ulong)buttons;
 
-                if (Log.FLAG_BUTTON)
-                    Log.d (LOG_TAG, "device: " + device + " btnState: " + btnState);
+                //if (Log.FLAG_BUTTON)
+                //    Log.d (LOG_TAG, "device: " + device + " btnState: " + btnState);
 
                 if ((btnState & WaveVR_Controller.Device.Input_Mask_Trigger) != 0)
                 {
@@ -215,13 +215,6 @@ public class WaveVR_TrackedButtons : MonoBehaviour
                             analogArrayCount);
                         OnTriggerClicked (e);
                     }
-                } else
-                {
-                    if (triggerPressed == true)
-                    {
-                        triggerPressed = false;
-                        OnTriggerUnclicked (e);
-                    }
                 }
 
                 if ((btnState & WaveVR_Controller.Device.Input_Mask_Grip) != 0)
@@ -230,13 +223,6 @@ public class WaveVR_TrackedButtons : MonoBehaviour
                     {
                         gripPressed = true;
                         OnGripped (e);
-                    }
-                } else
-                {
-                    if (gripPressed == true)
-                    {
-                        gripPressed = false;
-                        OnUngripped (e);
                     }
                 }
 
@@ -252,13 +238,6 @@ public class WaveVR_TrackedButtons : MonoBehaviour
                         padPressed = true;
                         OnPadClicked (e);
                     }
-                } else
-                {
-                    if (padPressed == true)
-                    {
-                        padPressed = false;
-                        OnPadUnclicked (e);
-                    }
                 }
 
                 if ((btnState & WaveVR_Controller.Device.Input_Mask_Menu) != 0)
@@ -268,33 +247,42 @@ public class WaveVR_TrackedButtons : MonoBehaviour
                         menuPressed = true;
                         OnMenuClicked (e);
                     }
-                } else
-                {
-                    if (menuPressed == true)
-                    {
-                        menuPressed = false;
-                        OnMenuUnclicked (e);
-                    }
                 }
             } else
             {
-                Log.w (LOG_TAG, "device: " + device + " buttons = -1");
-            }   // if (buttons != -1)
+                if (triggerPressed == true)
+                {
+                    triggerPressed = false;
+                    OnTriggerUnclicked (e);
+                }
+                if (gripPressed == true)
+                {
+                    gripPressed = false;
+                    OnUngripped (e);
+                }
+                if (padPressed == true)
+                {
+                    padPressed = false;
+                    OnPadUnclicked (e);
+                }
+                if (menuPressed == true)
+                {
+                    menuPressed = false;
+                    OnMenuUnclicked (e);
+                }
+            }   // if (buttons != 0)
 
             /**
              *  for Touch
              **/
-            if (touches != -1)
+            e.flags = touches;
+            if (touches != 0)
             {
-                ClickedEventArgs e;
-                e.device = device;
-                e.flags = (uint)buttons;
-                e.axis = Vector2.zero;
 
                 ulong touchState = (ulong)touches;
 
-                if (Log.FLAG_BUTTON)
-                    Log.d (LOG_TAG, "device: " + device + " touchState: " + touchState);
+                //if (Log.FLAG_BUTTON)
+                //    Log.d (LOG_TAG, "device: " + device + " touchState: " + touchState);
 
                 if ((touchState & WaveVR_Controller.Device.Input_Mask_Touchpad) != 0)
                 {
@@ -310,19 +298,18 @@ public class WaveVR_TrackedButtons : MonoBehaviour
                     }
                 } else
                 {
-                    if (padTouched == true)
-                    {
-                        padTouched = false;
-                        OnPadUntouched (e);
-                    }
                 }
             } else
             {
-                Log.w (LOG_TAG, "device: " + device + " touches = -1");
-            }   // if (touches != -1)
+                if (padTouched == true)
+                {
+                    padTouched = false;
+                    OnPadUntouched (e);
+                }
+            }   // if (touches != 0)
         } else
         {
-            Log.e (LOG_TAG, "device: " + device + " WVR_GetInputDeviceState(button) failed!");
+            Log.e (LOG_TAG, "device: " + device + " WVR_GetInputDeviceState failed!");
         }   // WVR_GetInputDeviceState
     }   // Update
 }

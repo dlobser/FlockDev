@@ -35,7 +35,7 @@ public class WaveVR_ControllerListener : MonoBehaviour
         }
     }
 
-    private Device[] devices;
+    private static Device[] devices;
 
     /// <summary>
     /// Get the controller by device index.
@@ -43,6 +43,26 @@ public class WaveVR_ControllerListener : MonoBehaviour
     /// <param name="deviceIndex">The index of the controller.</param>
     /// <returns></returns>
     public Device Input(WVR_DeviceType deviceIndex)
+    {
+        if (WaveVR_Controller.IsLeftHanded)
+        {
+            switch (deviceIndex)
+            {
+            case WVR_DeviceType.WVR_DeviceType_Controller_Right:
+                deviceIndex = WVR_DeviceType.WVR_DeviceType_Controller_Left;
+                break;
+            case WVR_DeviceType.WVR_DeviceType_Controller_Left:
+                deviceIndex = WVR_DeviceType.WVR_DeviceType_Controller_Right;
+                break;
+            default:
+                break;
+            }
+        }
+
+        return ChangeRole (deviceIndex);
+    }
+
+    private static Device ChangeRole(WVR_DeviceType deviceIndex)
     {
         if (devices == null)
         {
@@ -225,9 +245,8 @@ public class WaveVR_ControllerListener : MonoBehaviour
                 #if UNITY_EDITOR || UNITY_STANDALONE
                 if (isEditorMode)
                 {
-                    var system = WaveVR_EmulatorControllerProvider.Instance;
-                    //system.GetControllerStateWithPose (DeviceType, ref state, ref pose, ref axis, WVR_InputId.WVR_InputId_Alias1_Menu);
-                    _pressed = system.WVR_GetInputButtonState (DeviceType, WVR_InputId.WVR_InputId_Alias1_Menu);
+                    var system = WaveVR_PoseSimulator.Instance;
+                    _pressed = system.GetButtonPressState(DeviceType, WVR_InputId.WVR_InputId_Alias1_Menu);
                 } else
                 #endif
                 {
@@ -280,9 +299,8 @@ public class WaveVR_ControllerListener : MonoBehaviour
                 #if UNITY_EDITOR || UNITY_STANDALONE
                 if (isEditorMode)
                 {
-                    var system = WaveVR_EmulatorControllerProvider.Instance;
-                    //system.GetControllerStateWithPose (DeviceType, ref state, ref pose, ref axis, WVR_InputId.WVR_InputId_Alias1_Grip);
-                    _pressed = system.WVR_GetInputButtonState (DeviceType, WVR_InputId.WVR_InputId_Alias1_Grip);
+                    var system = WaveVR_PoseSimulator.Instance;
+                    _pressed = system.GetButtonPressState(DeviceType, WVR_InputId.WVR_InputId_Alias1_Grip);
                 } else
                 #endif
                 {
@@ -335,9 +353,8 @@ public class WaveVR_ControllerListener : MonoBehaviour
                 #if UNITY_EDITOR || UNITY_STANDALONE
                 if (isEditorMode)
                 {
-                    var system = WaveVR_EmulatorControllerProvider.Instance;
-                    //system.GetControllerStateWithPose (DeviceType, ref state, ref pose, ref axis, WVR_InputId.WVR_InputId_Alias1_Touchpad);
-                    _pressed = system.WVR_GetInputButtonState (DeviceType, WVR_InputId.WVR_InputId_Alias1_Touchpad);
+                    var system = WaveVR_PoseSimulator.Instance;
+                    _pressed = system.GetButtonPressState(DeviceType, WVR_InputId.WVR_InputId_Alias1_Touchpad);
                 } else
                 #endif
                 {
@@ -390,9 +407,8 @@ public class WaveVR_ControllerListener : MonoBehaviour
                 #if UNITY_EDITOR || UNITY_STANDALONE
                 if (isEditorMode)
                 {
-                    var system = WaveVR_EmulatorControllerProvider.Instance;
-                    //system.GetControllerStateWithPose (DeviceType, ref state, ref pose, ref axis, WVR_InputId.WVR_InputId_Alias1_Trigger);
-                    _pressed = system.WVR_GetInputButtonState (DeviceType, WVR_InputId.WVR_InputId_Alias1_Trigger);
+                    var system = WaveVR_PoseSimulator.Instance;
+                    _pressed = system.GetButtonPressState(DeviceType, WVR_InputId.WVR_InputId_Alias1_Trigger);
                 } else
                 #endif
                 {
@@ -471,9 +487,8 @@ public class WaveVR_ControllerListener : MonoBehaviour
                 #if UNITY_EDITOR || UNITY_STANDALONE
                 if (isEditorMode)
                 {
-                    var system = WaveVR_EmulatorControllerProvider.Instance;
-                    //system.GetControllerStateWithPose (DeviceType, ref state, ref pose, ref axis, WVR_InputId.WVR_InputId_Alias1_Touchpad);
-                    _touched = system.WVR_GetInputTouchState (DeviceType, WVR_InputId.WVR_InputId_Alias1_Touchpad);
+                    var system = WaveVR_PoseSimulator.Instance;
+                    _touched = system.GetButtonTouchState(DeviceType, WVR_InputId.WVR_InputId_Alias1_Touchpad);
                 } else
                 #endif
                 {
@@ -526,9 +541,8 @@ public class WaveVR_ControllerListener : MonoBehaviour
                 #if UNITY_EDITOR || UNITY_STANDALONE
                 if (isEditorMode)
                 {
-                    var system = WaveVR_EmulatorControllerProvider.Instance;
-                    //system.GetControllerStateWithPose (DeviceType, ref state, ref pose, ref axis, WVR_InputId.WVR_InputId_Alias1_Trigger);
-                    _touched = system.WVR_GetInputTouchState (DeviceType, WVR_InputId.WVR_InputId_Alias1_Trigger);
+                    var system = WaveVR_PoseSimulator.Instance;
+                    _touched = system.GetButtonTouchState(DeviceType, WVR_InputId.WVR_InputId_Alias1_Trigger);
                 } else
                 #endif
                 {
@@ -578,9 +592,8 @@ public class WaveVR_ControllerListener : MonoBehaviour
             #if UNITY_EDITOR || UNITY_STANDALONE
             if (isEditorMode)
             {
-                var system = WaveVR_EmulatorControllerProvider.Instance;
-                //system.GetControllerStateWithPose (DeviceType, ref emu_state, ref pose, ref axis, _id);
-                axis = system.WVR_GetInputAnalogAxis (DeviceType, _id);
+                var system = WaveVR_PoseSimulator.Instance;
+                axis = system.GetAxis(DeviceType, WVR_InputId.WVR_InputId_Alias1_Trigger);
             } else
             #endif
             {
@@ -600,7 +613,7 @@ public class WaveVR_ControllerListener : MonoBehaviour
             #if UNITY_EDITOR || UNITY_STANDALONE
             if (isEditorMode)
             {
-                var system = WaveVR_EmulatorControllerProvider.Instance;
+                var system = WaveVR_PoseSimulator.Instance;
                 system.TriggerHapticPulse (DeviceType, _id, _durationMicroSec);
             } else
             #endif

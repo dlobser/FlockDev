@@ -53,7 +53,7 @@ public class WaveVR_ControllerInputModule : BaseInputModule
     private const string LOG_TAG = "WaveVR_ControllerInputModule";
 
     #region Developer specified parameters
-    public GameObject RightController = null, LeftController = null;
+    public GameObject RightController, LeftController;
     public EControllerButtons ButtonToTrigger = EControllerButtons.Touchpad;
     [TextArea(3,10)]
     public string CanvasTag = null;
@@ -267,8 +267,7 @@ public class WaveVR_ControllerInputModule : BaseInputModule
     {
         Camera _cam = (Camera)RightController.GetComponent (typeof(Camera));
         PhysicsRaycaster _raycaster = RightController.GetComponent<PhysicsRaycaster> ();
-        Physics2DRaycaster _raycaster2D = RightController.GetComponent<Physics2DRaycaster> ();
-        if (_cam == null || (_raycaster == null && _raycaster2D == null))
+        if (_cam == null || _raycaster == null)
         {
             Log.e (LOG_TAG, "PhysicRaycast_Right() no Camera or Physics Raycaster!");
             return;
@@ -284,16 +283,13 @@ public class WaveVR_ControllerInputModule : BaseInputModule
 
         if (_raycaster != null)
             _raycaster.Raycast (rightHandPointer, _results);
-        // no 3D result, try physic 2D casting
-        if (_results.Count == 0 && _raycaster2D != null)
-            _raycaster2D.Raycast (rightHandPointer, _results);
 
         RaycastResult _firstResult = FindFirstRaycast (_results);
 
         if (_firstResult.module != null)
         {
             #if UNITY_EDITOR
-            Debug.Log ("PhysicRaycast_Right(), camera: " + _firstResult.module.eventCamera + ", first result = " + _firstResult);
+            //Debug.Log ("PhysicRaycast_Right(), camera: " + _firstResult.module.eventCamera + ", first result = " + _firstResult);
             #endif
             //Log.d (LOG_TAG, "PhysicRaycast_Right(), camera: " + _firstResult.module.eventCamera + ", first result = " + _firstResult);
         }
@@ -307,8 +303,7 @@ public class WaveVR_ControllerInputModule : BaseInputModule
     {
         Camera _cam = (Camera)LeftController.GetComponent (typeof(Camera));
         PhysicsRaycaster _raycaster = LeftController.GetComponent<PhysicsRaycaster> ();
-        Physics2DRaycaster _raycaster2D = LeftController.GetComponent<Physics2DRaycaster> ();
-        if (_cam == null || (_raycaster == null && _raycaster2D == null))
+        if (_cam == null || _raycaster == null)
         {
             Log.e (LOG_TAG, "PhysicRaycast_Left() no Camera or Physics Raycaster!");
             return;
@@ -324,16 +319,13 @@ public class WaveVR_ControllerInputModule : BaseInputModule
 
         if (_raycaster != null)
             _raycaster.Raycast (leftHandPointer, _results);
-        // no 3D result, try physic 2D casting
-        if (_results.Count == 0 && _raycaster2D != null)
-            _raycaster2D.Raycast (leftHandPointer, _results);
 
         RaycastResult _firstResult = FindFirstRaycast (_results);
 
         if (_firstResult.module != null)
         {
             #if UNITY_EDITOR
-            Debug.Log ("PhysicRaycast_Left(), camera: " + _firstResult.module.eventCamera + ", first result = " + _firstResult);
+            //Debug.Log ("PhysicRaycast_Left(), camera: " + _firstResult.module.eventCamera + ", first result = " + _firstResult);
             #endif
             //Log.d (LOG_TAG, "PhysicRaycast_Left(), camera: " + _firstResult.module.eventCamera + ", first result = " + _firstResult);
         }
@@ -373,10 +365,15 @@ public class WaveVR_ControllerInputModule : BaseInputModule
     private void onButtonClick(WVR_DeviceType _dt)
     {
         GameObject _go = null;
-        if (_dt == WVR_DeviceType.WVR_DeviceType_Controller_Right)
+        if (_dt == ControllerIndex_Right)
+        {
             _go = GetRightHandObject ();
-        else if (_dt == WVR_DeviceType.WVR_DeviceType_Controller_Left)
+            eligibleForButtonClick_Right = false;
+        } else if (_dt == ControllerIndex_Left)
+        {
             _go = GetLeftHandObject ();
+            eligibleForButtonClick_Left = false;
+        }
 
         if (CheckNullObject ("onButtonClick() " + _dt.ToString (), _go))
             return;
@@ -384,6 +381,9 @@ public class WaveVR_ControllerInputModule : BaseInputModule
         Button _btn = _go.GetComponent<Button> ();
         if (_btn != null)
         {
+            #if UNITY_EDITOR
+            Debug.Log("onButtonClick() trigger Button.onClick to " + _btn + " from " + _dt.ToString ());
+            #endif
             Log.d (LOG_TAG, "onButtonClick() trigger Button.onClick to " + _btn + " from " + _dt.ToString ());
             _btn.onClick.Invoke ();
         } else
@@ -648,6 +648,7 @@ public class WaveVR_ControllerInputModule : BaseInputModule
         }
 
         GameObject _go = GetLeftHandObject ();
+        // _go may be different with leftHandPointer.pointerDrag so we don't check null
 
         if (leftHandPointer.pointerPress != null)
         {
@@ -699,10 +700,10 @@ public class WaveVR_ControllerInputModule : BaseInputModule
         Camera _event_camera = null;
         switch (_dt)
         {
-        case WVR_DeviceType.WVR_DeviceType_Controller_Right:
+        case ControllerIndex_Right:
             _event_camera = (Camera)RightController.GetComponent (typeof(Camera));
             break;
-        case WVR_DeviceType.WVR_DeviceType_Controller_Left:
+        case ControllerIndex_Left:
             _event_camera = (Camera)LeftController.GetComponent (typeof(Camera));
             break;
         default:
@@ -728,6 +729,7 @@ public class WaveVR_ControllerInputModule : BaseInputModule
         }
     }
 
+    private bool eligibleForButtonClick_Right = false;
     private void Process_RightHand()
     {
         prevObject_right = GetRightHandObject ();
@@ -750,7 +752,9 @@ public class WaveVR_ControllerInputModule : BaseInputModule
         btnPressed |= WaveVR_Controller.Input (ControllerIndex_Right).GetPress ((WVR_InputId)ButtonToTrigger);
         btnPressUp |= WaveVR_Controller.Input (ControllerIndex_Right).GetPressUp ((WVR_InputId)ButtonToTrigger);
 
-        if (btnPressUp)
+        if (btnPressDown)
+            eligibleForButtonClick_Right = true;
+        if (btnPressUp && eligibleForButtonClick_Right)
             onButtonClick (ControllerIndex_Right);
 
         /**
@@ -784,6 +788,7 @@ public class WaveVR_ControllerInputModule : BaseInputModule
         }
     }
 
+    private bool eligibleForButtonClick_Left = false;
     private void Process_LeftHand()
     {
         prevObject_left = GetLeftHandObject ();
@@ -806,7 +811,9 @@ public class WaveVR_ControllerInputModule : BaseInputModule
         btnPressed |= WaveVR_Controller.Input (ControllerIndex_Left).GetPress ((WVR_InputId)ButtonToTrigger);
         btnPressUp |= WaveVR_Controller.Input (ControllerIndex_Left).GetPressUp ((WVR_InputId)ButtonToTrigger);
 
-        if (btnPressUp)
+        if (btnPressDown)
+            eligibleForButtonClick_Left = true;
+        if (btnPressUp && eligibleForButtonClick_Left)
             onButtonClick (ControllerIndex_Left);
 
         /**
@@ -842,10 +849,108 @@ public class WaveVR_ControllerInputModule : BaseInputModule
 
     public override void Process()
     {
+        bool _bRConnected = WaveVR_Controller.Input (ControllerIndex_Right).connected;
+        bool _bLConnected = WaveVR_Controller.Input (ControllerIndex_Left).connected;
+
         /**
          * Left right & left hand actions be processed in current thread
          **/
-        Process_RightHand ();
-        Process_LeftHand ();
+        if (RightController != null && _bRConnected)
+        {
+            Process_RightHand ();
+            UpdateReticlePointer_Right ();
+            SetupReticleBeam_Right ();
+        }
+        if (LeftController != null && _bLConnected)
+        {
+            Process_LeftHand ();
+            UpdateReticlePointer_Left ();
+            SetupReticleBeam_Left ();
+        }
     }
+
+    #region Reticle Pointer
+    private WaveVR_ControllerPointer reticlePointer_right = null, reticlePointer_left = null;
+    private WaveVR_Beam beam_right = null, beam_left = null;
+
+    private void SetupReticleBeam_Right()
+    {
+        if (reticlePointer_right == null)
+        {
+            reticlePointer_right = RightController.GetComponentInChildren<WaveVR_ControllerPointer> ();
+            // Remove right reticle by default.
+            if (reticlePointer_right != null)
+                reticlePointer_right.removePointer ();
+        }
+
+        if (beam_right == null)
+        {
+            beam_right = RightController.GetComponentInChildren<WaveVR_Beam> ();
+        }
+    }
+
+    private void SetupReticleBeam_Left()
+    {
+        if (reticlePointer_left == null)
+        {
+            reticlePointer_left = LeftController.GetComponentInChildren<WaveVR_ControllerPointer> ();
+            // Remove left reticle by default.
+            if (reticlePointer_left != null)
+                reticlePointer_left.removePointer();
+        }
+
+        if (beam_left == null)
+        {
+            beam_left = LeftController.GetComponentInChildren<WaveVR_Beam> ();
+        }
+    }
+
+    private void UpdateReticlePointer_Right()
+    {
+        if (reticlePointer_right != null && beam_right != null)
+        {
+            Vector3 _intersectionPosition = GetIntersectionPosition (rightHandPointer.enterEventCamera, rightHandPointer.pointerCurrentRaycast);
+            GameObject _go = GetRightHandObject ();
+
+            if (_go != prevObject_right)
+            {
+                if (_go != null)
+                {
+                    reticlePointer_right.SetPointerColor (new Color32 (11, 220, 249, 255));
+                    reticlePointer_right.OnPointerEnter (rightHandPointer.enterEventCamera, _go, _intersectionPosition, true);
+                    beam_right.SetEndOffset (_intersectionPosition, false);
+                } else
+                {
+                    reticlePointer_right.SetPointerColor (Color.white);
+                    reticlePointer_right.OnPointerExit(rightHandPointer.enterEventCamera, prevObject_right);
+                    beam_right.ResetEndOffset ();
+                }
+            }
+        }
+    }
+
+    private void UpdateReticlePointer_Left()
+    {
+        if (reticlePointer_left != null && beam_left != null)
+        {
+            Vector3 _intersectionPosition = GetIntersectionPosition (leftHandPointer.enterEventCamera, leftHandPointer.pointerCurrentRaycast);
+            GameObject _go = GetLeftHandObject ();
+
+            if (_go != prevObject_left)
+            {
+                if (_go != null)
+                {
+                    reticlePointer_left.SetPointerColor (new Color32 (11, 220, 249, 255));
+                    reticlePointer_left.OnPointerEnter(leftHandPointer.enterEventCamera, _go, _intersectionPosition, true);
+                    beam_left.SetEndOffset (_intersectionPosition, false);
+                } else
+                {
+                    reticlePointer_left.SetPointerColor (Color.white);
+                    reticlePointer_left.OnPointerExit(leftHandPointer.enterEventCamera, prevObject_left);
+                    beam_left.ResetEndOffset ();
+                }
+            }
+        }
+    }
+    #endregion
 }

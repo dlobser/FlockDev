@@ -1,4 +1,4 @@
-﻿// ++ LICENSE-RELEASE SOURCE ++
+// ++ LICENSE-RELEASE SOURCE ++
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +13,7 @@ public class Permission_Test : MonoBehaviour {
     private static int retryCount = 0;
     private static int RETRY_LIMIT = 1;
     private static bool requested = false;
+    private static int systemCheckFailCount = 0;
 
     public static void requestDoneCallback(List<WaveVR_PermissionManager.RequestResult> results)
     {
@@ -58,21 +59,31 @@ public class Permission_Test : MonoBehaviour {
         if (Application.isEditor) return;
 #endif
 
-        if (pmInstance.isInitialized() && !requested)
+        if (!requested)
         {
-            Log.d(LOG_TAG, "inited");
-            Log.d(LOG_TAG, "showDialogOnScene() = " + pmInstance.showDialogOnScene());
-            string[] tmpStr =
+            if (systemCheckFailCount <= 10)
             {
-                "android.permission.CAMERA", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE"
-            };
+                if (pmInstance.isInitialized())
+                {
+                    Log.d(LOG_TAG, "inited");
+                    Log.d(LOG_TAG, "showDialogOnScene() = " + pmInstance.showDialogOnScene());
+                    string[] tmpStr =
+                    {
+                        "android.permission.CAMERA", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE"
+                    };
 
-            Log.d(LOG_TAG, "isPermissionGranted(android.permission.CAMERA) = " + pmInstance.isPermissionGranted("android.permission.CAMERA"));
-            Log.d(LOG_TAG, "isPermissionGranted(android.permission.WRITE_EXTERNAL_STORAGE) = " + pmInstance.isPermissionGranted("android.permission.WRITE_EXTERNAL_STORAGE"));
-            Log.d(LOG_TAG, "shouldGrantPermission(android.permission.READ_EXTERNAL_STORAGE) = " + pmInstance.shouldGrantPermission("android.permission.READ_EXTERNAL_STORAGE"));
+                    Log.d(LOG_TAG, "isPermissionGranted(android.permission.CAMERA) = " + pmInstance.isPermissionGranted("android.permission.CAMERA"));
+                    Log.d(LOG_TAG, "isPermissionGranted(android.permission.WRITE_EXTERNAL_STORAGE) = " + pmInstance.isPermissionGranted("android.permission.WRITE_EXTERNAL_STORAGE"));
+                    Log.d(LOG_TAG, "shouldGrantPermission(android.permission.READ_EXTERNAL_STORAGE) = " + pmInstance.shouldGrantPermission("android.permission.READ_EXTERNAL_STORAGE"));
 
-            pmInstance.requestPermissions(tmpStr, requestDoneCallback);
-            requested = true;
+                    pmInstance.requestPermissions(tmpStr, requestDoneCallback);
+                    requested = true;
+                }
+                else
+                {
+                    systemCheckFailCount++;
+                }
+            }
         }
 	}
 }

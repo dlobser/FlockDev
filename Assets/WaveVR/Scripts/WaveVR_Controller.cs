@@ -19,6 +19,24 @@ public class WaveVR_Controller
 {
     private static string LOG_TAG = "WaveVR_Controller";
 
+    public static bool IsLeftHanded
+    {
+        get
+        {
+            return isLeftHanded;
+        }
+    }
+    private static bool isLeftHanded = false;
+
+    public static void SetLeftHandedMode()
+    {
+        isLeftHanded = !isLeftHanded;
+        #if UNITY_EDITOR
+        Debug.Log ("SetLeftHandedMode() " + isLeftHanded);
+        #endif
+        Log.d (LOG_TAG, "SetLeftHandedMode() left handed? " + isLeftHanded);
+    }
+
     private static Device[] devices;
 
     /// <summary>
@@ -27,6 +45,26 @@ public class WaveVR_Controller
     /// <param name="deviceIndex">The index of the controller.</param>
     /// <returns></returns>
     public static Device Input(WVR_DeviceType deviceIndex)
+    {
+        if (isLeftHanded)
+        {
+            switch (deviceIndex)
+            {
+            case WVR_DeviceType.WVR_DeviceType_Controller_Right:
+                deviceIndex = WVR_DeviceType.WVR_DeviceType_Controller_Left;
+                break;
+            case WVR_DeviceType.WVR_DeviceType_Controller_Left:
+                deviceIndex = WVR_DeviceType.WVR_DeviceType_Controller_Right;
+                break;
+            default:
+                break;
+            }
+        }
+
+        return ChangeRole (deviceIndex);
+    }
+
+    private static Device ChangeRole(WVR_DeviceType deviceIndex)
     {
         if (devices == null)
         {
@@ -50,6 +88,7 @@ public class WaveVR_Controller
 
     public class Device
     {
+        #region button definition
         public static ulong Input_Mask_Menu         = 1UL << (int)WVR_InputId.WVR_InputId_Alias1_Menu;
         public static ulong Input_Mask_Grip         = 1UL << (int)WVR_InputId.WVR_InputId_Alias1_Grip;
         public static ulong Input_Mask_DPad_Left    = 1UL << (int)WVR_InputId.WVR_InputId_Alias1_DPad_Left;
@@ -60,6 +99,40 @@ public class WaveVR_Controller
         public static ulong Input_Mask_Volume_Down  = 1UL << (int)WVR_InputId.WVR_InputId_Alias1_Volume_Down;
         public static ulong Input_Mask_Touchpad     = 1UL << (int)WVR_InputId.WVR_InputId_Alias1_Touchpad;
         public static ulong Input_Mask_Trigger      = 1UL << (int)WVR_InputId.WVR_InputId_Alias1_Trigger;
+        public static ulong Input_Mask_Bumper       = 1UL << (int)WVR_InputId.WVR_InputId_Alias1_Bumper;
+
+        // press
+        WVR_InputId[] pressIds = new WVR_InputId[] {
+            WVR_InputId.WVR_InputId_Alias1_Menu,
+            WVR_InputId.WVR_InputId_Alias1_Grip,
+            WVR_InputId.WVR_InputId_Alias1_DPad_Left,
+            WVR_InputId.WVR_InputId_Alias1_DPad_Up,
+            WVR_InputId.WVR_InputId_Alias1_DPad_Right,  // 5
+            WVR_InputId.WVR_InputId_Alias1_DPad_Down,
+            WVR_InputId.WVR_InputId_Alias1_Volume_Up,
+            WVR_InputId.WVR_InputId_Alias1_Volume_Down,
+            WVR_InputId.WVR_InputId_Alias1_Bumper,
+            WVR_InputId.WVR_InputId_Alias1_Touchpad,    // 10
+            WVR_InputId.WVR_InputId_Alias1_Trigger
+        };
+
+        // Timer of each button (has press state) should be seperated.
+        // 4 buttons need 4 timer.
+        int[] prevFrameCount_press = new int[11]{
+            -1, -1, -1, -1, -1,
+            -1, -1, -1, -1, -1,
+            -1 };
+
+        // touch
+        WVR_InputId[] touchIds = new WVR_InputId[] {
+            WVR_InputId.WVR_InputId_Alias1_Touchpad,
+            WVR_InputId.WVR_InputId_Alias1_Trigger
+        };
+
+        // Timer of each button (has touch state) should be seperated.
+        // 2 buttons need 2 timer.
+        int[] prevFrameCount_touch = new int[]{ -1, -1 };
+        #endregion
 
         public Device(WVR_DeviceType dt)
         {
@@ -95,7 +168,10 @@ public class WaveVR_Controller
             {
                 #if UNITY_EDITOR || UNITY_STANDALONE
                 if (isEditorMode)
-                    return WaveVR_Utils.RigidTransform.identity;
+                {
+                    var system = WaveVR_PoseSimulator.Instance;
+                    return system.GetRigidTransform(DeviceType);
+                }
                 #endif
 
                 Interop.WVR_GetPoseState (
@@ -117,25 +193,11 @@ public class WaveVR_Controller
         #endif
 
         #region Timer
-        // press
-        WVR_InputId[] pressIds = new WVR_InputId[] {
-            WVR_InputId.WVR_InputId_Alias1_Menu,
-            WVR_InputId.WVR_InputId_Alias1_Grip,
-            WVR_InputId.WVR_InputId_Alias1_DPad_Left,
-            WVR_InputId.WVR_InputId_Alias1_DPad_Up,
-            WVR_InputId.WVR_InputId_Alias1_DPad_Right,
-            WVR_InputId.WVR_InputId_Alias1_DPad_Down,
-            WVR_InputId.WVR_InputId_Alias1_Volume_Up,
-            WVR_InputId.WVR_InputId_Alias1_Volume_Down,
-            WVR_InputId.WVR_InputId_Alias1_Touchpad,
-            WVR_InputId.WVR_InputId_Alias1_Trigger
-        };
-
-        // Timer of each button (has press state) should be seperated.
-        // 4 buttons need 4 timer.
-        int[] prevFrameCount_press = new int[10]{ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
         private bool AllowPressActionInAFrame(WVR_InputId _id)
         {
+            if (!connected)
+                return false;
+
             for (uint i = 0; i < pressIds.Length; i++)
             {
                 if (_id == pressIds [i])
@@ -151,17 +213,11 @@ public class WaveVR_Controller
             return false;
         }
 
-        // touch
-        WVR_InputId[] touchIds = new WVR_InputId[] {
-            WVR_InputId.WVR_InputId_Alias1_Touchpad,
-            WVR_InputId.WVR_InputId_Alias1_Trigger
-        };
-
-        // Timer of each button (has touch state) should be seperated.
-        // 2 buttons need 2 timer.
-        int[] prevFrameCount_touch = new int[]{ -1, -1 };
         private bool AllowTouchActionInAFrame(WVR_InputId _id)
         {
+            if (!connected)
+                return false;
+
             for (uint i = 0; i < touchIds.Length; i++)
             {
                 if (_id == touchIds [i])
@@ -257,6 +313,13 @@ public class WaveVR_Controller
                     else
                         pre_state.BtnPressed |= _tmpvalue;
                     break;
+                case WVR_InputId.WVR_InputId_Alias1_Bumper:
+                    _tmpvalue = state.BtnPressed & Input_Mask_Bumper;
+                    if (_tmpvalue == 0)
+                        pre_state.BtnPressed &= ~Input_Mask_Bumper;
+                    else
+                        pre_state.BtnPressed |= _tmpvalue;
+                    break;
                 default:
                     break;
                 }
@@ -264,9 +327,8 @@ public class WaveVR_Controller
                 #if UNITY_EDITOR || UNITY_STANDALONE
                 if (isEditorMode)
                 {
-                    var system = WaveVR_EmulatorControllerProvider.Instance;
-                    //system.GetControllerStateWithPose (DeviceType, ref state, ref pose, ref axis);
-                    _pressed = system.WVR_GetInputButtonState (DeviceType, _id);
+                    var system = WaveVR_PoseSimulator.Instance;
+                    _pressed = system.GetButtonPressState(DeviceType, _id);
                 } else
                 #endif
                 {
@@ -335,6 +397,12 @@ public class WaveVR_Controller
                     else
                         state.BtnPressed &= ~Input_Mask_Trigger;
                     break;
+                case WVR_InputId.WVR_InputId_Alias1_Bumper:
+                    if (_pressed)
+                        state.BtnPressed |= Input_Mask_Bumper;
+                    else
+                        state.BtnPressed &= ~Input_Mask_Bumper;
+                    break;
                 default:
                     break;
                 }
@@ -371,9 +439,8 @@ public class WaveVR_Controller
                 #if UNITY_EDITOR || UNITY_STANDALONE
                 if (isEditorMode)
                 {
-                    var system = WaveVR_EmulatorControllerProvider.Instance;
-                    //system.GetControllerStateWithPose (DeviceType, ref state, ref pose, ref axis);
-                    _touched = system.WVR_GetInputTouchState (DeviceType, _id);
+                    var system = WaveVR_PoseSimulator.Instance;
+                    _touched = system.GetButtonTouchState(DeviceType, _id);
                 } else
                 #endif
                 {
@@ -442,6 +509,9 @@ public class WaveVR_Controller
                 break;
             case WVR_InputId.WVR_InputId_Alias1_Trigger:
                 _state = (state.BtnPressed & Input_Mask_Trigger) != 0 ? true : false;
+                break;
+            case WVR_InputId.WVR_InputId_Alias1_Bumper:
+                _state = (state.BtnPressed & Input_Mask_Bumper) != 0 ? true : false;
                 break;
             default:
                 break;
@@ -522,6 +592,12 @@ public class WaveVR_Controller
                         && ((pre_state.BtnPressed & Input_Mask_Trigger) == 0))
                     ? true : false);
                 break;
+            case WVR_InputId.WVR_InputId_Alias1_Bumper:
+                _state = (
+                    (((state.BtnPressed & Input_Mask_Bumper) != 0)
+                        && ((pre_state.BtnPressed & Input_Mask_Bumper) == 0))
+                    ? true : false);
+                break;
             default:
                 break;
             }
@@ -599,6 +675,12 @@ public class WaveVR_Controller
                 _state = (
                     (((state.BtnPressed & Input_Mask_Trigger) == 0)
                         && ((pre_state.BtnPressed & Input_Mask_Trigger) != 0))
+                    ? true : false);
+                break;
+            case WVR_InputId.WVR_InputId_Alias1_Bumper:
+                _state = (
+                    (((state.BtnPressed & Input_Mask_Bumper) == 0)
+                        && ((pre_state.BtnPressed & Input_Mask_Bumper) != 0))
                     ? true : false);
                 break;
             default:
@@ -700,6 +782,9 @@ public class WaveVR_Controller
 
         public Vector2 GetAxis(WVR_InputId _id)
         {
+            if (!connected)
+                return Vector2.zero;
+
             if (_id != WVR_InputId.WVR_InputId_Alias1_Touchpad && _id != WVR_InputId.WVR_InputId_Alias1_Trigger)
             {
                 Log.e (LOG_TAG, "GetAxis, button " + _id + " does NOT have axis!");
@@ -709,9 +794,8 @@ public class WaveVR_Controller
             #if UNITY_EDITOR || UNITY_STANDALONE
             if (isEditorMode)
             {
-                var system = WaveVR_EmulatorControllerProvider.Instance;
-                //system.GetControllerStateWithPose (DeviceType, ref emu_state, ref pose, ref axis);
-                axis = system.WVR_GetInputAnalogAxis (DeviceType, _id);
+                var system = WaveVR_PoseSimulator.Instance;
+                axis = system.GetAxis(DeviceType, _id);
             } else
             #endif
             {
@@ -730,7 +814,7 @@ public class WaveVR_Controller
             #if UNITY_EDITOR || UNITY_STANDALONE
             if (isEditorMode)
             {
-                var system = WaveVR_EmulatorControllerProvider.Instance;
+                var system = WaveVR_PoseSimulator.Instance;
                 system.TriggerHapticPulse (DeviceType, _id, _durationMicroSec);
             } else
             #endif

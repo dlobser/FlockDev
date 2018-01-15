@@ -44,7 +44,19 @@ public class WaveVR_Init : MonoBehaviour
     void Start()
     {
         if (WaveVR.Instance != null)
-            WaveVR.Instance.onLoadLevel();
+        {
+            WaveVR.Instance.onLoadLevel ();
+
+            // if system boots with default controller role left, set left-handed mode to true
+            if (Interop.WVR_GetDefaultControllerRole () == WVR_DeviceType.WVR_DeviceType_Controller_Left)
+            {
+                WaveVR_Controller.SetLeftHandedMode ();
+                #if UNITY_EDITOR
+                Debug.Log ("Start() Set left-handed mode to " + WaveVR_Controller.IsLeftHanded);
+                #endif
+                Log.i (LOG_TAG, "Start() Set left-handed mode to " + WaveVR_Controller.IsLeftHanded);
+            }
+        }
     }
 
     void Awake()
@@ -112,6 +124,13 @@ public class WaveVR_Init : MonoBehaviour
         case WVR_EventType.WVR_EventType_TouchpadSwipe_DownToUp:
         case WVR_EventType.WVR_EventType_TouchpadSwipe_UpToDown:
             WaveVR_Utils.Event.Send("SWIPE_EVENT", vrEvent.common.type);
+            break;
+        case WVR_EventType.WVR_EventType_Settings_Controller:
+            if (WaveVR.Instance != null)
+            {
+                WaveVR_Controller.SetLeftHandedMode ();
+                Log.i (LOG_TAG, "Set left-handed mode to " + WaveVR_Controller.IsLeftHanded);
+            }
             break;
         default:
             break;

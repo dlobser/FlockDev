@@ -10,29 +10,62 @@
 
 using UnityEngine;
 using System.Collections.Generic;
-using wvr;
-using WaveVR_Log;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class Beam: MonoBehaviour
 {
-    public float startWidth = 0.001f;  // in x,y axis
-    public float endWidth = 0.002f;  // let the bean seems the same width in far distance.
-    public float startOffset = 0.003f;
-    public float endOffset = 10;
+    public float startWidth = 0.01f;  // in x,y axis
+    public float endWidth = 0.02f;  // let the bean seems the same width in far distance.
+    public float startOffset = 0.03f;
+    public float endOffset = 10f;
+
     public int count = 3;
     public bool updateEveryFrame = false;
     public bool makeTail = true; // Offset from 0
 
-    // Use this for initialization
-    void OnEnable()
+    private int maxUVAngle = 30;
+    private const float epsilon = 0.001f;
+
+    private void Validate()
     {
+        if (startWidth < epsilon)
+            startWidth = epsilon;
+
+        if (endWidth < epsilon)
+            endWidth = epsilon;
+
+        if (startOffset < epsilon)
+            startOffset = epsilon;
+
+        if (endOffset < epsilon * 2)
+            endOffset = epsilon * 2;
+
+        if (endOffset < startOffset)
+            endOffset = startOffset + epsilon;
+
         if (count < 3)
             count = 3;
 
+        /**
+         * The texture pattern should be a radiated image starting 
+         * from the texture center.
+         * If the mesh's count is too low, the uv map can't keep a 
+         * good radiation shap.  Therefore the maxUVAngle should be
+         * reduced to avoid the uv area cutting the radiation circle.
+        **/
+        int uvAngle = 360 / count;
+        if (uvAngle > 30)
+            maxUVAngle = 30;
+        else
+            maxUVAngle = uvAngle;
+    }
+
+    void OnEnable()
+    {
+        Validate();
+
         var meshfilter = GetComponent<MeshFilter>();
-        if (meshfilter.mesh == null)
-            meshfilter.mesh = createMesh();
+        meshfilter.mesh = createMesh();
 
         var meshRenderer = GetComponent<MeshRenderer>();
         meshRenderer.enabled = true;
@@ -48,8 +81,9 @@ public class Beam: MonoBehaviour
     {
         if (!updateEveryFrame)
             return;
-        if (count < 3)
-            count = 3;
+
+        Validate();
+
         var meshfilter = GetComponent<MeshFilter>();
         meshfilter.mesh = createMesh();
     }
@@ -62,26 +96,30 @@ public class Beam: MonoBehaviour
         int indicesCount = Count * 6 + (makeTail ? count * 3 : 0);
 
         vertices = new List<Vector3>(verticesCount);
-        uvs= new List<Vector2>(verticesCount);
+        uvs = new List<Vector2>(verticesCount);
         normals = new List<Vector3>(verticesCount);
         indices = new List<int>(indicesCount);
 
         Matrix4x4 mat = new Matrix4x4();
+        Matrix4x4 matUV = new Matrix4x4();
 
         for (int i = 0; i < Count; i++)
         {
             int angle = (int) (i * 360.0f / count);
+            int UVangle = (int)(i * maxUVAngle / count);
             // make rotation matrix
             mat.SetTRS(new Vector3(0, 0, 0), Quaternion.AngleAxis(angle, new Vector3(0, 0, 1)), new Vector3(1, 1, 1));
+            matUV.SetTRS(new Vector3(0, 0, 0), Quaternion.AngleAxis(UVangle, new Vector3(0, 0, 1)), new Vector3(1, 1, 1));
 
             // start
             vertices.Add(mat.MultiplyVector(new Vector3(0, startWidth, startOffset)));
             uvs.Add(new Vector2(0.5f,0.5f));
             normals.Add(mat.MultiplyVector(new Vector3(0, 1, 0)).normalized);
+            
 
             // end
             vertices.Add(mat.MultiplyVector(new Vector3(0, endWidth, endOffset)));
-            Vector2 uv = mat.MultiplyVector(new Vector3(0, 0.5f, 0));
+            Vector2 uv = matUV.MultiplyVector(new Vector3(0, 0.5f, 0));
             uv.x = uv.x + 0.5f;
             uv.y = uv.y + 0.5f;
             uvs.Add(uv);

@@ -69,7 +69,7 @@ public class BuildHelloVR
         PlayerSettings.mobileMTRendering = true;
 #endif
         PlayerSettings.graphicsJobs = true;
-        PlayerSettings.Android.minSdkVersion = AndroidSdkVersions.AndroidApiLevel25;
+        PlayerSettings.Android.minSdkVersion = AndroidSdkVersions.AndroidApiLevel23;
         PlayerSettings.Android.targetSdkVersion = AndroidSdkVersions.AndroidApiLevel25;
 
         string outputFilePath = string.IsNullOrEmpty(destPath) ? apkName : destPath + "/" + apkName;

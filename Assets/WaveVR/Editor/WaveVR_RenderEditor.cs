@@ -8,6 +8,7 @@
 // conditions signed by you and all SDK and API requirements,
 // specifications, and documentation provided by HTC to You."
 
+#if true
 using UnityEngine;
 using UnityEditor;
 using System.IO;
@@ -15,7 +16,7 @@ using System.IO;
 [CustomEditor(typeof(WaveVR_Render)), CanEditMultipleObjects]
 public class WaveVR_RenderEditor : Editor
 {
-    private int bannerHeight = 150;
+    private int bannerHeightMax = 150;
     Texture logo = null;
 
     SerializedProperty script;
@@ -27,6 +28,7 @@ public class WaveVR_RenderEditor : Editor
     //SerializedProperty textureExpand;
     SerializedProperty _origin;
     //SerializedProperty useATW;
+    SerializedProperty needTimeControl;
 
     string GetResourcePath()
     {
@@ -40,9 +42,9 @@ public class WaveVR_RenderEditor : Editor
     {
         var resourcePath = GetResourcePath();
 #if UNITY_5_0
-		logo = Resources.LoadAssetAtPath<Texture2D>(resourcePath + "logo.png");
+		logo = Resources.LoadAssetAtPath<Texture2D>(resourcePath + "vivewave_logo_flat.png");
 #else
-        logo = AssetDatabase.LoadAssetAtPath<Texture2D>(resourcePath + "logo.png");
+        logo = AssetDatabase.LoadAssetAtPath<Texture2D>(resourcePath + "vivewave_logo_flat.png");
 #endif
         script = serializedObject.FindProperty("m_Script");
         CameraGaze =  serializedObject.FindProperty("CameraGaze");
@@ -52,6 +54,7 @@ public class WaveVR_RenderEditor : Editor
         //targetFPS = serializedObject.FindProperty("targetFPS");
         //textureExpand = serializedObject.FindProperty("textureExpand");
         _origin = serializedObject.FindProperty("_origin");
+        needTimeControl = serializedObject.FindProperty("needTimeControl");
         //useATW = serializedObject.FindProperty("useATW");
     }
 
@@ -61,10 +64,20 @@ public class WaveVR_RenderEditor : Editor
 
         if (logo)
         {
-            var rect = GUILayoutUtility.GetRect(Screen.width - 38, bannerHeight, GUI.skin.box);
+            // Logo need have aspect rate 2:1
+            int bannerWidth, bannerHeight;
+            bannerWidth = Screen.width - 35;
+            bannerHeight = (int) (bannerWidth / (float) 2);
+            if (bannerHeight > bannerHeightMax)
+            {
+                bannerHeight = bannerHeightMax;
+                bannerWidth = bannerHeight * 2;
+            }
+            var rect = GUILayoutUtility.GetRect(bannerWidth, bannerHeight, GUI.skin.box);
             GUI.DrawTexture(rect, logo, ScaleMode.ScaleToFit);
         }
         EditorGUILayout.PropertyField(script);
+
         EditorGUILayout.PropertyField(CameraGaze);
 
         //EditorGUILayout.PropertyField(useSingleBuffer);
@@ -73,6 +86,7 @@ public class WaveVR_RenderEditor : Editor
         //EditorGUILayout.PropertyField(textureExpand);
         //EditorGUILayout.PropertyField(targetFPS);
         EditorGUILayout.PropertyField(_origin);
+        EditorGUILayout.PropertyField(needTimeControl);
         //EditorGUILayout.PropertyField(useATW);
 
         if (!Application.isPlaying)
@@ -133,3 +147,4 @@ public class WaveVR_RenderEditor : Editor
         serializedObject.ApplyModifiedProperties();
     }
 }
+#endif

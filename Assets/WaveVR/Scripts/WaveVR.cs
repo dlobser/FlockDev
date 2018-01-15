@@ -137,7 +137,6 @@ public class WaveVR : System.IDisposable
         controllerRight = new Device(WVR_DeviceType.WVR_DeviceType_Controller_Right);
 
         Log.d(LOG_TAG, "WaveVR()-");
-        Log.getLogFlags();
     }
 
     ~WaveVR()
@@ -244,11 +243,10 @@ public class WaveVR : System.IDisposable
         //        rtPoses[i].update(vrpose.pose.PoseMatrix);
         //}
 
-        Log.gpl.d(LOG_TAG, "send new poses");
         for (int i = 0; i < poses.Length; i++)
         {
             if (poses [i].pose.IsValidPose)
-                Log.gpl.d (LOG_TAG, "device " + i + " pose: {" + poses[i].pose.PoseMatrix + "}");
+                Log.gpl.d (LOG_TAG, "device " + i + " pos: {" + rtPoses [i].pos + "}" + "rot: {" + rtPoses [i].rot + "}");
         }
         WaveVR_Utils.Event.Send(WaveVR_Utils.Event.NEW_POSES, poses, rtPoses);
         Log.gpl.d(LOG_TAG, "after new poses");

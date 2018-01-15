@@ -42,7 +42,7 @@ public class LineParticleStrength : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if(Time.time>startTime)
+        if(Time.time>startTime && triggered)
             GetSpeed();
         trail.time = speed * trailMult;
         parti.emissionRate = speed * partiMult;
@@ -59,9 +59,13 @@ public class LineParticleStrength : MonoBehaviour {
             dial.transform.parent.gameObject.GetComponent<MeshRenderer>().material.color = Color.Lerp(startDial, endDial, dialer);
 
         }
+		if (triggered && fader>=1) {
+			StartCoroutine(fadeUI());
+			dial.transform.parent.gameObject.SetActive(true);
+		}
         if (triggered && speed > canvasFadeSpeed && !fadeStarted && Time.time>3f)
         {
-            //StartCoroutine(fadeUI());
+//            StartCoroutine(fadeUI());
             fadeStarted = true;
             env.Add();
             dial.transform.parent.gameObject.SetActive(false);
@@ -81,9 +85,9 @@ public class LineParticleStrength : MonoBehaviour {
     {
         while (fader > 0)
         {
-            fader -= .01f;
+			fader -= Time.deltaTime * 2f;
             UIMat.SetColor("_Color", new Color(1, 1, 1, fader));
-            yield return new WaitForSeconds(Time.deltaTime);
+			yield return null;
         }
     }
 }

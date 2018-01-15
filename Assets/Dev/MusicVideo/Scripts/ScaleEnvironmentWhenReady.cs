@@ -25,15 +25,22 @@ public class ScaleEnvironmentWhenReady : MonoBehaviour {
             this.transform.localScale = start;
             RenderSettings.fogColor = startFog;
             Camera.main.backgroundColor = startFog;
+			SetCameraBackground (Camera.main.gameObject, startFog);
             fader.SetActive(false);
             init = true;
         }
     }
 
+	void SetCameraBackground(GameObject obj, Color color){
+		Camera[] cams = obj.GetComponentsInChildren<Camera> ();
+		for (int i = 0; i < cams.Length; i++) {
+			cams [i].backgroundColor = color;
+		}
+	}
     public void Add()
     {
         count++;
-        if (count == 2)
+        if (count == 1)
         {
             StartCoroutine(scaleEnvironmentDown());
         }
@@ -46,7 +53,9 @@ public class ScaleEnvironmentWhenReady : MonoBehaviour {
             counter += .1f;
             this.transform.localScale = Vector3.Lerp(start, end, Mathf.SmoothStep(0,1, counter / scaleTime));
             RenderSettings.fogColor = Color.Lerp(startFog, endFog, counter / scaleTime);
+
             Camera.main.backgroundColor = Color.Lerp(startFog, endFog, counter / scaleTime); ;
+			SetCameraBackground (Camera.main.gameObject, Camera.main.backgroundColor);
 
             yield return new WaitForSeconds(Time.deltaTime);
         }
