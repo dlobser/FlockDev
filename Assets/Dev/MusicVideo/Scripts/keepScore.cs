@@ -14,7 +14,7 @@ public class keepScore : MonoBehaviour {
     public void AddToScore()
     {
         score++;
-        text.text = score + "\nBUGS";
+		text.text = score+"";// + "\nBUGS";
     }
 	// Update is called once per frame
 	void Update () {

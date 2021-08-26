@@ -27,7 +27,7 @@ public class UIManager : MonoBehaviour {
     public GameObject[] hideBothTriggers;
     public GameObject[] showBothTriggers;
 
-    public WaveVR_TrackedButtons LeftCTRL;
+    public WaveVR_TrackedButtonsCustom LeftCTRL;
 //    public ViveWandCTRL rightCTRL;
 
     //public Animator scoreAnim;
@@ -84,8 +84,9 @@ public class UIManager : MonoBehaviour {
 //            handleRight();
 //        }
 
-        if (!leftHandled && LeftCTRL.triggerPressed)
+        if (!leftHandled && LeftCTRL.padPressed)
         {
+			
             handleLeft();
         }
 

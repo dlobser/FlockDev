@@ -39,7 +39,10 @@ public class LineParticleStrength : MonoBehaviour {
         UIMat.SetColor("_Color", new Color(1, 1, 1, fader));
         dial.transform.parent.gameObject.GetComponent<MeshRenderer>().material.color = startDial;
     }
-	
+
+	void OnApplicationQuit(){
+		UIMat.SetColor("_Color", new Color(1, 1, 1, 1));
+	}
 	// Update is called once per frame
 	void Update () {
         if(Time.time>startTime && triggered)
