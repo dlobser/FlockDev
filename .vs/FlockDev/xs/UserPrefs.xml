@@ -1,5 +1,5 @@
-﻿<Properties StartupConfiguration="{77FC2526-9D43-4B3B-92E6-637492F0F65B}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/OVR/Editor/OVRPluginUpdater.cs">
+﻿<Properties StartupConfiguration="{C10BA8B1-D993-229A-B9DB-3B8E8B08C0A8}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/WaveVR/Scripts/WaveVR_ControllerManager.cs">
     <Files>
       <File FileName="Assets/Samples/TrackedButtons_Test/Scripts/TrackedButtons.cs" Line="27" Column="1" />
       <File FileName="Assets/Samples/ControllerManager_Test/Scripts/Watcher.cs" Line="1" Column="1" />
@@ -24,13 +24,13 @@
       <File FileName="Assets/Dev/DL/Scripts/RopeScript.cs" Line="1" Column="1" />
       <File FileName="Assets/WaveVR/Scripts/WaveVR_TrackedButtons.cs" Line="16" Column="1" />
       <File FileName="Assets/WaveVR/Scripts/WaveVR.cs" Line="1" Column="1" />
-      <File FileName="Assets/WaveVR/Scripts/WaveVR_ControllerManager.cs" Line="46" Column="36" />
+      <File FileName="Assets/WaveVR/Scripts/WaveVR_ControllerManager.cs" Line="56" Column="1" />
       <File FileName="Assets/Dev/DL/Scripts/Fader/FaderFogColor.cs" Line="1" Column="1" />
       <File FileName="Assets/Dev/DL/Scripts/Fader/Fader.cs" Line="1" Column="1" />
       <File FileName="Assets/Dev/MusicVideo/Scripts/WaveWandCTRL.cs" Line="45" Column="45" />
       <File FileName="Assets/Dev/DL/Scripts/Utility/copyPos.cs" Line="1" Column="1" />
       <File FileName="Assets/Dev/DL/Shaders/lineWarper.shader" Line="1" Column="1" />
-      <File FileName="Assets/WaveVR/Scripts/WaveVR_Render.cs" Line="606" Column="43" />
+      <File FileName="Assets/WaveVR/Scripts/WaveVR_Render.cs" Line="606" Column="41" />
       <File FileName="Assets/Dev/MusicVideo/Scripts/Flock/FlockPopulator.cs" Line="1" Column="1" />
       <File FileName="Assets/Dev/ckromero/Scripts/Environment.cs" Line="1" Column="1" />
       <File FileName="Assets/Dev/MusicVideo/Scripts/W_CopyLocalPosition.cs" Line="1" Column="1" />
@@ -39,9 +39,10 @@
       <File FileName="Assets/Dev/MusicVideo/Scripts/WaveClickTest.cs" Line="1" Column="1" />
       <File FileName="Assets/WaveVR/Scripts/WaveVR_Init.cs" Line="1" Column="1" />
       <File FileName="Assets/Dev/MusicVideo/Scripts/WaveVR_TrackedButtonsCustom.cs" Line="107" Column="18" />
-      <File FileName="Assets/OVR/Editor/OVRPluginUpdater.cs" Line="478" Column="5" />
+      <File FileName="Assets/OVR/Editor/OVRPluginUpdater.cs" Line="478" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp-Editor PreferredExecutionTarget="Unity.Editor" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="Unity.Editor" />
